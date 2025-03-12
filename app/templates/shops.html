@@ -420,6 +420,7 @@
             formData.append('file', file);
             
             try {
+                // Upload new image
                 const response = await fetch('/api/upload/shop-image', {
                     method: 'POST',
                     body: formData
@@ -427,6 +428,7 @@
                 
                 if (response.ok) {
                     const data = await response.json();
+                    const oldImageUrl = document.getElementById('edit_shop_image_url').value;
                     document.getElementById('edit_shop_image_url').value = data.url;
                     
                     // Update preview
@@ -438,6 +440,7 @@
                 }
             } catch (error) {
                 console.error('Error uploading file:', error);
+                showError('Error uploading image. Please try again.');
             }
         }
     });

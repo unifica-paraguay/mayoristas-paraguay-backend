@@ -230,6 +230,52 @@
         "see_all"
       ],
       "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1N4GbPHfjdfQnhlfH19udVKzFUV9b55x02A&s"
+    },
+    {
+      "id": 0,
+      "name": "Testing Shop Image",
+      "owner": "SA",
+      "contact_number": "595982844853",
+      "categories": [
+        1,
+        2,
+        4,
+        5,
+        10,
+        11
+      ],
+      "working_hours": null,
+      "city": "Asunción",
+      "zone_id": 4,
+      "categorie_pages": [
+        "recommended",
+        "free_shipping",
+        "see_all"
+      ],
+      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/8e0626a2-df88-46ed-9676-47fe49444180.jpeg"
+    },
+    {
+      "id": 20,
+      "name": "qwer",
+      "owner": "qwer",
+      "contact_number": "595982844853",
+      "categories": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "working_hours": null,
+      "city": "asdf",
+      "zone_id": 1,
+      "categorie_pages": [
+        "recommended",
+        "free_shipping",
+        "see_all"
+      ],
+      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/5c5f1395-d728-4191-bf8b-1059c2ce9da6.jpeg"
     }
   ],
   "categories": [

@@ -108,7 +108,7 @@ class CloudStorage:
         # Return the public URL (assuming the bucket has public access configured)
         return f"https://storage.googleapis.com/{self.bucket_name}/{filename}"
 
-    def delete_file(self, url: str) -> None:
+    async def delete_file(self, url: str) -> None:
         """Delete a file from Google Cloud Storage using its public URL"""
         try:
             # Extract the path after the bucket name from the URL

@@ -130,6 +130,13 @@ async def update_shop(shop_id: int, updated_shop: Shop):
             if not any(z.id == updated_shop.zone_id for z in data_structure.zones):
                 raise HTTPException(status_code=400, detail="Zone ID does not exist")
             
+            # If image has changed, delete the old one
+            if shop.img and shop.img != updated_shop.img:
+                try:
+                    await storage.delete_file(shop.img)
+                except Exception as e:
+                    print(f"Error deleting old image: {e}")
+            
             data_structure.shops[i] = updated_shop
             save_data(data_structure)
             return updated_shop
@@ -407,7 +414,7 @@ async def upload_other_business_image(file: UploadFile = File(...)):
 async def delete_storage_file(url: str):
     """Delete a file from storage"""
     try:
-        storage.delete_file(url)
+        await storage.delete_file(url)
         return {"message": "File deleted successfully"}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e)) 
