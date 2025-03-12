@@ -631,21 +631,19 @@
     }
   ],
   "primary_banner": [
-    "https://storage.googleapis.com/mayoristas-paraguay-backend/primary-banners/db71e00b-2354-4491-a027-a3c0e41e3681.jpeg",
-    "https://storage.googleapis.com/mayoristas-paraguay-backend/primary-banners/111a2e18-aabb-429d-880d-1132ed045527.jpeg",
-    "https://storage.googleapis.com/mayoristas-paraguay-backend/primary-banners/399e2708-7ee1-45f0-936f-258096d14fb7.jpeg",
-    "https://storage.googleapis.com/mayoristas-paraguay-backend/primary-banners/3970052f-5708-4434-9ffd-489b6c00b299.jpeg",
-    "https://storage.googleapis.com/mayoristas-paraguay-backend/primary-banners/38144b93-210b-47a9-a980-a3b4ec0b08c2.jpeg",
-    "https://storage.googleapis.com/mayoristas-paraguay-backend/primary-banners/9fe1063d-0560-486f-94ce-a334356213ce.jpeg"
+    "https://storage.googleapis.com/mayoristas-paraguay-backend/primary-banners/da969544-ca03-4edd-9fa9-8e9f55e0eec4.jpeg",
+    "https://storage.googleapis.com/mayoristas-paraguay-backend/primary-banners/c7ee72e0-a39e-48b2-96eb-5d4ecf169674.jpeg",
+    "https://storage.googleapis.com/mayoristas-paraguay-backend/primary-banners/82fe9c9b-a03f-4e20-ac45-ceb44f52d603.jpeg",
+    "https://storage.googleapis.com/mayoristas-paraguay-backend/primary-banners/8784cc9e-1aa3-4b98-ba6e-0a9b8d3d1047.jpeg",
+    "https://storage.googleapis.com/mayoristas-paraguay-backend/primary-banners/4a79a18a-e6a6-45cd-8909-163066a052fa.jpeg"
   ],
   "secondary_banner": [
-    "https://storage.googleapis.com/mayoristas-paraguay-backend/secondary-banners/89827432-f11e-43cf-9a78-918aa8f6a261.jpeg",
-    "https://storage.googleapis.com/mayoristas-paraguay-backend/secondary-banners/2a7dd9f0-6c1b-46f6-b178-f75ea760a8cf.jpeg",
-    "https://storage.googleapis.com/mayoristas-paraguay-backend/secondary-banners/f372634e-5f1a-4ec9-ad34-7fb760b0b543.jpeg",
-    "https://storage.googleapis.com/mayoristas-paraguay-backend/secondary-banners/034d3aaf-f56c-4762-b67e-5cdf6c1f6891.jpeg",
-    "https://storage.googleapis.com/mayoristas-paraguay-backend/secondary-banners/6f4ccae6-dc84-4906-8a50-24ad95180c3e.jpeg",
-    "https://storage.googleapis.com/mayoristas-paraguay-backend/secondary-banners/56a2922c-fa8c-4699-bbd7-d8e0f3b4768c.jpeg"
+    "https://storage.googleapis.com/mayoristas-paraguay-backend/secondary-banners/f9aecc12-8f02-43f1-8819-460a464403e4.jpeg",
+    "https://storage.googleapis.com/mayoristas-paraguay-backend/secondary-banners/e5381887-7928-4f86-b0b7-2c83e705ab1e.jpeg",
+    "https://storage.googleapis.com/mayoristas-paraguay-backend/secondary-banners/57e8bf30-20c8-4e60-a736-6d5a8ef73612.jpeg",
+    "https://storage.googleapis.com/mayoristas-paraguay-backend/secondary-banners/0211b853-1530-47d5-9477-7fbb05974d44.jpeg",
+    "https://storage.googleapis.com/mayoristas-paraguay-backend/secondary-banners/4daf1d80-9859-4fe0-88a6-09fdeebf3324.jpeg"
   ],
-  "recommended_image": "https://storage.googleapis.com/mayoristas-paraguay-backend/recommended/d985b154-b778-4f8b-8ecf-238c15e88f90.jpeg",
-  "other_businesses": "https://storage.googleapis.com/mayoristas-paraguay-backend/other-business/597ff18a-a3c4-4555-ab27-a78c2e68913f.jpeg"
+  "recommended_image": "https://storage.googleapis.com/mayoristas-paraguay-backend/recommended/eea5db73-852e-45cc-ab88-3ab81cd46020.jpeg",
+  "other_businesses": "https://storage.googleapis.com/mayoristas-paraguay-backend/other-business/98a24aed-a324-4512-b71d-8ce52df94a74.jpeg"
 }
