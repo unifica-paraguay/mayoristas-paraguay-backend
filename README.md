@@ -19,7 +19,7 @@ This is a FastAPI backend application that provides data management and visualiz
 
 1. Clone the repository:
 ```bash
-git clone <repository-url>
+git clone git@github.com:unifica-paraguay/mayoristas-paraguay-backend.git
 cd mayoristas-paraguay-backend
 ```
 
@@ -46,6 +46,20 @@ uvicorn app.main:app --reload
 3. Open your web browser and navigate to:
 ```
 http://localhost:8000
+```
+
+## Docker Support
+
+You can also run the application using Docker:
+
+1. Build the Docker image:
+```bash
+docker build -t mayoristas-backend .
+```
+
+2. Run the container:
+```bash
+docker run -p 8000:8000 -v $(pwd)/data.json:/app/data.json mayoristas-backend
 ```
 
 ## API Endpoints
@@ -80,6 +94,10 @@ http://localhost:8000
 - `PUT /api/banners/secondary` - Update secondary banner URLs
 - `PUT /api/images/recommended` - Update recommended image URL
 - `PUT /api/images/other-businesses` - Update other businesses image URL
+
+### Data Access
+
+- `GET /api/data` - Get the complete data.json file
 
 ### Visualization Endpoints
 
@@ -136,4 +154,4 @@ The API includes several validation checks:
 2. Create your feature branch
 3. Commit your changes
 4. Push to the branch
-5. Create a new Pull Request 
+5. Create a new Pull Request
