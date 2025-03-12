@@ -1,6 +1,6 @@
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.staticfiles import StaticFiles
-from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi.responses import HTMLResponse, JSONResponse, FileResponse
 from fastapi.templating import Jinja2Templates
 import plotly.express as px
 import plotly.graph_objects as go
@@ -345,4 +345,8 @@ async def get_working_hours_distribution():
         values=[with_hours, without_hours],
         title="Working Hours Distribution"
     )])
-    return HTMLResponse(fig.to_html()) 
+    return HTMLResponse(fig.to_html())
+
+@app.get("/api/data")
+async def get_data_json():
+    return FileResponse(DATA_FILE, media_type="application/json") 
