@@ -5,7 +5,14 @@
       "name": "La tienda de Patty",
       "owner": "Patricia Martinez",
       "contact_number": "595991431730",
-      "categories": [1, 12, 17, 7, 36, 14],
+      "categories": [
+        1,
+        12,
+        17,
+        7,
+        36,
+        14
+      ],
       "working_hours": {
         "Lunes-viernes": "07:30 - 18:00",
         "Sábado": "07:30 - 13:00"
@@ -23,7 +30,11 @@
       "name": "DIVAS FASHION",
       "owner": "WILMA ELIZABETH GONZALEZ PORTILLO",
       "contact_number": "595976938190",
-      "categories": [12, 8],
+      "categories": [
+        12,
+        8
+      ],
+      "working_hours": null,
       "city": "Ciudad del Este",
       "zone_id": 2,
       "categorie_pages": [
@@ -37,7 +48,10 @@
       "name": "Nanny Shop EAS",
       "owner": "Eliana Da Silva",
       "contact_number": "595986720471",
-      "categories": [22, 28],
+      "categories": [
+        22,
+        28
+      ],
       "working_hours": {
         "Lunes-viernes": "07:00 - 16:00"
       },
@@ -55,7 +69,12 @@
       "name": "Tudo Brazil",
       "owner": "Mary Florencio",
       "contact_number": "595982402913",
-      "categories": [8, 27, 12],
+      "categories": [
+        8,
+        27,
+        12
+      ],
+      "working_hours": null,
       "city": "Capiatá",
       "zone_id": 1,
       "categorie_pages": [
@@ -70,7 +89,14 @@
       "name": "Di Casa - Premium",
       "owner": "Sandra Cañete",
       "contact_number": "595973736453",
-      "categories": [19, 25, 22, 16, 4],
+      "categories": [
+        19,
+        25,
+        22,
+        16,
+        4
+      ],
+      "working_hours": null,
       "city": "Ciudad del Este",
       "zone_id": 2,
       "categorie_pages": [
@@ -84,7 +110,13 @@
       "name": "Amapola",
       "owner": "Ruth Torres",
       "contact_number": "595994214753",
-      "categories": [34, 2, 9, 32],
+      "categories": [
+        34,
+        2,
+        9,
+        32
+      ],
+      "working_hours": null,
       "city": "Ciudad del Este",
       "zone_id": 2,
       "categorie_pages": [
@@ -98,7 +130,13 @@
       "name": "Camila Calzados",
       "owner": "Silvina Britez",
       "contact_number": "595984501871",
-      "categories": [12, 10, 22, 33],
+      "categories": [
+        12,
+        10,
+        22,
+        33
+      ],
+      "working_hours": null,
       "city": "Ciudad del Este",
       "zone_id": 2,
       "categorie_pages": [
@@ -113,7 +151,13 @@
       "name": "Juma Decora",
       "owner": "Bienestar Company S.R.L",
       "contact_number": "595983627955",
-      "categories": [7, 4, 3, 21],
+      "categories": [
+        7,
+        4,
+        3,
+        21
+      ],
+      "working_hours": null,
       "city": "Ciudad del Este",
       "zone_id": 2,
       "categorie_pages": [
@@ -128,7 +172,14 @@
       "name": "A&A tienda",
       "owner": "Mónica Villalba Colman",
       "contact_number": "595986897050",
-      "categories": [12, 33, 22, 27, 26, 23],
+      "categories": [
+        12,
+        33,
+        22,
+        27,
+        26,
+        23
+      ],
       "working_hours": {
         "Lunes-viernes": "08:00 - 17:30"
       },
@@ -145,7 +196,12 @@
       "name": "Mary Novedades",
       "owner": "María Villalba",
       "contact_number": "595993506860",
-      "categories": [8, 12, 10],
+      "categories": [
+        8,
+        12,
+        10
+      ],
+      "working_hours": null,
       "city": "Ciudad del Este",
       "zone_id": 2,
       "categorie_pages": [
@@ -160,7 +216,10 @@
       "name": "MY LOOK MAYORISTA",
       "owner": "Elizabeth Cespedes",
       "contact_number": "595985294970",
-      "categories": [25, 19],
+      "categories": [
+        25,
+        19
+      ],
       "working_hours": {
         "Lunes-viernes": "08:30 - 17:00"
       },
@@ -536,11 +595,13 @@
     },
     {
       "id": 73,
-      "name": "Recomendados"
+      "name": "Recomendados",
+      "icon": null
     },
     {
       "id": 74,
-      "name": "Otros Negocios"
+      "name": "Otros Negocios",
+      "icon": null
     }
   ],
   "zones": [
@@ -570,19 +631,21 @@
     }
   ],
   "primary_banner": [
-    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1N4GbPHfjdfQnhlfH19udVKzFUV9b55x02A&s",
-    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1N4GbPHfjdfQnhlfH19udVKzFUV9b55x02A&s",
-    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1N4GbPHfjdfQnhlfH19udVKzFUV9b55x02A&s",
-    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1N4GbPHfjdfQnhlfH19udVKzFUV9b55x02A&s",
-    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1N4GbPHfjdfQnhlfH19udVKzFUV9b55x02A&s"
+    "https://storage.googleapis.com/mayoristas-paraguay-backend/primary-banners/db71e00b-2354-4491-a027-a3c0e41e3681.jpeg",
+    "https://storage.googleapis.com/mayoristas-paraguay-backend/primary-banners/111a2e18-aabb-429d-880d-1132ed045527.jpeg",
+    "https://storage.googleapis.com/mayoristas-paraguay-backend/primary-banners/399e2708-7ee1-45f0-936f-258096d14fb7.jpeg",
+    "https://storage.googleapis.com/mayoristas-paraguay-backend/primary-banners/3970052f-5708-4434-9ffd-489b6c00b299.jpeg",
+    "https://storage.googleapis.com/mayoristas-paraguay-backend/primary-banners/38144b93-210b-47a9-a980-a3b4ec0b08c2.jpeg",
+    "https://storage.googleapis.com/mayoristas-paraguay-backend/primary-banners/9fe1063d-0560-486f-94ce-a334356213ce.jpeg"
   ],
   "secondary_banner": [
-    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1N4GbPHfjdfQnhlfH19udVKzFUV9b55x02A&s",
-    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1N4GbPHfjdfQnhlfH19udVKzFUV9b55x02A&s",
-    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1N4GbPHfjdfQnhlfH19udVKzFUV9b55x02A&s",
-    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1N4GbPHfjdfQnhlfH19udVKzFUV9b55x02A&s",
-    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1N4GbPHfjdfQnhlfH19udVKzFUV9b55x02A&s"
+    "https://storage.googleapis.com/mayoristas-paraguay-backend/secondary-banners/89827432-f11e-43cf-9a78-918aa8f6a261.jpeg",
+    "https://storage.googleapis.com/mayoristas-paraguay-backend/secondary-banners/2a7dd9f0-6c1b-46f6-b178-f75ea760a8cf.jpeg",
+    "https://storage.googleapis.com/mayoristas-paraguay-backend/secondary-banners/f372634e-5f1a-4ec9-ad34-7fb760b0b543.jpeg",
+    "https://storage.googleapis.com/mayoristas-paraguay-backend/secondary-banners/034d3aaf-f56c-4762-b67e-5cdf6c1f6891.jpeg",
+    "https://storage.googleapis.com/mayoristas-paraguay-backend/secondary-banners/6f4ccae6-dc84-4906-8a50-24ad95180c3e.jpeg",
+    "https://storage.googleapis.com/mayoristas-paraguay-backend/secondary-banners/56a2922c-fa8c-4699-bbd7-d8e0f3b4768c.jpeg"
   ],
-  "recommended_image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1N4GbPHfjdfQnhlfH19udVKzFUV9b55x02A&s",
-  "other_businesses": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1N4GbPHfjdfQnhlfH19udVKzFUV9b55x02A&s"
+  "recommended_image": "https://storage.googleapis.com/mayoristas-paraguay-backend/recommended/d985b154-b778-4f8b-8ecf-238c15e88f90.jpeg",
+  "other_businesses": "https://storage.googleapis.com/mayoristas-paraguay-backend/other-business/597ff18a-a3c4-4555-ab27-a78c2e68913f.jpeg"
 }

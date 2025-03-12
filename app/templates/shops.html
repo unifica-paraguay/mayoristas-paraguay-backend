@@ -116,9 +116,20 @@
                 </div>
                 <div class="grid grid-cols-2 gap-4">
                     <div class="mb-4">
-                        <label class="block text-gray-700 text-sm font-bold mb-2" for="img">Image URL</label>
-                        <input type="url" name="img" required
-                               class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="img">Image</label>
+                        <div class="flex items-start space-x-4">
+                            <div class="flex-1">
+                                <input type="file" accept="image/*" id="shop_image"
+                                       class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                                <input type="hidden" name="img" id="shop_image_url" required>
+                            </div>
+                            <div class="w-32 h-32 bg-gray-100 rounded-lg overflow-hidden">
+                                <img id="shop_image_preview" src="" alt="" class="w-full h-full object-cover hidden">
+                                <div id="shop_image_placeholder" class="w-full h-full flex items-center justify-center text-gray-400">
+                                    <i data-lucide="image" class="w-8 h-8"></i>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="mb-4">
                         <label class="block text-gray-700 text-sm font-bold mb-2" for="categorie_pages">Category Pages</label>
@@ -202,9 +213,20 @@
                 </div>
                 <div class="grid grid-cols-2 gap-4">
                     <div class="mb-4">
-                        <label class="block text-gray-700 text-sm font-bold mb-2" for="edit_img">Image URL</label>
-                        <input type="url" name="img" id="edit_img" required
-                               class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="edit_img">Image</label>
+                        <div class="flex items-start space-x-4">
+                            <div class="flex-1">
+                                <input type="file" accept="image/*" id="edit_shop_image"
+                                       class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                                <input type="hidden" name="img" id="edit_shop_image_url" required>
+                            </div>
+                            <div class="w-32 h-32 bg-gray-100 rounded-lg overflow-hidden">
+                                <img id="edit_shop_image_preview" src="" alt="" class="w-full h-full object-cover hidden">
+                                <div id="edit_shop_image_placeholder" class="w-full h-full flex items-center justify-center text-gray-400">
+                                    <i data-lucide="image" class="w-8 h-8"></i>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="mb-4">
                         <label class="block text-gray-700 text-sm font-bold mb-2" for="edit_categorie_pages">Category Pages</label>
@@ -291,7 +313,7 @@
         document.getElementById('edit_contact_number').value = shop.contact_number;
         document.getElementById('edit_city').value = shop.city;
         document.getElementById('edit_zone_id').value = shop.zone_id;
-        document.getElementById('edit_img').value = shop.img;
+        document.getElementById('edit_shop_image_url').value = shop.img;
 
         // Clear all checkboxes first
         document.querySelectorAll('#editShopForm input[name="categories"]').forEach(cb => cb.checked = false);
@@ -307,6 +329,19 @@
         Array.from(categoryPagesSelect.options).forEach(option => {
             option.selected = shop.categorie_pages.includes(option.value);
         });
+        
+        // Update image preview
+        const preview = document.getElementById('edit_shop_image_preview');
+        const placeholder = document.getElementById('edit_shop_image_placeholder');
+        
+        if (shop.img) {
+            preview.src = shop.img;
+            preview.classList.remove('hidden');
+            placeholder.classList.add('hidden');
+        } else {
+            preview.classList.add('hidden');
+            placeholder.classList.remove('hidden');
+        }
         
         document.getElementById('editShopModal').classList.remove('hidden');
     }
@@ -345,6 +380,66 @@
         .catch(error => {
             showError('Error updating shop. Please check your input and try again.');
         });
+    });
+
+    // Image upload handling for create form
+    document.getElementById('shop_image').addEventListener('change', async function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            const formData = new FormData();
+            formData.append('file', file);
+            
+            try {
+                const response = await fetch('/api/upload/shop-image', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    document.getElementById('shop_image_url').value = data.url;
+                    
+                    // Update preview
+                    const preview = document.getElementById('shop_image_preview');
+                    const placeholder = document.getElementById('shop_image_placeholder');
+                    preview.src = data.url;
+                    preview.classList.remove('hidden');
+                    placeholder.classList.add('hidden');
+                }
+            } catch (error) {
+                console.error('Error uploading file:', error);
+            }
+        }
+    });
+
+    // Image upload handling for edit form
+    document.getElementById('edit_shop_image').addEventListener('change', async function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            const formData = new FormData();
+            formData.append('file', file);
+            
+            try {
+                const response = await fetch('/api/upload/shop-image', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    document.getElementById('edit_shop_image_url').value = data.url;
+                    
+                    // Update preview
+                    const preview = document.getElementById('edit_shop_image_preview');
+                    const placeholder = document.getElementById('edit_shop_image_placeholder');
+                    preview.src = data.url;
+                    preview.classList.remove('hidden');
+                    placeholder.classList.add('hidden');
+                }
+            } catch (error) {
+                console.error('Error uploading file:', error);
+            }
+        }
     });
 </script>
 {% endblock %} 

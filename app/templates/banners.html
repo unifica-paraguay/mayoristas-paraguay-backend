@@ -3,253 +3,344 @@
 {% block title %}Banners Management - Mayoristas Paraguay{% endblock %}
 
 {% block content %}
-<div class="bg-white shadow rounded-lg p-6">
+<div class="container mx-auto px-4 py-8">
+    <!-- Primary Banner Section -->
     <div class="mb-8">
-        <h2 class="text-2xl font-bold text-gray-800 mb-4">Primary Banner</h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <h2 class="text-2xl font-bold mb-4">Primary Banner</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
             {% for url in primary_banner %}
-            <div class="relative">
-                <img src="{{ url }}" alt="Primary banner {{ loop.index }}" class="w-full h-48 object-cover rounded">
-                <button onclick="removePrimaryBanner({{ loop.index0 }})"
-                        class="absolute top-2 right-2 bg-red-500 text-white rounded-full p-2 hover:bg-red-700">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                    </svg>
+            <div class="relative group">
+                <img src="{{ url }}" alt="Primary Banner" class="w-full h-48 object-cover rounded-lg">
+                <button onclick="removePrimaryBanner('{{ url }}')"
+                        class="absolute top-2 right-2 bg-red-500 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+                    <i data-lucide="trash-2" class="w-4 h-4"></i>
                 </button>
             </div>
             {% endfor %}
         </div>
-        <div class="mt-4">
-            <form id="primaryBannerForm" class="flex gap-4">
-                <input type="url" name="url" placeholder="Enter image URL" required
-                       class="flex-1 shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                <button type="submit"
-                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                    Add Image
-                </button>
-            </form>
-        </div>
+        <form id="uploadPrimaryBannerForm" class="flex gap-4 items-center">
+            <input type="file" accept="image/*" multiple
+                   class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+            <button type="submit"
+                    class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors">
+                Upload
+            </button>
+        </form>
     </div>
 
+    <!-- Secondary Banner Section -->
     <div class="mb-8">
-        <h2 class="text-2xl font-bold text-gray-800 mb-4">Secondary Banner</h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <h2 class="text-2xl font-bold mb-4">Secondary Banner</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
             {% for url in secondary_banner %}
-            <div class="relative">
-                <img src="{{ url }}" alt="Secondary banner {{ loop.index }}" class="w-full h-48 object-cover rounded">
-                <button onclick="removeSecondaryBanner({{ loop.index0 }})"
-                        class="absolute top-2 right-2 bg-red-500 text-white rounded-full p-2 hover:bg-red-700">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                    </svg>
+            <div class="relative group">
+                <img src="{{ url }}" alt="Secondary Banner" class="w-full h-48 object-cover rounded-lg">
+                <button onclick="removeSecondaryBanner('{{ url }}')"
+                        class="absolute top-2 right-2 bg-red-500 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+                    <i data-lucide="trash-2" class="w-4 h-4"></i>
                 </button>
             </div>
             {% endfor %}
         </div>
-        <div class="mt-4">
-            <form id="secondaryBannerForm" class="flex gap-4">
-                <input type="url" name="url" placeholder="Enter image URL" required
-                       class="flex-1 shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                <button type="submit"
-                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                    Add Image
-                </button>
-            </form>
-        </div>
+        <form id="uploadSecondaryBannerForm" class="flex gap-4 items-center">
+            <input type="file" accept="image/*" multiple
+                   class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+            <button type="submit"
+                    class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors">
+                Upload
+            </button>
+        </form>
     </div>
 
+    <!-- Recommended Image Section -->
     <div class="mb-8">
-        <h2 class="text-2xl font-bold text-gray-800 mb-4">Recommended Image</h2>
-        <div class="relative inline-block">
-            {% if recommended_image %}
-            <img src="{{ recommended_image }}" alt="Recommended image" class="w-64 h-48 object-cover rounded">
-            <button onclick="updateRecommendedImage('')"
-                    class="absolute top-2 right-2 bg-red-500 text-white rounded-full p-2 hover:bg-red-700">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                </svg>
+        <h2 class="text-2xl font-bold mb-4">Recommended Image</h2>
+        {% if recommended_image %}
+        <div class="relative group inline-block">
+            <img src="{{ recommended_image }}" alt="Recommended" class="w-64 h-64 object-cover rounded-lg">
+            <button onclick="removeRecommendedImage('{{ recommended_image }}')"
+                    class="absolute top-2 right-2 bg-red-500 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+                <i data-lucide="trash-2" class="w-4 h-4"></i>
             </button>
-            {% else %}
-            <div class="w-64 h-48 bg-gray-200 rounded flex items-center justify-center">
-                <span class="text-gray-500">No image set</span>
-            </div>
-            {% endif %}
         </div>
-        <div class="mt-4">
-            <form id="recommendedImageForm" class="flex gap-4">
-                <input type="url" name="url" placeholder="Enter image URL" required
-                       class="flex-1 shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                <button type="submit"
-                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                    Update Image
-                </button>
-            </form>
-        </div>
+        {% endif %}
+        <form id="uploadRecommendedForm" class="flex gap-4 items-center mt-4">
+            <input type="file" accept="image/*"
+                   class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+            <button type="submit"
+                    class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors">
+                Upload
+            </button>
+        </form>
     </div>
 
+    <!-- Other Businesses Image Section -->
     <div class="mb-8">
-        <h2 class="text-2xl font-bold text-gray-800 mb-4">Other Businesses Image</h2>
-        <div class="relative inline-block">
-            {% if other_businesses %}
-            <img src="{{ other_businesses }}" alt="Other businesses image" class="w-64 h-48 object-cover rounded">
-            <button onclick="updateOtherBusinessesImage('')"
-                    class="absolute top-2 right-2 bg-red-500 text-white rounded-full p-2 hover:bg-red-700">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                </svg>
+        <h2 class="text-2xl font-bold mb-4">Other Businesses Image</h2>
+        {% if other_businesses %}
+        <div class="relative group inline-block">
+            <img src="{{ other_businesses }}" alt="Other Businesses" class="w-64 h-64 object-cover rounded-lg">
+            <button onclick="removeOtherBusinessImage('{{ other_businesses }}')"
+                    class="absolute top-2 right-2 bg-red-500 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+                <i data-lucide="trash-2" class="w-4 h-4"></i>
             </button>
-            {% else %}
-            <div class="w-64 h-48 bg-gray-200 rounded flex items-center justify-center">
-                <span class="text-gray-500">No image set</span>
-            </div>
-            {% endif %}
         </div>
-        <div class="mt-4">
-            <form id="otherBusinessesForm" class="flex gap-4">
-                <input type="url" name="url" placeholder="Enter image URL" required
-                       class="flex-1 shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                <button type="submit"
-                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                    Update Image
-                </button>
-            </form>
-        </div>
+        {% endif %}
+        <form id="uploadOtherBusinessForm" class="flex gap-4 items-center mt-4">
+            <input type="file" accept="image/*"
+                   class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+            <button type="submit"
+                    class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors">
+                Upload
+            </button>
+        </form>
     </div>
 </div>
 
 <script>
-    // Primary Banner
-    document.getElementById('primaryBannerForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        const url = this.querySelector('[name="url"]').value;
-        const currentUrls = {{ primary_banner | tojson | safe }};
-        currentUrls.push(url);
-        
-        fetch('/api/banners/primary', {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(currentUrls)
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.detail) {
-                showError(data.detail);
-            } else {
-                window.location.reload();
-            }
-        })
-        .catch(error => showError('Error updating primary banner'));
-    });
+    // Initialize Lucide icons
+    lucide.createIcons();
 
-    function removePrimaryBanner(index) {
-        const currentUrls = {{ primary_banner | tojson | safe }};
-        currentUrls.splice(index, 1);
+    // Primary Banner
+    document.getElementById('uploadPrimaryBannerForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const files = e.target.querySelector('input[type="file"]').files;
+        const currentUrls = JSON.parse('{{ primary_banner|tojson|safe }}');
+        const newUrls = [...currentUrls];  // Start with existing URLs
         
-        fetch('/api/banners/primary', {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(currentUrls)
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.detail) {
-                showError(data.detail);
-            } else {
-                window.location.reload();
+        for (const file of files) {
+            const formData = new FormData();
+            formData.append('file', file);
+            
+            try {
+                const response = await fetch('/api/upload/primary-banner', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    newUrls.push(data.url);  // Add new URL to the list
+                }
+            } catch (error) {
+                console.error('Error uploading file:', error);
             }
-        })
-        .catch(error => showError('Error updating primary banner'));
-    }
+        }
+        
+        if (newUrls.length > currentUrls.length) {  // Only update if we added new URLs
+            await fetch('/api/banners/primary', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(newUrls)
+            });
+            
+            window.location.reload();
+        }
+    });
 
     // Secondary Banner
-    document.getElementById('secondaryBannerForm').addEventListener('submit', function(e) {
+    document.getElementById('uploadSecondaryBannerForm').addEventListener('submit', async function(e) {
         e.preventDefault();
-        const url = this.querySelector('[name="url"]').value;
-        const currentUrls = {{ secondary_banner | tojson | safe }};
-        currentUrls.push(url);
+        const files = e.target.querySelector('input[type="file"]').files;
+        const currentUrls = JSON.parse('{{ secondary_banner|tojson|safe }}');
+        const newUrls = [...currentUrls];  // Start with existing URLs
         
-        fetch('/api/banners/secondary', {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(currentUrls)
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.detail) {
-                showError(data.detail);
-            } else {
-                window.location.reload();
+        for (const file of files) {
+            const formData = new FormData();
+            formData.append('file', file);
+            
+            try {
+                const response = await fetch('/api/upload/secondary-banner', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    newUrls.push(data.url);  // Add new URL to the list
+                }
+            } catch (error) {
+                console.error('Error uploading file:', error);
             }
-        })
-        .catch(error => showError('Error updating secondary banner'));
+        }
+        
+        if (newUrls.length > currentUrls.length) {  // Only update if we added new URLs
+            await fetch('/api/banners/secondary', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(newUrls)
+            });
+            
+            window.location.reload();
+        }
     });
-
-    function removeSecondaryBanner(index) {
-        const currentUrls = {{ secondary_banner | tojson | safe }};
-        currentUrls.splice(index, 1);
-        
-        fetch('/api/banners/secondary', {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(currentUrls)
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.detail) {
-                showError(data.detail);
-            } else {
-                window.location.reload();
-            }
-        })
-        .catch(error => showError('Error updating secondary banner'));
-    }
 
     // Recommended Image
-    document.getElementById('recommendedImageForm').addEventListener('submit', function(e) {
+    document.getElementById('uploadRecommendedForm').addEventListener('submit', async function(e) {
         e.preventDefault();
-        const url = this.querySelector('[name="url"]').value;
-        updateRecommendedImage(url);
+        const file = e.target.querySelector('input[type="file"]').files[0];
+        const formData = new FormData();
+        formData.append('file', file);
+        
+        try {
+            const response = await fetch('/api/upload/recommended', {
+                method: 'POST',
+                body: formData
+            });
+            
+            if (response.ok) {
+                const data = await response.json();
+                console.log('URL recibida del upload:', data.url);
+                const payload = { url: data.url };
+                console.log('Payload a enviar:', payload);
+                
+                const updateResponse = await fetch('/api/images/recommended', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                });
+                
+                if (!updateResponse.ok) {
+                    const errorData = await updateResponse.json();
+                    console.error('Error response:', errorData);
+                } else {
+                    window.location.reload();
+                }
+            }
+        } catch (error) {
+            console.error('Error completo:', error);
+        }
     });
 
-    function updateRecommendedImage(url) {
-        fetch('/api/images/recommended', {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(url)
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.detail) {
-                showError(data.detail);
-            } else {
+    // Other Business Image
+    document.getElementById('uploadOtherBusinessForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const file = e.target.querySelector('input[type="file"]').files[0];
+        const formData = new FormData();
+        formData.append('file', file);
+        
+        try {
+            const response = await fetch('/api/upload/other-business', {
+                method: 'POST',
+                body: formData
+            });
+            
+            if (response.ok) {
+                const data = await response.json();
+                await fetch('/api/images/other-businesses', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ url: data.url })  // Enviando objeto con propiedad url
+                });
+                
                 window.location.reload();
             }
-        })
-        .catch(error => showError('Error updating recommended image'));
+        } catch (error) {
+            console.error('Error uploading file:', error);
+        }
+    });
+
+    // Remove functions
+    async function removePrimaryBanner(url) {
+        try {
+            const currentUrls = JSON.parse('{{ primary_banner|tojson|safe }}');
+            const newUrls = currentUrls.filter(u => u !== url);
+            
+            // First delete from storage
+            await fetch('/api/storage/delete?url=' + encodeURIComponent(url), {
+                method: 'DELETE'
+            });
+            
+            // Then update the banner list
+            await fetch('/api/banners/primary', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(newUrls)
+            });
+            
+            window.location.reload();
+        } catch (error) {
+            console.error('Error removing primary banner:', error);
+        }
     }
 
-    // Other Businesses Image
-    document.getElementById('otherBusinessesForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        const url = this.querySelector('[name="url"]').value;
-        updateOtherBusinessesImage(url);
-    });
+    async function removeSecondaryBanner(url) {
+        try {
+            const currentUrls = JSON.parse('{{ secondary_banner|tojson|safe }}');
+            const newUrls = currentUrls.filter(u => u !== url);
+            
+            // First delete from storage
+            await fetch('/api/storage/delete?url=' + encodeURIComponent(url), {
+                method: 'DELETE'
+            });
+            
+            // Then update the banner list
+            await fetch('/api/banners/secondary', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(newUrls)
+            });
+            
+            window.location.reload();
+        } catch (error) {
+            console.error('Error removing secondary banner:', error);
+        }
+    }
 
-    function updateOtherBusinessesImage(url) {
-        fetch('/api/images/other-businesses', {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(url)
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.detail) {
-                showError(data.detail);
-            } else {
-                window.location.reload();
-            }
-        })
-        .catch(error => showError('Error updating other businesses image'));
+    async function removeRecommendedImage(url) {
+        try {
+            // First delete from storage
+            await fetch('/api/storage/delete?url=' + encodeURIComponent(url), {
+                method: 'DELETE'
+            });
+            
+            // Then update the recommended image
+            await fetch('/api/images/recommended', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ url: "" })  // Enviando objeto con propiedad url vacía
+            });
+            
+            window.location.reload();
+        } catch (error) {
+            console.error('Error removing recommended image:', error);
+        }
+    }
+
+    async function removeOtherBusinessImage(url) {
+        try {
+            // First delete from storage
+            await fetch('/api/storage/delete?url=' + encodeURIComponent(url), {
+                method: 'DELETE'
+            });
+            
+            // Then update the other business image
+            await fetch('/api/images/other-businesses', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ url: "" })  // Enviando objeto con propiedad url vacía
+            });
+            
+            window.location.reload();
+        } catch (error) {
+            console.error('Error removing other business image:', error);
+        }
     }
 </script>
 {% endblock %} 

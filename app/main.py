@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException, Request
+from fastapi import FastAPI, HTTPException, Request, UploadFile, File
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse, JSONResponse, FileResponse
 from fastapi.templating import Jinja2Templates
@@ -6,11 +6,20 @@ import plotly.express as px
 import plotly.graph_objects as go
 import pandas as pd
 from .models.models import DataStructure, Shop, Category, Zone
+from pydantic import BaseModel
 import json
 from typing import List, Optional
 import os
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
+
+# Import storage after loading environment variables
+from .utils.storage import CloudStorage
 
 app = FastAPI(title="Mayoristas Paraguay Backend")
+storage = CloudStorage()
 
 # Mount static files
 app.mount("/static", StaticFiles(directory="app/static"), name="static")
@@ -19,6 +28,10 @@ app.mount("/static", StaticFiles(directory="app/static"), name="static")
 templates = Jinja2Templates(directory="app/templates")
 
 DATA_FILE = "data.json"
+
+# Modelos para las solicitudes
+class ImageUrl(BaseModel):
+    url: str = ""
 
 def load_data() -> DataStructure:
     with open(DATA_FILE, "r", encoding="utf-8") as f:
@@ -226,25 +239,32 @@ async def delete_zone(zone_id: int):
 # Banner Management
 @app.put("/api/banners/primary")
 async def update_primary_banner(urls: List[str]):
+    # Replace existing URLs with new ones
     data_structure.primary_banner = urls
     save_data(data_structure)
     return {"message": "Primary banner updated successfully"}
 
 @app.put("/api/banners/secondary")
 async def update_secondary_banner(urls: List[str]):
+    # Replace existing URLs with new ones
     data_structure.secondary_banner = urls
     save_data(data_structure)
     return {"message": "Secondary banner updated successfully"}
 
 @app.put("/api/images/recommended")
-async def update_recommended_image(url: str):
-    data_structure.recommended_image = url
+async def update_recommended_image(image: ImageUrl):
+    """Update the recommended image URL"""
+    print("Datos recibidos:", image)
+    print("URL recibida:", image.url)
+    # Store the new URL
+    data_structure.recommended_image = image.url
     save_data(data_structure)
     return {"message": "Recommended image updated successfully"}
 
 @app.put("/api/images/other-businesses")
-async def update_other_businesses_image(url: str):
-    data_structure.other_businesses = url
+async def update_other_businesses_image(image: ImageUrl):
+    # Store the new URL
+    data_structure.other_businesses = image.url
     save_data(data_structure)
     return {"message": "Other businesses image updated successfully"}
 
@@ -349,4 +369,45 @@ async def get_working_hours_distribution():
 
 @app.get("/api/data")
 async def get_data_json():
-    return FileResponse(DATA_FILE, media_type="application/json") 
+    return FileResponse(DATA_FILE, media_type="application/json")
+
+# Image Upload Endpoints
+@app.post("/api/upload/shop-image")
+async def upload_shop_image(file: UploadFile = File(...)):
+    """Upload a shop image and return its URL"""
+    url = await storage.upload_file(file, folder="shops")
+    return {"url": url}
+
+@app.post("/api/upload/primary-banner")
+async def upload_primary_banner(file: UploadFile = File(...)):
+    """Upload a primary banner image and return its URL"""
+    url = await storage.upload_file(file, folder="primary-banners")
+    return {"url": url}
+
+@app.post("/api/upload/secondary-banner")
+async def upload_secondary_banner(file: UploadFile = File(...)):
+    """Upload a secondary banner image and return its URL"""
+    url = await storage.upload_file(file, folder="secondary-banners")
+    return {"url": url}
+
+@app.post("/api/upload/recommended")
+async def upload_recommended_image(file: UploadFile = File(...)):
+    """Upload a recommended image and return its URL"""
+    url = await storage.upload_file(file, folder="recommended")
+    return {"url": url}
+
+@app.post("/api/upload/other-business")
+async def upload_other_business_image(file: UploadFile = File(...)):
+    """Upload an other business image and return its URL"""
+    url = await storage.upload_file(file, folder="other-business")
+    return {"url": url}
+
+# Storage Management
+@app.delete("/api/storage/delete")
+async def delete_storage_file(url: str):
+    """Delete a file from storage"""
+    try:
+        storage.delete_file(url)
+        return {"message": "File deleted successfully"}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e)) 
