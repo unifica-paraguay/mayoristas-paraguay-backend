@@ -1,0 +1,185 @@
+{
+  "shops": [
+    {
+      "id": 1,
+      "name": "La tienda de Patty",
+      "owner": "Patricia Martinez",
+      "contact_number": "595991431730",
+      "categories": [1, 12, 17, 7, 36, 14],
+      "working_hours": {
+        "Lunes-viernes": "07:30 - 18:00",
+        "Sábado": "07:30 - 13:00"
+      },
+      "city": "Ciudad del Este",
+      "zone_id": 2,
+      "categorie_pages": ["recommended", "see_all"],
+      "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1N4GbPHfjdfQnhlfH19udVKzFUV9b55x02A&s"
+    },
+    {
+      "id": 2,
+      "name": "DIVAS FASHION",
+      "owner": "WILMA ELIZABETH GONZALEZ PORTILLO",
+      "contact_number": "595976938190",
+      "categories": [12, 8],
+      "city": "Ciudad del Este",
+      "zone_id": 2,
+      "categorie_pages": ["free_shipping", "see_all"],
+      "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1N4GbPHfjdfQnhlfH19udVKzFUV9b55x02A&s"
+    },
+    {
+      "id": 3,
+      "name": "Nanny Shop EAS",
+      "owner": "Eliana Da Silva",
+      "contact_number": "595986720471",
+      "categories": [22, 28],
+      "working_hours": {
+        "Lunes-viernes": "07:00 - 16:00"
+      },
+      "city": "Ciudad del Este",
+      "zone_id": 2,
+      "categorie_pages": ["other_business", "free_shipping", "see_all"],
+      "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1N4GbPHfjdfQnhlfH19udVKzFUV9b55x02A&s"
+    },
+    {
+      "id": 4,
+      "name": "Tudo Brazil",
+      "owner": "Mary Florencio",
+      "contact_number": "595982402913",
+      "categories": [8, 27, 12],
+      "city": "Capiatá",
+      "zone_id": 1,
+      "categorie_pages": ["other_business", "free_shipping", "see_all"],
+      "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1N4GbPHfjdfQnhlfH19udVKzFUV9b55x02A&s"
+    },
+    {
+      "id": 5,
+      "name": "Di Casa - Premium",
+      "owner": "Sandra Cañete",
+      "contact_number": "595973736453",
+      "categories": [19, 25, 22, 16, 4],
+      "city": "Ciudad del Este",
+      "zone_id": 2,
+      "categorie_pages": ["recommended", "see_all"],
+      "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1N4GbPHfjdfQnhlfH19udVKzFUV9b55x02A&s"
+    }
+  ],
+  "categories": [
+    {
+      "id": 1,
+      "name": "Accesorios",
+      "icon": "LucideShoppingCart"
+    },
+    {
+      "id": 2,
+      "name": "Acero Quirúrgico",
+      "icon": "LucideDiamond"
+    },
+    {
+      "id": 4,
+      "name": "Artículos De Cama",
+      "icon": "LucideBed"
+    },
+    {
+      "id": 7,
+      "name": "Artículos Para El Hogar",
+      "icon": "LucideHome"
+    },
+    {
+      "id": 8,
+      "name": "Artículos Varios",
+      "icon": "LucidePackage"
+    },
+    {
+      "id": 12,
+      "name": "Calzados",
+      "icon": "LucideShoe"
+    },
+    {
+      "id": 14,
+      "name": "Calzados Escolares",
+      "icon": "LucideSchool"
+    },
+    {
+      "id": 16,
+      "name": "Calzados Premium",
+      "icon": "LucideDiamond"
+    },
+    {
+      "id": 17,
+      "name": "Calzados Varios",
+      "icon": "LucideTags"
+    },
+    {
+      "id": 19,
+      "name": "Casual",
+      "icon": "LucideShirt"
+    },
+    {
+      "id": 22,
+      "name": "Cosméticos",
+      "icon": "LucideSparkles"
+    },
+    {
+      "id": 25,
+      "name": "Deportivos",
+      "icon": "LucideDumbbell"
+    },
+    {
+      "id": 27,
+      "name": "Electrónica",
+      "icon": "LucideCpu"
+    },
+    {
+      "id": 28,
+      "name": "Gigot",
+      "icon": "LucideWand"
+    },
+    {
+      "id": 36,
+      "name": "Kalua",
+      "icon": "LucideWine"
+    }
+  ],
+  "zones": [
+    {
+      "id": 1,
+      "name": "Capiatá"
+    },
+    {
+      "id": 2,
+      "name": "Ciudad del Este"
+    },
+    {
+      "id": 3,
+      "name": "J.Augusto Saldivar"
+    },
+    {
+      "id": 4,
+      "name": "Luque"
+    },
+    {
+      "id": 5,
+      "name": "San Lorenzo"
+    },
+    {
+      "id": 6,
+      "name": "Villa Elisa"
+    }
+  ],
+  "primary_banner": [
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1N4GbPHfjdfQnhlfH19udVKzFUV9b55x02A&s",
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1N4GbPHfjdfQnhlfH19udVKzFUV9b55x02A&s",
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1N4GbPHfjdfQnhlfH19udVKzFUV9b55x02A&s",
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1N4GbPHfjdfQnhlfH19udVKzFUV9b55x02A&s",
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1N4GbPHfjdfQnhlfH19udVKzFUV9b55x02A&s"
+  ],
+  "secondary_banner": [
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1N4GbPHfjdfQnhlfH19udVKzFUV9b55x02A&s",
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1N4GbPHfjdfQnhlfH19udVKzFUV9b55x02A&s",
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1N4GbPHfjdfQnhlfH19udVKzFUV9b55x02A&s",
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1N4GbPHfjdfQnhlfH19udVKzFUV9b55x02A&s",
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1N4GbPHfjdfQnhlfH19udVKzFUV9b55x02A&s"
+  ],
+  "recommended_image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1N4GbPHfjdfQnhlfH19udVKzFUV9b55x02A&s",
+  "other_businesses": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1N4GbPHfjdfQnhlfH19udVKzFUV9b55x02A&s"
+} 
