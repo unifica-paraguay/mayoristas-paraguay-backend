@@ -111,11 +111,7 @@
       "owner": "William Eckerleben",
       "contact_number": "595982844853",
       "categories": [
-        1,
-        2,
-        8,
-        14,
-        17
+        0
       ],
       "working_hours": null,
       "city": "Asunción",
@@ -203,6 +199,11 @@
       "id": 36,
       "name": "Kalua",
       "icon": "LucideWine"
+    },
+    {
+      "id": 0,
+      "name": "Testing Category",
+      "icon": "LucideAlbum"
     }
   ],
   "zones": [
@@ -240,14 +241,16 @@
     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1N4GbPHfjdfQnhlfH19udVKzFUV9b55x02A&s",
     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1N4GbPHfjdfQnhlfH19udVKzFUV9b55x02A&s",
     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1N4GbPHfjdfQnhlfH19udVKzFUV9b55x02A&s",
-    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1N4GbPHfjdfQnhlfH19udVKzFUV9b55x02A&s"
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1N4GbPHfjdfQnhlfH19udVKzFUV9b55x02A&s",
+    "https://gratisography.com/wp-content/uploads/2024/11/gratisography-augmented-reality-800x525.jpg"
   ],
   "secondary_banner": [
     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1N4GbPHfjdfQnhlfH19udVKzFUV9b55x02A&s",
     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1N4GbPHfjdfQnhlfH19udVKzFUV9b55x02A&s",
     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1N4GbPHfjdfQnhlfH19udVKzFUV9b55x02A&s",
     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1N4GbPHfjdfQnhlfH19udVKzFUV9b55x02A&s",
-    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1N4GbPHfjdfQnhlfH19udVKzFUV9b55x02A&s"
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1N4GbPHfjdfQnhlfH19udVKzFUV9b55x02A&s",
+    "https://letsenhance.io/static/73136da51c245e80edc6ccfe44888a99/1015f/MainBefore.jpg"
   ],
   "recommended_image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1N4GbPHfjdfQnhlfH19udVKzFUV9b55x02A&s",
   "other_businesses": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1N4GbPHfjdfQnhlfH19udVKzFUV9b55x02A&s"
