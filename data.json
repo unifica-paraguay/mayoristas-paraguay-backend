@@ -1,0 +1,588 @@
+{
+  "shops": [
+    {
+      "id": 1,
+      "name": "La tienda de Patty",
+      "owner": "Patricia Martinez",
+      "contact_number": "595991431730",
+      "categories": [1, 12, 17, 7, 36, 14],
+      "working_hours": {
+        "Lunes-viernes": "07:30 - 18:00",
+        "Sábado": "07:30 - 13:00"
+      },
+      "city": "Ciudad del Este",
+      "zone_id": 2,
+      "categorie_pages": [
+        "recommended",
+        "see_all"
+      ],
+      "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1N4GbPHfjdfQnhlfH19udVKzFUV9b55x02A&s"
+    },
+    {
+      "id": 2,
+      "name": "DIVAS FASHION",
+      "owner": "WILMA ELIZABETH GONZALEZ PORTILLO",
+      "contact_number": "595976938190",
+      "categories": [12, 8],
+      "city": "Ciudad del Este",
+      "zone_id": 2,
+      "categorie_pages": [
+        "free_shipping",
+        "see_all"
+      ],
+      "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1N4GbPHfjdfQnhlfH19udVKzFUV9b55x02A&s"
+    },
+    {
+      "id": 3,
+      "name": "Nanny Shop EAS",
+      "owner": "Eliana Da Silva",
+      "contact_number": "595986720471",
+      "categories": [22, 28],
+      "working_hours": {
+        "Lunes-viernes": "07:00 - 16:00"
+      },
+      "city": "Ciudad del Este",
+      "zone_id": 2,
+      "categorie_pages": [
+        "other_business",
+        "free_shipping",
+        "see_all"
+      ],
+      "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1N4GbPHfjdfQnhlfH19udVKzFUV9b55x02A&s"
+    },
+    {
+      "id": 4,
+      "name": "Tudo Brazil",
+      "owner": "Mary Florencio",
+      "contact_number": "595982402913",
+      "categories": [8, 27, 12],
+      "city": "Capiatá",
+      "zone_id": 1,
+      "categorie_pages": [
+        "other_business",
+        "free_shipping",
+        "see_all"
+      ],
+      "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1N4GbPHfjdfQnhlfH19udVKzFUV9b55x02A&s"
+    },
+    {
+      "id": 5,
+      "name": "Di Casa - Premium",
+      "owner": "Sandra Cañete",
+      "contact_number": "595973736453",
+      "categories": [19, 25, 22, 16, 4],
+      "city": "Ciudad del Este",
+      "zone_id": 2,
+      "categorie_pages": [
+        "recommended",
+        "see_all"
+      ],
+      "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1N4GbPHfjdfQnhlfH19udVKzFUV9b55x02A&s"
+    },
+    {
+      "id": 6,
+      "name": "Amapola",
+      "owner": "Ruth Torres",
+      "contact_number": "595994214753",
+      "categories": [34, 2, 9, 32],
+      "city": "Ciudad del Este",
+      "zone_id": 2,
+      "categorie_pages": [
+        "free_shipping",
+        "see_all"
+      ],
+      "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1N4GbPHfjdfQnhlfH19udVKzFUV9b55x02A&s"
+    },
+    {
+      "id": 7,
+      "name": "Camila Calzados",
+      "owner": "Silvina Britez",
+      "contact_number": "595984501871",
+      "categories": [12, 10, 22, 33],
+      "city": "Ciudad del Este",
+      "zone_id": 2,
+      "categorie_pages": [
+        "recommended",
+        "other_business",
+        "see_all"
+      ],
+      "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1N4GbPHfjdfQnhlfH19udVKzFUV9b55x02A&s"
+    },
+    {
+      "id": 8,
+      "name": "Juma Decora",
+      "owner": "Bienestar Company S.R.L",
+      "contact_number": "595983627955",
+      "categories": [7, 4, 3, 21],
+      "city": "Ciudad del Este",
+      "zone_id": 2,
+      "categorie_pages": [
+        "recommended",
+        "free_shipping",
+        "see_all"
+      ],
+      "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1N4GbPHfjdfQnhlfH19udVKzFUV9b55x02A&s"
+    },
+    {
+      "id": 9,
+      "name": "A&A tienda",
+      "owner": "Mónica Villalba Colman",
+      "contact_number": "595986897050",
+      "categories": [12, 33, 22, 27, 26, 23],
+      "working_hours": {
+        "Lunes-viernes": "08:00 - 17:30"
+      },
+      "city": "Ciudad del Este",
+      "zone_id": 2,
+      "categorie_pages": [
+        "other_business",
+        "see_all"
+      ],
+      "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1N4GbPHfjdfQnhlfH19udVKzFUV9b55x02A&s"
+    },
+    {
+      "id": 10,
+      "name": "Mary Novedades",
+      "owner": "María Villalba",
+      "contact_number": "595993506860",
+      "categories": [8, 12, 10],
+      "city": "Ciudad del Este",
+      "zone_id": 2,
+      "categorie_pages": [
+        "recommended",
+        "free_shipping",
+        "see_all"
+      ],
+      "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1N4GbPHfjdfQnhlfH19udVKzFUV9b55x02A&s"
+    },
+    {
+      "id": 11,
+      "name": "MY LOOK MAYORISTA",
+      "owner": "Elizabeth Cespedes",
+      "contact_number": "595985294970",
+      "categories": [25, 19],
+      "working_hours": {
+        "Lunes-viernes": "08:30 - 17:00"
+      },
+      "city": "Villa Elisa",
+      "zone_id": 6,
+      "categorie_pages": [
+        "other_business",
+        "see_all"
+      ],
+      "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1N4GbPHfjdfQnhlfH19udVKzFUV9b55x02A&s"
+    }
+  ],
+  "categories": [
+    {
+      "id": 1,
+      "name": "Accesorios",
+      "icon": "LucideShoppingCart"
+    },
+    {
+      "id": 2,
+      "name": "Acero Quirúrgico",
+      "icon": "LucideDiamond"
+    },
+    {
+      "id": 3,
+      "name": "Alfombras",
+      "icon": "LucideLayers"
+    },
+    {
+      "id": 4,
+      "name": "Artículos De Cama",
+      "icon": "LucideBed"
+    },
+    {
+      "id": 5,
+      "name": "Artículos Electrónicos",
+      "icon": "LucideSmartphone"
+    },
+    {
+      "id": 6,
+      "name": "Artículos En General",
+      "icon": "LucideBox"
+    },
+    {
+      "id": 7,
+      "name": "Artículos Para El Hogar",
+      "icon": "LucideHome"
+    },
+    {
+      "id": 8,
+      "name": "Artículos Varios",
+      "icon": "LucidePackage"
+    },
+    {
+      "id": 9,
+      "name": "Bañado En Oro De 18K y 24K",
+      "icon": "LucideCoin"
+    },
+    {
+      "id": 10,
+      "name": "Bazar",
+      "icon": "LucideStore"
+    },
+    {
+      "id": 11,
+      "name": "Bazar Mayorista",
+      "icon": "LucideWarehouse"
+    },
+    {
+      "id": 12,
+      "name": "Calzados",
+      "icon": "LucideShoe"
+    },
+    {
+      "id": 13,
+      "name": "Calzados Adultos",
+      "icon": "LucideDiamond"
+    },
+    {
+      "id": 14,
+      "name": "Calzados Escolares",
+      "icon": "LucideSchool"
+    },
+    {
+      "id": 15,
+      "name": "Calzados Niños",
+      "icon": "LucideFootprints"
+    },
+    {
+      "id": 16,
+      "name": "Calzados Premium",
+      "icon": "LucideDiamond"
+    },
+    {
+      "id": 17,
+      "name": "Calzados Varios",
+      "icon": "LucideTags"
+    },
+    {
+      "id": 18,
+      "name": "Carteras",
+      "icon": "LucideBriefcase"
+    },
+    {
+      "id": 19,
+      "name": "Casual",
+      "icon": "LucideShirt"
+    },
+    {
+      "id": 20,
+      "name": "Cocina",
+      "icon": "LucideChefHat"
+    },
+    {
+      "id": 21,
+      "name": "Cortinas",
+      "icon": "LucideWindow"
+    },
+    {
+      "id": 22,
+      "name": "Cosméticos",
+      "icon": "LucideSparkles"
+    },
+    {
+      "id": 23,
+      "name": "Cotillón",
+      "icon": "LucideGift"
+    },
+    {
+      "id": 24,
+      "name": "Cremas",
+      "icon": "LucideDroplet"
+    },
+    {
+      "id": 25,
+      "name": "Deportivos",
+      "icon": "LucideDumbbell"
+    },
+    {
+      "id": 26,
+      "name": "Electrodomésticos",
+      "icon": "LucidePlug"
+    },
+    {
+      "id": 27,
+      "name": "Electrónica",
+      "icon": "LucideCpu"
+    },
+    {
+      "id": 28,
+      "name": "Gigot",
+      "icon": "LucideWand"
+    },
+    {
+      "id": 29,
+      "name": "Grabados En Láser",
+      "icon": "LucidePenTool"
+    },
+    {
+      "id": 30,
+      "name": "Hogar",
+      "icon": "LucideHome"
+    },
+    {
+      "id": 31,
+      "name": "Hobbies",
+      "icon": "LucidePuzzle"
+    },
+    {
+      "id": 32,
+      "name": "Insumos Para Joyería",
+      "icon": "LucideGem"
+    },
+    {
+      "id": 33,
+      "name": "Jeans",
+      "icon": "LucideTShirt"
+    },
+    {
+      "id": 34,
+      "name": "Joyas",
+      "icon": "LucideGem"
+    },
+    {
+      "id": 35,
+      "name": "Bijouterie",
+      "icon": "LucideCircleDot"
+    },
+    {
+      "id": 36,
+      "name": "Kalua",
+      "icon": "LucideWine"
+    },
+    {
+      "id": 37,
+      "name": "Lencerías",
+      "icon": "LucideUnderline"
+    },
+    {
+      "id": 38,
+      "name": "D'HERMOSA by Bruna Wan",
+      "icon": "LucideSparkle"
+    },
+    {
+      "id": 39,
+      "name": "Maquillajes",
+      "icon": "LucidePalette"
+    },
+    {
+      "id": 40,
+      "name": "Medias Premium",
+      "icon": "LucidePalette"
+    },
+    {
+      "id": 41,
+      "name": "Mochilas",
+      "icon": "LucideBackpack"
+    },
+    {
+      "id": 42,
+      "name": "Natura Mayoristas",
+      "icon": "LucideLeaf"
+    },
+    {
+      "id": 43,
+      "name": "Parlantes",
+      "icon": "LucideSpeaker"
+    },
+    {
+      "id": 44,
+      "name": "Perfumes",
+      "icon": "LucideSprayCan"
+    },
+    {
+      "id": 45,
+      "name": "Prendas",
+      "icon": "LucideShirt"
+    },
+    {
+      "id": 46,
+      "name": "Prendas Caballeros",
+      "icon": "LucideUser"
+    },
+    {
+      "id": 47,
+      "name": "Prendas Casuales",
+      "icon": "LucideShirt"
+    },
+    {
+      "id": 48,
+      "name": "Prendas Damas",
+      "icon": "LucideUser"
+    },
+    {
+      "id": 49,
+      "name": "Prendas de Vestir",
+      "icon": "LucideShirt"
+    },
+    {
+      "id": 50,
+      "name": "Prendas Deportivas",
+      "icon": "LucideDumbbell"
+    },
+    {
+      "id": 51,
+      "name": "Prendas Elegantes",
+      "icon": "LucideShirt"
+    },
+    {
+      "id": 52,
+      "name": "Prendas En General",
+      "icon": "LucideShirt"
+    },
+    {
+      "id": 53,
+      "name": "Prendas Exclusivas Para Revendedores",
+      "icon": "LucideShirt"
+    },
+    {
+      "id": 54,
+      "name": "Productos De Higiene",
+      "icon": "LucideSoap"
+    },
+    {
+      "id": 55,
+      "name": "Productos Varios",
+      "icon": "LucidePackage"
+    },
+    {
+      "id": 56,
+      "name": "Remeras",
+      "icon": "LucideShirt"
+    },
+    {
+      "id": 57,
+      "name": "Romance",
+      "icon": "LucideHeart"
+    },
+    {
+      "id": 58,
+      "name": "Ropa",
+      "icon": "LucideShirt"
+    },
+    {
+      "id": 59,
+      "name": "Ropa Casual",
+      "icon": "LucideShirt"
+    },
+    {
+      "id": 60,
+      "name": "Ropa Deportiva",
+      "icon": "LucideDumbbell"
+    },
+    {
+      "id": 61,
+      "name": "Route 66",
+      "icon": "LucideFlag"
+    },
+    {
+      "id": 62,
+      "name": "Sábanas",
+      "icon": "LucideBed"
+    },
+    {
+      "id": 63,
+      "name": "Shein",
+      "icon": "LucideShoppingBag"
+    },
+    {
+      "id": 64,
+      "name": "Sobrecama",
+      "icon": "LucideBed"
+    },
+    {
+      "id": 65,
+      "name": "Termos",
+      "icon": "LucideThermometer"
+    },
+    {
+      "id": 66,
+      "name": "Termos Forrados",
+      "icon": "LucideThermometer"
+    },
+    {
+      "id": 67,
+      "name": "Termos Personalizados",
+      "icon": "LucideThermometer"
+    },
+    {
+      "id": 68,
+      "name": "Stanley",
+      "icon": "LucideThermometer"
+    },
+    {
+      "id": 69,
+      "name": "Toallas",
+      "icon": "LucideTowel"
+    },
+    {
+      "id": 70,
+      "name": "Vasos",
+      "icon": "LucideGlassWater"
+    },
+    {
+      "id": 71,
+      "name": "Vasos Térmicos",
+      "icon": "LucideThermometer"
+    },
+    {
+      "id": 72,
+      "name": "Zapatillas Al Por Mayor",
+      "icon": "LucideShoe"
+    },
+    {
+      "id": 73,
+      "name": "Recomendados"
+    },
+    {
+      "id": 74,
+      "name": "Otros Negocios"
+    }
+  ],
+  "zones": [
+    {
+      "id": 1,
+      "name": "Capiatá"
+    },
+    {
+      "id": 2,
+      "name": "Ciudad del Este"
+    },
+    {
+      "id": 3,
+      "name": "J.Augusto Saldivar"
+    },
+    {
+      "id": 4,
+      "name": "Luque"
+    },
+    {
+      "id": 5,
+      "name": "San Lorenzo"
+    },
+    {
+      "id": 6,
+      "name": "Villa Elisa"
+    }
+  ],
+  "primary_banner": [
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1N4GbPHfjdfQnhlfH19udVKzFUV9b55x02A&s",
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1N4GbPHfjdfQnhlfH19udVKzFUV9b55x02A&s",
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1N4GbPHfjdfQnhlfH19udVKzFUV9b55x02A&s",
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1N4GbPHfjdfQnhlfH19udVKzFUV9b55x02A&s",
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1N4GbPHfjdfQnhlfH19udVKzFUV9b55x02A&s"
+  ],
+  "secondary_banner": [
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1N4GbPHfjdfQnhlfH19udVKzFUV9b55x02A&s",
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1N4GbPHfjdfQnhlfH19udVKzFUV9b55x02A&s",
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1N4GbPHfjdfQnhlfH19udVKzFUV9b55x02A&s",
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1N4GbPHfjdfQnhlfH19udVKzFUV9b55x02A&s",
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1N4GbPHfjdfQnhlfH19udVKzFUV9b55x02A&s"
+  ],
+  "recommended_image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1N4GbPHfjdfQnhlfH19udVKzFUV9b55x02A&s",
+  "other_businesses": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1N4GbPHfjdfQnhlfH19udVKzFUV9b55x02A&s"
+}
