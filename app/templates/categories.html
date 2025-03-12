@@ -29,7 +29,7 @@
                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ category.name }}</td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                         {% if category.icon %}
-                            <img src="{{ category.icon }}" alt="{{ category.name }}" class="h-8 w-8">
+                            <i data-lucide="{{ category.icon }}"></i>
                         {% else %}
                             No icon
                         {% endif %}
@@ -70,9 +70,22 @@
                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                 </div>
                 <div class="mb-4">
-                    <label class="block text-gray-700 text-sm font-bold mb-2" for="icon">Icon URL</label>
-                    <input type="url" name="icon"
-                           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="icon">Icon</label>
+                    <div class="relative">
+                        <select name="icon" id="icon_select" required
+                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                            <option value="">Select an icon</option>
+                        </select>
+                        <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+                            <i id="selected_icon" class="w-5 h-5"></i>
+                        </div>
+                    </div>
+                    <div class="mt-2 grid grid-cols-8 gap-2 p-2 border rounded max-h-40 overflow-y-auto" id="icon_preview">
+                        <!-- Icons will be populated here -->
+                    </div>
+                    <div class="mt-2 text-sm text-gray-500 text-center" id="icon_counter">
+                        Total icons: 0 | Selected: -
+                    </div>
                 </div>
                 <div class="flex items-center justify-between mt-6">
                     <button type="submit"
@@ -103,9 +116,22 @@
                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                 </div>
                 <div class="mb-4">
-                    <label class="block text-gray-700 text-sm font-bold mb-2" for="edit_category_icon">Icon URL</label>
-                    <input type="url" name="icon" id="edit_category_icon"
-                           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="edit_icon_select">Icon</label>
+                    <div class="relative">
+                        <select name="icon" id="edit_icon_select" required
+                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                            <option value="">Select an icon</option>
+                        </select>
+                        <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+                            <i id="edit_selected_icon" class="w-5 h-5"></i>
+                        </div>
+                    </div>
+                    <div class="mt-2 grid grid-cols-8 gap-2 p-2 border rounded max-h-40 overflow-y-auto" id="edit_icon_preview">
+                        <!-- Icons will be populated here -->
+                    </div>
+                    <div class="mt-2 text-sm text-gray-500 text-center" id="edit_icon_counter">
+                        Total icons: 0 | Selected: -
+                    </div>
                 </div>
                 <div class="flex items-center justify-between mt-6">
                     <button type="submit"
@@ -123,7 +149,114 @@
     </div>
 </div>
 
-<script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<script type="module">
+    import { iconNames } from '/static/js/icons.js';
+    
+    // Initialize Lucide icons
+    lucide.createIcons();
+
+    // Function to populate icon select and preview with search functionality
+    function populateIconSelect(selectId, previewId, searchId) {
+        const select = document.getElementById(selectId);
+        const preview = document.getElementById(previewId);
+        const counter = document.getElementById(previewId.replace('preview', 'counter'));
+        
+        // Add search input if it doesn't exist
+        let searchInput = document.getElementById(searchId);
+        if (!searchInput) {
+            searchInput = document.createElement('input');
+            searchInput.id = searchId;
+            searchInput.type = 'text';
+            searchInput.placeholder = 'Search icons...';
+            searchInput.className = 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-2';
+            preview.parentNode.insertBefore(searchInput, preview);
+            
+            // Add search functionality
+            searchInput.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase();
+                const iconDivs = preview.querySelectorAll('div');
+                iconDivs.forEach(div => {
+                    const iconName = div.dataset.iconName.toLowerCase();
+                    div.style.display = iconName.includes(searchTerm) ? 'flex' : 'none';
+                });
+            });
+        }
+        
+        // Clear existing options and previews
+        select.innerHTML = '<option value="">Select an icon</option>';
+        preview.innerHTML = '';
+        
+        // Add icons to select and preview
+        iconNames.forEach((iconName, index) => {
+            // Add to select
+            const option = document.createElement('option');
+            option.value = `Lucide${iconName.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join('')}`;
+            option.textContent = iconName;
+            option.dataset.index = index + 1;
+            select.appendChild(option);
+            
+            // Add to preview grid
+            const iconDiv = document.createElement('div');
+            iconDiv.className = 'p-1 cursor-pointer hover:bg-gray-100 rounded flex items-center justify-center';
+            iconDiv.dataset.iconName = iconName;
+            iconDiv.dataset.index = index + 1;
+            iconDiv.innerHTML = `<i data-lucide="${iconName}" class="w-5 h-5"></i>`;
+            iconDiv.onclick = () => {
+                select.value = option.value;
+                select.dispatchEvent(new Event('change'));
+                updateCounter(counter, index + 1);
+            };
+            preview.appendChild(iconDiv);
+        });
+        
+        // Initialize the icons in the preview
+        lucide.createIcons();
+        
+        // Update total count
+        counter.textContent = `Total icons: ${iconNames.length} | Selected: -`;
+    }
+
+    function updateCounter(counterElement, selectedIndex) {
+        counterElement.textContent = `Total icons: ${iconNames.length} | Selected: ${selectedIndex} of ${iconNames.length}`;
+    }
+
+    // Populate both create and edit forms
+    populateIconSelect('icon_select', 'icon_preview', 'icon_search');
+    populateIconSelect('edit_icon_select', 'edit_icon_preview', 'edit_icon_search');
+
+    // Update selected icon preview when selection changes
+    document.getElementById('icon_select').addEventListener('change', function() {
+        const selectedIcon = document.getElementById('selected_icon');
+        const counter = document.getElementById('icon_counter');
+        if (this.value) {
+            const iconName = this.value.replace('Lucide', '').toLowerCase();
+            selectedIcon.innerHTML = '';
+            selectedIcon.appendChild(lucide[iconName]());
+            const selectedOption = this.options[this.selectedIndex];
+            updateCounter(counter, selectedOption.dataset.index);
+        } else {
+            selectedIcon.innerHTML = '';
+            counter.textContent = `Total icons: ${iconNames.length} | Selected: -`;
+        }
+    });
+
+    document.getElementById('edit_icon_select').addEventListener('change', function() {
+        const selectedIcon = document.getElementById('edit_selected_icon');
+        const counter = document.getElementById('edit_icon_counter');
+        if (this.value) {
+            const iconName = this.value.replace('Lucide', '').toLowerCase();
+            selectedIcon.innerHTML = '';
+            selectedIcon.appendChild(lucide[iconName]());
+            const selectedOption = this.options[this.selectedIndex];
+            updateCounter(counter, selectedOption.dataset.index);
+        } else {
+            selectedIcon.innerHTML = '';
+            counter.textContent = `Total icons: ${iconNames.length} | Selected: -`;
+        }
+    });
+
+    // Form submission handlers
     document.getElementById('createCategoryForm').addEventListener('submit', function(e) {
         e.preventDefault();
         const formData = new FormData(this);
@@ -188,9 +321,13 @@
         
         document.getElementById('edit_category_id').value = category.id;
         document.getElementById('edit_category_name').value = category.name;
-        document.getElementById('edit_category_icon').value = category.icon || '';
+        document.getElementById('edit_icon_select').value = category.icon || '';
+        document.getElementById('edit_icon_select').dispatchEvent(new Event('change'));
         
         document.getElementById('editCategoryModal').classList.remove('hidden');
     }
+
+    // Make editCategory available globally
+    window.editCategory = editCategory;
 </script>
 {% endblock %} 
