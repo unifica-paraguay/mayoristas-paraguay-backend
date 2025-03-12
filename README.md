@@ -1,15 +1,14 @@
 # Mayoristas Paraguay Backend
 
-This is a FastAPI backend application that provides data visualization for the Mayoristas Paraguay platform. The application creates various graphs and charts to analyze the distribution of shops, categories, and other metrics.
+This is a FastAPI backend application that provides data management and visualization for the Mayoristas Paraguay platform. The application provides CRUD operations for shops, categories, and zones, as well as various data visualizations.
 
 ## Features
 
-- Visualization of shops by zone
-- Distribution of top 10 categories
-- Analysis of shops by category
-- Working hours distribution
-- Modern, responsive UI using Tailwind CSS
+- Complete CRUD API for shops, categories, and zones
+- Banner and image management
+- Data visualization dashboard
 - Interactive charts using Plotly
+- Modern, responsive UI using Tailwind CSS
 
 ## Requirements
 
@@ -51,19 +50,85 @@ http://localhost:8000
 
 ## API Endpoints
 
-- `/`: Main dashboard with all visualizations
-- `/shops-by-zone`: Bar chart showing distribution of shops across zones
-- `/categories-distribution`: Pie chart showing top 10 categories
-- `/shops-by-category`: Bar chart showing top 15 categories by number of shops
-- `/working-hours-distribution`: Pie chart showing shops with/without working hours
+### Shops
 
-## Data Structure
+- `GET /api/shops` - Get all shops
+- `GET /api/shops/{shop_id}` - Get a specific shop
+- `POST /api/shops` - Create a new shop
+- `PUT /api/shops/{shop_id}` - Update a shop
+- `DELETE /api/shops/{shop_id}` - Delete a shop
 
-The application uses a JSON data structure that includes:
-- Shops with their details
-- Categories with icons
-- Zones
-- Banner images
+### Categories
+
+- `GET /api/categories` - Get all categories
+- `GET /api/categories/{category_id}` - Get a specific category
+- `POST /api/categories` - Create a new category
+- `PUT /api/categories/{category_id}` - Update a category
+- `DELETE /api/categories/{category_id}` - Delete a category
+
+### Zones
+
+- `GET /api/zones` - Get all zones
+- `GET /api/zones/{zone_id}` - Get a specific zone
+- `POST /api/zones` - Create a new zone
+- `PUT /api/zones/{zone_id}` - Update a zone
+- `DELETE /api/zones/{zone_id}` - Delete a zone
+
+### Banner Management
+
+- `PUT /api/banners/primary` - Update primary banner URLs
+- `PUT /api/banners/secondary` - Update secondary banner URLs
+- `PUT /api/images/recommended` - Update recommended image URL
+- `PUT /api/images/other-businesses` - Update other businesses image URL
+
+### Visualization Endpoints
+
+- `/` - Main dashboard with all visualizations
+- `/shops-by-zone` - Bar chart showing distribution of shops across zones
+- `/categories-distribution` - Pie chart showing top 10 categories
+- `/shops-by-category` - Bar chart showing top 15 categories by number of shops
+- `/working-hours-distribution` - Pie chart showing shops with/without working hours
+
+## API Examples
+
+### Creating a New Shop
+
+```bash
+curl -X POST "http://localhost:8000/api/shops" \
+     -H "Content-Type: application/json" \
+     -d '{
+       "id": 12,
+       "name": "New Shop",
+       "owner": "John Doe",
+       "contact_number": "595991234567",
+       "categories": [1, 2],
+       "city": "Ciudad del Este",
+       "zone_id": 2,
+       "categorie_pages": ["recommended", "see_all"],
+       "img": "https://example.com/image.jpg"
+     }'
+```
+
+### Updating a Category
+
+```bash
+curl -X PUT "http://localhost:8000/api/categories/1" \
+     -H "Content-Type: application/json" \
+     -d '{
+       "id": 1,
+       "name": "Updated Category Name",
+       "icon": "LucideIcon"
+     }'
+```
+
+## Data Validation
+
+The API includes several validation checks:
+
+- Prevents duplicate IDs when creating new items
+- Validates that referenced categories exist when creating/updating shops
+- Validates that referenced zones exist when creating/updating shops
+- Prevents deletion of categories and zones that are in use by shops
 
 ## Contributing
 

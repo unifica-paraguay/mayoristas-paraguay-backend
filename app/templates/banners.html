@@ -1,0 +1,255 @@
+{% extends "base.html" %}
+
+{% block title %}Banners Management - Mayoristas Paraguay{% endblock %}
+
+{% block content %}
+<div class="bg-white shadow rounded-lg p-6">
+    <div class="mb-8">
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">Primary Banner</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {% for url in primary_banner %}
+            <div class="relative">
+                <img src="{{ url }}" alt="Primary banner {{ loop.index }}" class="w-full h-48 object-cover rounded">
+                <button onclick="removePrimaryBanner({{ loop.index0 }})"
+                        class="absolute top-2 right-2 bg-red-500 text-white rounded-full p-2 hover:bg-red-700">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="mt-4">
+            <form id="primaryBannerForm" class="flex gap-4">
+                <input type="url" name="url" placeholder="Enter image URL" required
+                       class="flex-1 shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                <button type="submit"
+                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                    Add Image
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <div class="mb-8">
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">Secondary Banner</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {% for url in secondary_banner %}
+            <div class="relative">
+                <img src="{{ url }}" alt="Secondary banner {{ loop.index }}" class="w-full h-48 object-cover rounded">
+                <button onclick="removeSecondaryBanner({{ loop.index0 }})"
+                        class="absolute top-2 right-2 bg-red-500 text-white rounded-full p-2 hover:bg-red-700">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="mt-4">
+            <form id="secondaryBannerForm" class="flex gap-4">
+                <input type="url" name="url" placeholder="Enter image URL" required
+                       class="flex-1 shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                <button type="submit"
+                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                    Add Image
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <div class="mb-8">
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">Recommended Image</h2>
+        <div class="relative inline-block">
+            {% if recommended_image %}
+            <img src="{{ recommended_image }}" alt="Recommended image" class="w-64 h-48 object-cover rounded">
+            <button onclick="updateRecommendedImage('')"
+                    class="absolute top-2 right-2 bg-red-500 text-white rounded-full p-2 hover:bg-red-700">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+            {% else %}
+            <div class="w-64 h-48 bg-gray-200 rounded flex items-center justify-center">
+                <span class="text-gray-500">No image set</span>
+            </div>
+            {% endif %}
+        </div>
+        <div class="mt-4">
+            <form id="recommendedImageForm" class="flex gap-4">
+                <input type="url" name="url" placeholder="Enter image URL" required
+                       class="flex-1 shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                <button type="submit"
+                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                    Update Image
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <div class="mb-8">
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">Other Businesses Image</h2>
+        <div class="relative inline-block">
+            {% if other_businesses %}
+            <img src="{{ other_businesses }}" alt="Other businesses image" class="w-64 h-48 object-cover rounded">
+            <button onclick="updateOtherBusinessesImage('')"
+                    class="absolute top-2 right-2 bg-red-500 text-white rounded-full p-2 hover:bg-red-700">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+            {% else %}
+            <div class="w-64 h-48 bg-gray-200 rounded flex items-center justify-center">
+                <span class="text-gray-500">No image set</span>
+            </div>
+            {% endif %}
+        </div>
+        <div class="mt-4">
+            <form id="otherBusinessesForm" class="flex gap-4">
+                <input type="url" name="url" placeholder="Enter image URL" required
+                       class="flex-1 shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                <button type="submit"
+                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                    Update Image
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Primary Banner
+    document.getElementById('primaryBannerForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const url = this.querySelector('[name="url"]').value;
+        const currentUrls = {{ primary_banner | tojson | safe }};
+        currentUrls.push(url);
+        
+        fetch('/api/banners/primary', {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(currentUrls)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.detail) {
+                showError(data.detail);
+            } else {
+                window.location.reload();
+            }
+        })
+        .catch(error => showError('Error updating primary banner'));
+    });
+
+    function removePrimaryBanner(index) {
+        const currentUrls = {{ primary_banner | tojson | safe }};
+        currentUrls.splice(index, 1);
+        
+        fetch('/api/banners/primary', {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(currentUrls)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.detail) {
+                showError(data.detail);
+            } else {
+                window.location.reload();
+            }
+        })
+        .catch(error => showError('Error updating primary banner'));
+    }
+
+    // Secondary Banner
+    document.getElementById('secondaryBannerForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const url = this.querySelector('[name="url"]').value;
+        const currentUrls = {{ secondary_banner | tojson | safe }};
+        currentUrls.push(url);
+        
+        fetch('/api/banners/secondary', {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(currentUrls)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.detail) {
+                showError(data.detail);
+            } else {
+                window.location.reload();
+            }
+        })
+        .catch(error => showError('Error updating secondary banner'));
+    });
+
+    function removeSecondaryBanner(index) {
+        const currentUrls = {{ secondary_banner | tojson | safe }};
+        currentUrls.splice(index, 1);
+        
+        fetch('/api/banners/secondary', {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(currentUrls)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.detail) {
+                showError(data.detail);
+            } else {
+                window.location.reload();
+            }
+        })
+        .catch(error => showError('Error updating secondary banner'));
+    }
+
+    // Recommended Image
+    document.getElementById('recommendedImageForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const url = this.querySelector('[name="url"]').value;
+        updateRecommendedImage(url);
+    });
+
+    function updateRecommendedImage(url) {
+        fetch('/api/images/recommended', {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(url)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.detail) {
+                showError(data.detail);
+            } else {
+                window.location.reload();
+            }
+        })
+        .catch(error => showError('Error updating recommended image'));
+    }
+
+    // Other Businesses Image
+    document.getElementById('otherBusinessesForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const url = this.querySelector('[name="url"]').value;
+        updateOtherBusinessesImage(url);
+    });
+
+    function updateOtherBusinessesImage(url) {
+        fetch('/api/images/other-businesses', {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(url)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.detail) {
+                showError(data.detail);
+            } else {
+                window.location.reload();
+            }
+        })
+        .catch(error => showError('Error updating other businesses image'));
+    }
+</script>
+{% endblock %} 
