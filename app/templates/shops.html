@@ -46,9 +46,16 @@
                         </button>
                         <button hx-delete="/api/shops/{{ shop.id }}"
                                 hx-confirm="Are you sure you want to delete this shop?"
-                                class="text-red-600 hover:text-red-900">
+                                class="text-red-600 hover:text-red-900 mr-3">
                             Delete
                         </button>
+                        {% if shop.img %}
+                        <button onclick="openShopImage('{{ shop.img }}')"
+                                class="text-blue-600 hover:text-blue-900">
+                            <i data-lucide="image" class="w-4 h-4 inline-block mr-1"></i>
+                            View Image
+                        </button>
+                        {% endif %}
                     </td>
                 </tr>
                 {% endfor %}
@@ -441,6 +448,22 @@
     </div>
 </div>
 
+<!-- Image Preview Modal -->
+<div id="imagePreviewModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center p-4 z-50">
+    <div class="relative bg-white rounded-lg shadow-xl" style="width: 500px;">
+        <div class="absolute top-2 right-2 z-10">
+            <button onclick="document.getElementById('imagePreviewModal').classList.add('hidden')"
+                    class="bg-white rounded-full p-1.5 hover:bg-gray-100 focus:outline-none shadow-md">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+        </div>
+        <div class="p-4">
+            <img id="modalImage" src="" alt="Shop Image" 
+                 class="rounded-lg w-full h-[350px] object-contain">
+        </div>
+    </div>
+</div>
+
 <script>
     function handleShopSubmit(event) {
         if (event.detail.successful) {
@@ -798,5 +821,12 @@
         // Initialize Lucide icons
         lucide.createIcons();
     });
+
+    function openShopImage(imageUrl) {
+        const modal = document.getElementById('imagePreviewModal');
+        const modalImage = document.getElementById('modalImage');
+        modalImage.src = imageUrl;
+        modal.classList.remove('hidden');
+    }
 </script>
 {% endblock %} 
