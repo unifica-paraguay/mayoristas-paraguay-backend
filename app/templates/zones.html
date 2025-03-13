@@ -37,6 +37,8 @@
                             </button>
                             <button hx-delete="/api/zones/{{ zone.id }}"
                                     hx-confirm="Are you sure you want to delete this zone?"
+                                    hx-swap="none"
+                                    hx-on::after-request="if(event.detail.successful) window.location.reload()"
                                     class="text-red-600 hover:text-red-900 inline-flex items-center gap-1 bg-red-50 hover:bg-red-100 px-3 py-1.5 rounded-md transition-colors">
                                 <i data-lucide="trash-2" class="w-4 h-4"></i>
                                 Delete
