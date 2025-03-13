@@ -429,15 +429,17 @@
                         window.location.reload();
                     });
                 } else {
-                    throw new Error('Failed to delete');
+                    const errorData = await response.json();
+                    throw new Error(errorData.detail || 'Failed to delete');
                 }
             } catch (error) {
                 console.error('Error deleting category:', error);
-                Swal.fire(
-                    'Error!',
-                    'There was a problem deleting the category.',
-                    'error'
-                );
+                Swal.fire({
+                    title: 'Error!',
+                    text: error.message || 'There was a problem deleting the category.',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
             }
         }
     }
