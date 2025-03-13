@@ -29,7 +29,16 @@
                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ category.name }}</td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                         {% if category.icon %}
-                            <i data-lucide="{{ category.icon }}"></i>
+                            {% set icon_name = category.icon[6:] %}
+                            {% set kebab_case = namespace(value='') %}
+                            {% for char in icon_name %}
+                                {% if char.isupper() and not loop.first %}
+                                    {% set kebab_case.value = kebab_case.value + '-' + char.lower() %}
+                                {% else %}
+                                    {% set kebab_case.value = kebab_case.value + char.lower() %}
+                                {% endif %}
+                            {% endfor %}
+                            <i data-lucide="{{ kebab_case.value }}"></i>
                         {% else %}
                             No icon
                         {% endif %}
@@ -156,6 +165,11 @@
     // Initialize Lucide icons
     lucide.createIcons();
 
+    // Function to convert camelCase to kebab-case
+    function camelToKebab(str) {
+        return str.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
+    }
+
     // Function to populate icon select and preview with search functionality
     function populateIconSelect(selectId, previewId, searchId) {
         const select = document.getElementById(selectId);
@@ -230,7 +244,7 @@
         const selectedIcon = document.getElementById('selected_icon');
         const counter = document.getElementById('icon_counter');
         if (this.value) {
-            const iconName = this.value.replace('Lucide', '').toLowerCase();
+            const iconName = camelToKebab(this.value.replace('Lucide', ''));
             selectedIcon.innerHTML = '';
             selectedIcon.appendChild(lucide[iconName]());
             const selectedOption = this.options[this.selectedIndex];
@@ -245,7 +259,7 @@
         const selectedIcon = document.getElementById('edit_selected_icon');
         const counter = document.getElementById('edit_icon_counter');
         if (this.value) {
-            const iconName = this.value.replace('Lucide', '').toLowerCase();
+            const iconName = camelToKebab(this.value.replace('Lucide', ''));
             selectedIcon.innerHTML = '';
             selectedIcon.appendChild(lucide[iconName]());
             const selectedOption = this.options[this.selectedIndex];
