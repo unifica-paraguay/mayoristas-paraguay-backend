@@ -378,96 +378,188 @@
 
     // Remove functions
     async function removePrimaryBanner(url) {
-        try {
-            const currentUrls = JSON.parse('{{ primary_banner|tojson|safe }}');
-            const newUrls = currentUrls.filter(u => u !== url);
-            
-            // First delete from storage
-            await fetch('/api/storage/delete?url=' + encodeURIComponent(url), {
-                method: 'DELETE'
-            });
-            
-            // Then update the banner list
-            await fetch('/api/banners/primary', {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(newUrls)
-            });
-            
-            window.location.reload();
-        } catch (error) {
-            console.error('Error removing primary banner:', error);
+        const result = await Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        });
+
+        if (result.isConfirmed) {
+            try {
+                const currentUrls = JSON.parse('{{ primary_banner|tojson|safe }}');
+                const newUrls = currentUrls.filter(u => u !== url);
+                
+                // First delete from storage
+                await fetch('/api/storage/delete?url=' + encodeURIComponent(url), {
+                    method: 'DELETE'
+                });
+                
+                // Then update the banner list
+                await fetch('/api/banners/primary', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(newUrls)
+                });
+                
+                Swal.fire(
+                    'Deleted!',
+                    'The banner has been deleted.',
+                    'success'
+                ).then(() => {
+                    window.location.reload();
+                });
+            } catch (error) {
+                console.error('Error removing primary banner:', error);
+                Swal.fire(
+                    'Error!',
+                    'There was a problem deleting the banner.',
+                    'error'
+                );
+            }
         }
     }
 
     async function removeSecondaryBanner(url) {
-        try {
-            const currentUrls = JSON.parse('{{ secondary_banner|tojson|safe }}');
-            const newUrls = currentUrls.filter(u => u !== url);
-            
-            // First delete from storage
-            await fetch('/api/storage/delete?url=' + encodeURIComponent(url), {
-                method: 'DELETE'
-            });
-            
-            // Then update the banner list
-            await fetch('/api/banners/secondary', {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(newUrls)
-            });
-            
-            window.location.reload();
-        } catch (error) {
-            console.error('Error removing secondary banner:', error);
+        const result = await Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        });
+
+        if (result.isConfirmed) {
+            try {
+                const currentUrls = JSON.parse('{{ secondary_banner|tojson|safe }}');
+                const newUrls = currentUrls.filter(u => u !== url);
+                
+                // First delete from storage
+                await fetch('/api/storage/delete?url=' + encodeURIComponent(url), {
+                    method: 'DELETE'
+                });
+                
+                // Then update the banner list
+                await fetch('/api/banners/secondary', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(newUrls)
+                });
+                
+                Swal.fire(
+                    'Deleted!',
+                    'The banner has been deleted.',
+                    'success'
+                ).then(() => {
+                    window.location.reload();
+                });
+            } catch (error) {
+                console.error('Error removing secondary banner:', error);
+                Swal.fire(
+                    'Error!',
+                    'There was a problem deleting the banner.',
+                    'error'
+                );
+            }
         }
     }
 
     async function removeRecommendedImage(url) {
-        try {
-            // First delete from storage
-            await fetch('/api/storage/delete?url=' + encodeURIComponent(url), {
-                method: 'DELETE'
-            });
-            
-            // Then update the recommended image
-            await fetch('/api/images/recommended', {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ url: "" })  // Enviando objeto con propiedad url vacía
-            });
-            
-            window.location.reload();
-        } catch (error) {
-            console.error('Error removing recommended image:', error);
+        const result = await Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        });
+
+        if (result.isConfirmed) {
+            try {
+                // First delete from storage
+                await fetch('/api/storage/delete?url=' + encodeURIComponent(url), {
+                    method: 'DELETE'
+                });
+                
+                // Then update the recommended image
+                await fetch('/api/images/recommended', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ url: "" })
+                });
+                
+                Swal.fire(
+                    'Deleted!',
+                    'The image has been deleted.',
+                    'success'
+                ).then(() => {
+                    window.location.reload();
+                });
+            } catch (error) {
+                console.error('Error removing recommended image:', error);
+                Swal.fire(
+                    'Error!',
+                    'There was a problem deleting the image.',
+                    'error'
+                );
+            }
         }
     }
 
     async function removeOtherBusinessImage(url) {
-        try {
-            // First delete from storage
-            await fetch('/api/storage/delete?url=' + encodeURIComponent(url), {
-                method: 'DELETE'
-            });
-            
-            // Then update the other business image
-            await fetch('/api/images/other-businesses', {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ url: "" })  // Enviando objeto con propiedad url vacía
-            });
-            
-            window.location.reload();
-        } catch (error) {
-            console.error('Error removing other business image:', error);
+        const result = await Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        });
+
+        if (result.isConfirmed) {
+            try {
+                // First delete from storage
+                await fetch('/api/storage/delete?url=' + encodeURIComponent(url), {
+                    method: 'DELETE'
+                });
+                
+                // Then update the other business image
+                await fetch('/api/images/other-businesses', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ url: "" })
+                });
+                
+                Swal.fire(
+                    'Deleted!',
+                    'The image has been deleted.',
+                    'success'
+                ).then(() => {
+                    window.location.reload();
+                });
+            } catch (error) {
+                console.error('Error removing other business image:', error);
+                Swal.fire(
+                    'Error!',
+                    'There was a problem deleting the image.',
+                    'error'
+                );
+            }
         }
     }
 </script>
