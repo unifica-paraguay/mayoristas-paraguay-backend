@@ -18,13 +18,26 @@
             </div>
             {% endfor %}
         </div>
-        <form id="uploadPrimaryBannerForm" class="flex gap-4 items-center">
-            <input type="file" accept="image/*" multiple
-                   class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
-            <button type="submit"
-                    class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors">
-                Upload
-            </button>
+        <form id="uploadPrimaryBannerForm" class="space-y-4">
+            <div class="flex flex-col gap-4">
+                <div class="relative">
+                    <input type="file" accept="image/*" multiple id="primaryBannerInput"
+                           class="hidden"
+                           onchange="handleFileSelect(this, 'primaryBannerPreview')">
+                    <label for="primaryBannerInput" 
+                           class="cursor-pointer inline-flex items-center px-4 py-2 bg-blue-50 text-blue-700 rounded-lg hover:bg-blue-100 transition-colors">
+                        <i data-lucide="upload" class="w-4 h-4 mr-2"></i>
+                        Choose Files
+                    </label>
+                </div>
+                <div id="primaryBannerPreview" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <!-- Image previews will be added here -->
+                </div>
+                <button type="submit"
+                        class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors w-full md:w-auto">
+                    Upload Selected Files
+                </button>
+            </div>
         </form>
     </div>
 
@@ -42,13 +55,26 @@
             </div>
             {% endfor %}
         </div>
-        <form id="uploadSecondaryBannerForm" class="flex gap-4 items-center">
-            <input type="file" accept="image/*" multiple
-                   class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
-            <button type="submit"
-                    class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors">
-                Upload
-            </button>
+        <form id="uploadSecondaryBannerForm" class="space-y-4">
+            <div class="flex flex-col gap-4">
+                <div class="relative">
+                    <input type="file" accept="image/*" multiple id="secondaryBannerInput"
+                           class="hidden"
+                           onchange="handleFileSelect(this, 'secondaryBannerPreview')">
+                    <label for="secondaryBannerInput"
+                           class="cursor-pointer inline-flex items-center px-4 py-2 bg-blue-50 text-blue-700 rounded-lg hover:bg-blue-100 transition-colors">
+                        <i data-lucide="upload" class="w-4 h-4 mr-2"></i>
+                        Choose Files
+                    </label>
+                </div>
+                <div id="secondaryBannerPreview" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <!-- Image previews will be added here -->
+                </div>
+                <button type="submit"
+                        class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors w-full md:w-auto">
+                    Upload Selected Files
+                </button>
+            </div>
         </form>
     </div>
 
@@ -64,13 +90,26 @@
             </button>
         </div>
         {% endif %}
-        <form id="uploadRecommendedForm" class="flex gap-4 items-center mt-4">
-            <input type="file" accept="image/*"
-                   class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
-            <button type="submit"
-                    class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors">
-                Upload
-            </button>
+        <form id="uploadRecommendedForm" class="space-y-4 mt-4">
+            <div class="flex flex-col gap-4">
+                <div class="relative">
+                    <input type="file" accept="image/*" id="recommendedInput"
+                           class="hidden"
+                           onchange="handleSingleFileSelect(this, 'recommendedPreview')">
+                    <label for="recommendedInput"
+                           class="cursor-pointer inline-flex items-center px-4 py-2 bg-blue-50 text-blue-700 rounded-lg hover:bg-blue-100 transition-colors">
+                        <i data-lucide="upload" class="w-4 h-4 mr-2"></i>
+                        Choose File
+                    </label>
+                </div>
+                <div id="recommendedPreview" class="inline-block">
+                    <!-- Image preview will be added here -->
+                </div>
+                <button type="submit"
+                        class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors w-full md:w-auto">
+                    Upload Selected File
+                </button>
+            </div>
         </form>
     </div>
 
@@ -86,13 +125,26 @@
             </button>
         </div>
         {% endif %}
-        <form id="uploadOtherBusinessForm" class="flex gap-4 items-center mt-4">
-            <input type="file" accept="image/*"
-                   class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
-            <button type="submit"
-                    class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors">
-                Upload
-            </button>
+        <form id="uploadOtherBusinessForm" class="space-y-4 mt-4">
+            <div class="flex flex-col gap-4">
+                <div class="relative">
+                    <input type="file" accept="image/*" id="otherBusinessInput"
+                           class="hidden"
+                           onchange="handleSingleFileSelect(this, 'otherBusinessPreview')">
+                    <label for="otherBusinessInput"
+                           class="cursor-pointer inline-flex items-center px-4 py-2 bg-blue-50 text-blue-700 rounded-lg hover:bg-blue-100 transition-colors">
+                        <i data-lucide="upload" class="w-4 h-4 mr-2"></i>
+                        Choose File
+                    </label>
+                </div>
+                <div id="otherBusinessPreview" class="inline-block">
+                    <!-- Image preview will be added here -->
+                </div>
+                <button type="submit"
+                        class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors w-full md:w-auto">
+                    Upload Selected File
+                </button>
+            </div>
         </form>
     </div>
 </div>
@@ -101,14 +153,91 @@
     // Initialize Lucide icons
     lucide.createIcons();
 
+    // Store selected files for each form
+    const selectedFiles = {
+        primaryBanner: new Map(),
+        secondaryBanner: new Map()
+    };
+
+    function handleFileSelect(input, previewId) {
+        const preview = document.getElementById(previewId);
+        preview.innerHTML = ''; // Clear existing previews
+        const formType = input.id === 'primaryBannerInput' ? 'primaryBanner' : 'secondaryBanner';
+        selectedFiles[formType].clear(); // Clear existing files
+        
+        if (input.files) {
+            Array.from(input.files).forEach((file, index) => {
+                if (file.type.startsWith('image/')) {
+                    const reader = new FileReader();
+                    const previewContainer = document.createElement('div');
+                    previewContainer.className = 'relative group';
+                    const fileId = Date.now() + '-' + index; // Create unique ID for this file
+                    selectedFiles[formType].set(fileId, file);
+                    
+                    reader.onload = function(e) {
+                        previewContainer.innerHTML = `
+                            <img src="${e.target.result}" alt="Preview" class="w-full h-48 object-cover rounded-lg">
+                            <button type="button" data-file-id="${fileId}" onclick="removeFile(this, '${formType}')"
+                                    class="absolute top-2 right-2 bg-red-500 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+                                <i data-lucide="x" class="w-4 h-4"></i>
+                            </button>
+                        `;
+                        // Initialize just the x icon in this container
+                        const icon = previewContainer.querySelector('[data-lucide="x"]');
+                        if (icon) lucide.createIcons({ element: icon });
+                    };
+                    
+                    reader.readAsDataURL(file);
+                    preview.appendChild(previewContainer);
+                }
+            });
+        }
+    }
+
+    function handleSingleFileSelect(input, previewId) {
+        const preview = document.getElementById(previewId);
+        preview.innerHTML = ''; // Clear existing preview
+        
+        if (input.files && input.files[0]) {
+            const file = input.files[0];
+            if (file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                const previewContainer = document.createElement('div');
+                previewContainer.className = 'relative group inline-block';
+                
+                reader.onload = function(e) {
+                    previewContainer.innerHTML = `
+                        <img src="${e.target.result}" alt="Preview" class="w-64 h-64 object-cover rounded-lg">
+                        <button type="button" onclick="this.closest('.relative').remove(); input.value = '';"
+                                class="absolute top-2 right-2 bg-red-500 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+                            <i data-lucide="x" class="w-4 h-4"></i>
+                        </button>
+                    `;
+                    // Initialize just the x icon in this container
+                    const icon = previewContainer.querySelector('[data-lucide="x"]');
+                    if (icon) lucide.createIcons({ element: icon });
+                };
+                
+                reader.readAsDataURL(file);
+                preview.appendChild(previewContainer);
+            }
+        }
+    }
+
+    // Function to remove a file from selection
+    function removeFile(button, formType) {
+        const fileId = button.dataset.fileId;
+        selectedFiles[formType].delete(fileId);
+        button.closest('.relative').remove();
+    }
+
     // Primary Banner
     document.getElementById('uploadPrimaryBannerForm').addEventListener('submit', async function(e) {
         e.preventDefault();
-        const files = e.target.querySelector('input[type="file"]').files;
         const currentUrls = JSON.parse('{{ primary_banner|tojson|safe }}');
-        const newUrls = [...currentUrls];  // Start with existing URLs
+        const newUrls = [...currentUrls];
         
-        for (const file of files) {
+        for (const file of selectedFiles.primaryBanner.values()) {
             const formData = new FormData();
             formData.append('file', file);
             
@@ -120,14 +249,14 @@
                 
                 if (response.ok) {
                     const data = await response.json();
-                    newUrls.push(data.url);  // Add new URL to the list
+                    newUrls.push(data.url);
                 }
             } catch (error) {
                 console.error('Error uploading file:', error);
             }
         }
         
-        if (newUrls.length > currentUrls.length) {  // Only update if we added new URLs
+        if (newUrls.length > currentUrls.length) {
             await fetch('/api/banners/primary', {
                 method: 'PUT',
                 headers: {
@@ -143,11 +272,10 @@
     // Secondary Banner
     document.getElementById('uploadSecondaryBannerForm').addEventListener('submit', async function(e) {
         e.preventDefault();
-        const files = e.target.querySelector('input[type="file"]').files;
         const currentUrls = JSON.parse('{{ secondary_banner|tojson|safe }}');
-        const newUrls = [...currentUrls];  // Start with existing URLs
+        const newUrls = [...currentUrls];
         
-        for (const file of files) {
+        for (const file of selectedFiles.secondaryBanner.values()) {
             const formData = new FormData();
             formData.append('file', file);
             
@@ -159,14 +287,14 @@
                 
                 if (response.ok) {
                     const data = await response.json();
-                    newUrls.push(data.url);  // Add new URL to the list
+                    newUrls.push(data.url);
                 }
             } catch (error) {
                 console.error('Error uploading file:', error);
             }
         }
         
-        if (newUrls.length > currentUrls.length) {  // Only update if we added new URLs
+        if (newUrls.length > currentUrls.length) {
             await fetch('/api/banners/secondary', {
                 method: 'PUT',
                 headers: {
