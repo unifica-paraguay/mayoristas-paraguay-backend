@@ -413,52 +413,6 @@
         "see_all"
       ],
       "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/23bc6220-a479-4cb3-b671-16bea5ef7450.jpeg"
-    },
-    {
-      "id": 9,
-      "name": "Libroteca",
-      "owner": "SA",
-      "contact_number": "595982844853",
-      "categories": [
-        0
-      ],
-      "working_hours": {
-        "lunes": {
-          "open_time": "08:00",
-          "close_time": "18:00",
-          "is_open": true
-        },
-        "martes": {
-          "open_time": "08:00",
-          "close_time": "18:00",
-          "is_open": true
-        },
-        "miércoles": {
-          "open_time": "08:00",
-          "close_time": "18:00",
-          "is_open": true
-        },
-        "jueves": {
-          "open_time": "08:00",
-          "close_time": "18:00",
-          "is_open": true
-        },
-        "viernes": {
-          "open_time": "08:00",
-          "close_time": "18:00",
-          "is_open": true
-        },
-        "sábado": null,
-        "domingo": null
-      },
-      "city": "Asunción",
-      "zone_id": 0,
-      "categorie_pages": [
-        "recommended",
-        "free_shipping",
-        "see_all"
-      ],
-      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/23bc6220-a479-4cb3-b671-16bea5ef7450.jpeg"
     }
   ],
   "categories": [
@@ -470,22 +424,22 @@
     {
       "id": 1,
       "name": "Accesorios",
-      "icon": "LucideBookmarkCheck"
+      "icon": "LucideAlarmClockPlus"
     },
     {
       "id": 2,
       "name": "Muebles",
-      "icon": "LucideBookmarkCheck"
+      "icon": "LucideCircleSlash"
     },
     {
       "id": 3,
       "name": "Electrónica",
-      "icon": "LucideBookmarkCheck"
+      "icon": "LucideFish"
     },
     {
       "id": 4,
       "name": "Electrodomésticos",
-      "icon": "LucideBookmarkCheck"
+      "icon": "LucideBaby"
     },
     {
       "id": 5,
