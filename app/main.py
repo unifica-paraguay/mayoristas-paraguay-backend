@@ -11,6 +11,8 @@ import json
 from typing import List, Optional
 import os
 from dotenv import load_dotenv
+from .utils.working_hours import parse_legacy_working_hours, is_shop_open, format_working_hours, parse_time
+from datetime import time
 
 # Load environment variables from .env file
 load_dotenv()
@@ -39,8 +41,15 @@ def load_data() -> DataStructure:
         return DataStructure(**data)
 
 def save_data(data: DataStructure):
+    def time_handler(obj):
+        if hasattr(obj, 'model_dump'):
+            return obj.model_dump()
+        if isinstance(obj, time):
+            return obj.strftime("%H:%M")
+        raise TypeError(f'Object of type {type(obj).__name__} is not JSON serializable')
+
     with open(DATA_FILE, "w", encoding="utf-8") as f:
-        json.dump(data.model_dump(), f, indent=2, ensure_ascii=False)
+        json.dump(data.model_dump(), f, indent=2, ensure_ascii=False, default=time_handler)
 
 # Load initial data
 data_structure = load_data()
@@ -113,6 +122,17 @@ async def create_shop(shop: Shop):
     if not any(z.id == shop.zone_id for z in data_structure.zones):
         raise HTTPException(status_code=400, detail="Zone ID does not exist")
     
+    # Convert working hours time strings to time objects
+    if shop.working_hours:
+        for day in ['lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado', 'domingo']:
+            day_schedule = getattr(shop.working_hours, day)
+            if day_schedule and isinstance(day_schedule.open_time, str):
+                try:
+                    day_schedule.open_time = parse_time(day_schedule.open_time)
+                    day_schedule.close_time = parse_time(day_schedule.close_time)
+                except ValueError as e:
+                    raise HTTPException(status_code=400, detail=f"Invalid time format for {day}: {str(e)}")
+    
     data_structure.shops.append(shop)
     save_data(data_structure)
     return shop
@@ -129,6 +149,17 @@ async def update_shop(shop_id: int, updated_shop: Shop):
             # Validate zone exists
             if not any(z.id == updated_shop.zone_id for z in data_structure.zones):
                 raise HTTPException(status_code=400, detail="Zone ID does not exist")
+            
+            # Convert working hours time strings to time objects
+            if updated_shop.working_hours:
+                for day in ['lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado', 'domingo']:
+                    day_schedule = getattr(updated_shop.working_hours, day)
+                    if day_schedule and isinstance(day_schedule.open_time, str):
+                        try:
+                            day_schedule.open_time = parse_time(day_schedule.open_time)
+                            day_schedule.close_time = parse_time(day_schedule.close_time)
+                        except ValueError as e:
+                            raise HTTPException(status_code=400, detail=f"Invalid time format for {day}: {str(e)}")
             
             # If image has changed, delete the old one
             if shop.img and shop.img != updated_shop.img:
@@ -417,4 +448,10 @@ async def delete_storage_file(url: str):
         await storage.delete_file(url)
         return {"message": "File deleted successfully"}
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e)) 
+        raise HTTPException(status_code=500, detail=str(e))
+
+# Add new endpoint for getting open shops
+@app.get("/api/shops/open")
+async def get_open_shops():
+    """Get all currently open shops"""
+    return [shop for shop in data_structure.shops if is_shop_open(shop)] 

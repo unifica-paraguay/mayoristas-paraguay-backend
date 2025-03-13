@@ -142,6 +142,99 @@
                         </select>
                     </div>
                 </div>
+                <div class="mb-6">
+                    <label class="block text-gray-700 text-lg font-bold mb-4">Working Hours</label>
+                    <div class="space-y-4">
+                        <!-- Quick Templates -->
+                        <div class="bg-white p-4 rounded-lg border shadow-sm">
+                            <h4 class="text-sm font-medium text-gray-700 mb-3">Quick Templates</h4>
+                            <div class="flex flex-wrap gap-2">
+                                <button type="button" class="template-btn px-3 py-1 text-sm rounded border hover:bg-gray-50" data-template="weekday-9-6">
+                                    Weekdays 9-6
+                                </button>
+                                <button type="button" class="template-btn px-3 py-1 text-sm rounded border hover:bg-gray-50" data-template="weekday-8-5">
+                                    Weekdays 8-5
+                                </button>
+                                <button type="button" class="template-btn px-3 py-1 text-sm rounded border hover:bg-gray-50" data-template="all-week-9-6">
+                                    All Week 9-6
+                                </button>
+                                <button type="button" class="template-btn px-3 py-1 text-sm rounded border hover:bg-gray-50" data-template="all-week-8-5">
+                                    All Week 8-5
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Bulk Selection Controls -->
+                        <div class="bg-white p-4 rounded-lg border shadow-sm">
+                            <h4 class="text-sm font-medium text-gray-700 mb-3">Quick Selection</h4>
+                            <div class="flex flex-wrap gap-4">
+                                <button type="button" class="bulk-select-btn px-3 py-1 text-sm rounded border hover:bg-gray-50" data-days="all">
+                                    Select All Days
+                                </button>
+                                <button type="button" class="bulk-select-btn px-3 py-1 text-sm rounded border hover:bg-gray-50" data-days="weekdays">
+                                    Select Weekdays
+                                </button>
+                                <button type="button" class="bulk-select-btn px-3 py-1 text-sm rounded border hover:bg-gray-50" data-days="weekend">
+                                    Select Weekend
+                                </button>
+                                <button type="button" class="bulk-select-btn px-3 py-1 text-sm rounded border hover:bg-gray-50" data-days="none">
+                                    Clear Selection
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Bulk Time Setting -->
+                        <div class="bg-white p-4 rounded-lg border shadow-sm">
+                            <div class="flex items-end gap-4">
+                                <div class="flex-1">
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Opening Time</label>
+                                    <input type="time" id="bulk_opening_time" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500">
+                                </div>
+                                <div class="flex-1">
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Closing Time</label>
+                                    <input type="time" id="bulk_closing_time" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500">
+                                </div>
+                                <button type="button" id="apply_bulk_times" class="px-4 py-2 bg-blue-50 text-blue-600 rounded border border-blue-200 hover:bg-blue-100">
+                                    Apply to Selected Days
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Days Grid -->
+                        <div class="grid grid-cols-2 gap-4">
+                            {% for day in ['lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado', 'domingo'] %}
+                            <div class="flex flex-col space-y-2 p-4 border rounded bg-white shadow-sm">
+                                <div class="flex items-center justify-between mb-2">
+                                    <label class="text-sm font-medium capitalize text-gray-700">{{ day }}</label>
+                                    <div class="flex items-center gap-2">
+                                        <span class="text-sm text-gray-600">Open</span>
+                                        <input type="checkbox" 
+                                               name="working_hours_{{ day }}_enabled" 
+                                               class="working-hours-toggle h-4 w-4 text-blue-600 rounded border-gray-300"
+                                               data-day="{{ day }}">
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-xs text-gray-600">Opening Time</label>
+                                        <input type="time" 
+                                               name="working_hours_{{ day }}_open" 
+                                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                                               disabled>
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs text-gray-600">Closing Time</label>
+                                        <input type="time" 
+                                               name="working_hours_{{ day }}_close" 
+                                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                                               disabled>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
                 <div class="flex items-center justify-between mt-6">
                     <button type="submit"
                             class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
@@ -239,6 +332,99 @@
                         </select>
                     </div>
                 </div>
+                <div class="mb-6">
+                    <label class="block text-gray-700 text-lg font-bold mb-4">Working Hours</label>
+                    <div class="space-y-4">
+                        <!-- Quick Templates -->
+                        <div class="bg-white p-4 rounded-lg border shadow-sm">
+                            <h4 class="text-sm font-medium text-gray-700 mb-3">Quick Templates</h4>
+                            <div class="flex flex-wrap gap-2">
+                                <button type="button" class="template-btn px-3 py-1 text-sm rounded border hover:bg-gray-50" data-template="weekday-9-6">
+                                    Weekdays 9-6
+                                </button>
+                                <button type="button" class="template-btn px-3 py-1 text-sm rounded border hover:bg-gray-50" data-template="weekday-8-5">
+                                    Weekdays 8-5
+                                </button>
+                                <button type="button" class="template-btn px-3 py-1 text-sm rounded border hover:bg-gray-50" data-template="all-week-9-6">
+                                    All Week 9-6
+                                </button>
+                                <button type="button" class="template-btn px-3 py-1 text-sm rounded border hover:bg-gray-50" data-template="all-week-8-5">
+                                    All Week 8-5
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Bulk Selection Controls -->
+                        <div class="bg-white p-4 rounded-lg border shadow-sm">
+                            <h4 class="text-sm font-medium text-gray-700 mb-3">Quick Selection</h4>
+                            <div class="flex flex-wrap gap-4">
+                                <button type="button" class="bulk-select-btn px-3 py-1 text-sm rounded border hover:bg-gray-50" data-days="all">
+                                    Select All Days
+                                </button>
+                                <button type="button" class="bulk-select-btn px-3 py-1 text-sm rounded border hover:bg-gray-50" data-days="weekdays">
+                                    Select Weekdays
+                                </button>
+                                <button type="button" class="bulk-select-btn px-3 py-1 text-sm rounded border hover:bg-gray-50" data-days="weekend">
+                                    Select Weekend
+                                </button>
+                                <button type="button" class="bulk-select-btn px-3 py-1 text-sm rounded border hover:bg-gray-50" data-days="none">
+                                    Clear Selection
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Bulk Time Setting -->
+                        <div class="bg-white p-4 rounded-lg border shadow-sm">
+                            <div class="flex items-end gap-4">
+                                <div class="flex-1">
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Opening Time</label>
+                                    <input type="time" id="bulk_opening_time" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500">
+                                </div>
+                                <div class="flex-1">
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Closing Time</label>
+                                    <input type="time" id="bulk_closing_time" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500">
+                                </div>
+                                <button type="button" id="apply_bulk_times" class="px-4 py-2 bg-blue-50 text-blue-600 rounded border border-blue-200 hover:bg-blue-100">
+                                    Apply to Selected Days
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Days Grid -->
+                        <div class="grid grid-cols-2 gap-4">
+                            {% for day in ['lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado', 'domingo'] %}
+                            <div class="flex flex-col space-y-2 p-4 border rounded bg-white shadow-sm">
+                                <div class="flex items-center justify-between mb-2">
+                                    <label class="text-sm font-medium capitalize text-gray-700">{{ day }}</label>
+                                    <div class="flex items-center gap-2">
+                                        <span class="text-sm text-gray-600">Open</span>
+                                        <input type="checkbox" 
+                                               name="working_hours_{{ day }}_enabled" 
+                                               class="working-hours-toggle h-4 w-4 text-blue-600 rounded border-gray-300"
+                                               data-day="{{ day }}">
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-xs text-gray-600">Opening Time</label>
+                                        <input type="time" 
+                                               name="working_hours_{{ day }}_open" 
+                                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                                               disabled>
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs text-gray-600">Closing Time</label>
+                                        <input type="time" 
+                                               name="working_hours_{{ day }}_close" 
+                                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                                               disabled>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
                 <div class="flex items-center justify-between mt-6">
                     <button type="submit"
                             class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
@@ -256,17 +442,64 @@
 </div>
 
 <script>
-    // Initialize Lucide icons after the content is loaded
-    document.addEventListener('DOMContentLoaded', function() {
-        lucide.createIcons();
-    });
-
     function handleShopSubmit(event) {
         if (event.detail.successful) {
             window.location.reload();
         } else {
             showError('Error saving shop. Please check your input and try again.');
         }
+    }
+
+    function getWorkingHours(form) {
+        const workingHours = {};
+        const days = ['lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado', 'domingo'];
+        
+        days.forEach(day => {
+            const enabled = form.querySelector(`[name="working_hours_${day}_enabled"]`).checked;
+            if (enabled) {
+                const openTime = form.querySelector(`[name="working_hours_${day}_open"]`).value;
+                const closeTime = form.querySelector(`[name="working_hours_${day}_close"]`).value;
+                if (openTime && closeTime) {
+                    // Format times as strings in HH:MM format
+                    const [openHours, openMinutes] = openTime.split(':');
+                    const [closeHours, closeMinutes] = closeTime.split(':');
+                    
+                    workingHours[day] = {
+                        open_time: `${openHours.padStart(2, '0')}:${openMinutes.padStart(2, '0')}`,
+                        close_time: `${closeHours.padStart(2, '0')}:${closeMinutes.padStart(2, '0')}`,
+                        is_open: true
+                    };
+                }
+            }
+        });
+        
+        return Object.keys(workingHours).length > 0 ? workingHours : null;
+    }
+
+    function setWorkingHours(form, workingHours) {
+        if (!workingHours) return;
+        
+        // First, disable all time inputs
+        form.querySelectorAll('input[type="time"]').forEach(input => {
+            input.disabled = true;
+        });
+        
+        // Then set the working hours for each day
+        Object.entries(workingHours).forEach(([day, schedule]) => {
+            if (schedule && schedule.is_open) {
+                const enabledCheckbox = form.querySelector(`[name="working_hours_${day}_enabled"]`);
+                const openInput = form.querySelector(`[name="working_hours_${day}_open"]`);
+                const closeInput = form.querySelector(`[name="working_hours_${day}_close"]`);
+                
+                if (enabledCheckbox && openInput && closeInput) {
+                    enabledCheckbox.checked = true;
+                    openInput.disabled = false;
+                    closeInput.disabled = false;
+                    openInput.value = schedule.open_time;
+                    closeInput.value = schedule.close_time;
+                }
+            }
+        });
     }
 
     document.getElementById('createShopForm').addEventListener('submit', function(e) {
@@ -281,7 +514,8 @@
             zone_id: parseInt(formData.get('zone_id')),
             categories: Array.from(this.querySelectorAll('input[name="categories"]:checked')).map(cb => parseInt(cb.value)),
             categorie_pages: Array.from(this.querySelector('[name="categorie_pages"]').selectedOptions).map(opt => opt.value),
-            img: formData.get('img')
+            img: formData.get('img'),
+            working_hours: getWorkingHours(this)
         };
 
         fetch('/api/shops', {
@@ -343,6 +577,9 @@
             placeholder.classList.remove('hidden');
         }
         
+        // Set working hours
+        setWorkingHours(document.getElementById('editShopForm'), shop.working_hours);
+        
         document.getElementById('editShopModal').classList.remove('hidden');
     }
 
@@ -359,7 +596,8 @@
             zone_id: parseInt(formData.get('zone_id')),
             categories: Array.from(this.querySelectorAll('input[name="categories"]:checked')).map(cb => parseInt(cb.value)),
             categorie_pages: Array.from(this.querySelector('[name="categorie_pages"]').selectedOptions).map(opt => opt.value),
-            img: formData.get('img')
+            img: formData.get('img'),
+            working_hours: getWorkingHours(this)
         };
 
         fetch(`/api/shops/${shopId}`, {
@@ -443,6 +681,122 @@
                 showError('Error uploading image. Please try again.');
             }
         }
+    });
+
+    // Add new JavaScript for working hours management
+    document.addEventListener('DOMContentLoaded', function() {
+        // Template handling
+        document.querySelectorAll('.template-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const template = this.dataset.template;
+                let openTime, closeTime, days;
+                
+                switch(template) {
+                    case 'weekday-9-6':
+                        openTime = '09:00';
+                        closeTime = '18:00';
+                        days = ['lunes', 'martes', 'miércoles', 'jueves', 'viernes'];
+                        break;
+                    case 'weekday-8-5':
+                        openTime = '08:00';
+                        closeTime = '17:00';
+                        days = ['lunes', 'martes', 'miércoles', 'jueves', 'viernes'];
+                        break;
+                    case 'all-week-9-6':
+                        openTime = '09:00';
+                        closeTime = '18:00';
+                        days = ['lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado', 'domingo'];
+                        break;
+                    case 'all-week-8-5':
+                        openTime = '08:00';
+                        closeTime = '17:00';
+                        days = ['lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado', 'domingo'];
+                        break;
+                }
+                
+                applyWorkingHours(days, openTime, closeTime);
+            });
+        });
+
+        // Bulk selection handling
+        document.querySelectorAll('.bulk-select-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const selection = this.dataset.days;
+                let days = [];
+                
+                switch(selection) {
+                    case 'all':
+                        days = ['lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado', 'domingo'];
+                        break;
+                    case 'weekdays':
+                        days = ['lunes', 'martes', 'miércoles', 'jueves', 'viernes'];
+                        break;
+                    case 'weekend':
+                        days = ['sábado', 'domingo'];
+                        break;
+                    case 'none':
+                        days = [];
+                        break;
+                }
+                
+                // Toggle checkboxes for selected days
+                document.querySelectorAll('.working-hours-toggle').forEach(toggle => {
+                    const day = toggle.dataset.day;
+                    toggle.checked = days.includes(day);
+                    // Trigger change event to enable/disable time inputs
+                    toggle.dispatchEvent(new Event('change'));
+                });
+            });
+        });
+
+        // Bulk time application
+        document.getElementById('apply_bulk_times').addEventListener('click', function() {
+            const openTime = document.getElementById('bulk_opening_time').value;
+            const closeTime = document.getElementById('bulk_closing_time').value;
+            
+            if (!openTime || !closeTime) {
+                alert('Please set both opening and closing times');
+                return;
+            }
+            
+            const selectedDays = Array.from(document.querySelectorAll('.working-hours-toggle:checked'))
+                .map(toggle => toggle.dataset.day);
+            
+            applyWorkingHours(selectedDays, openTime, closeTime);
+        });
+
+        // Working hours toggle functionality
+        document.querySelectorAll('.working-hours-toggle').forEach(toggle => {
+            toggle.addEventListener('change', function() {
+                const day = this.dataset.day;
+                const container = this.closest('.border');
+                const inputs = container.querySelectorAll('input[type="time"]');
+                inputs.forEach(input => {
+                    input.disabled = !this.checked;
+                    if (!this.checked) {
+                        input.value = '';
+                    }
+                });
+            });
+        });
+
+        function applyWorkingHours(days, openTime, closeTime) {
+            days.forEach(day => {
+                const toggle = document.querySelector(`[name="working_hours_${day}_enabled"]`);
+                const openInput = document.querySelector(`[name="working_hours_${day}_open"]`);
+                const closeInput = document.querySelector(`[name="working_hours_${day}_close"]`);
+                
+                if (toggle && openInput && closeInput) {
+                    toggle.checked = true;
+                    toggle.dispatchEvent(new Event('change'));
+                    openInput.value = openTime;
+                    closeInput.value = closeTime;
+                }
+            });
+        }
+
+        // Initialize Lucide icons
+        lucide.createIcons();
     });
 </script>
 {% endblock %} 
