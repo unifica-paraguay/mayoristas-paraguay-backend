@@ -907,11 +907,13 @@
                 });
 
                 if (response.ok) {
-                    Swal.fire(
-                        'Deleted!',
-                        'The shop has been deleted.',
-                        'success'
-                    ).then(() => {
+                    Swal.fire({
+                        title: 'Deleted!',
+                        text: 'The shop has been deleted.',
+                        icon: 'success',
+                        timer: 2000,
+                        showConfirmButton: false
+                    }).then(() => {
                         window.location.reload();
                     });
                 } else {

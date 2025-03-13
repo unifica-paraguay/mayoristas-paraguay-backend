@@ -444,27 +444,27 @@
     {
       "id": 5,
       "name": "Hogar",
-      "icon": "LucideBookmarkCheck"
+      "icon": "LucideBoomBox"
     },
     {
       "id": 6,
       "name": "Belleza",
-      "icon": "LucideBookmarkCheck"
+      "icon": "LucideLocateFixed"
     },
     {
       "id": 7,
       "name": "Cosméticos",
-      "icon": "LucideBookmarkCheck"
+      "icon": "LucideDatabaseZap"
     },
     {
       "id": 8,
       "name": "Deportes",
-      "icon": "LucideBookmarkCheck"
+      "icon": "LucideSailboat"
     },
     {
       "id": 9,
       "name": "Bazar",
-      "icon": "LucideBookmarkCheck"
+      "icon": "LucideWineOff"
     }
   ],
   "zones": [
