@@ -45,19 +45,514 @@
         "see_all"
       ],
       "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/23bc6220-a479-4cb3-b671-16bea5ef7450.jpeg"
+    },
+    {
+      "id": 1,
+      "name": "Libroteca",
+      "owner": "SA",
+      "contact_number": "595982844853",
+      "categories": [
+        0
+      ],
+      "working_hours": {
+        "lunes": {
+          "open_time": "08:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "martes": {
+          "open_time": "08:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "miércoles": {
+          "open_time": "08:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "jueves": {
+          "open_time": "08:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "viernes": {
+          "open_time": "08:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "sábado": null,
+        "domingo": null
+      },
+      "city": "Asunción",
+      "zone_id": 0,
+      "categorie_pages": [
+        "recommended",
+        "free_shipping",
+        "see_all"
+      ],
+      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/23bc6220-a479-4cb3-b671-16bea5ef7450.jpeg"
+    },
+    {
+      "id": 2,
+      "name": "Libroteca",
+      "owner": "SA",
+      "contact_number": "595982844853",
+      "categories": [
+        0
+      ],
+      "working_hours": {
+        "lunes": {
+          "open_time": "08:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "martes": {
+          "open_time": "08:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "miércoles": {
+          "open_time": "08:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "jueves": {
+          "open_time": "08:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "viernes": {
+          "open_time": "08:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "sábado": null,
+        "domingo": null
+      },
+      "city": "Asunción",
+      "zone_id": 0,
+      "categorie_pages": [
+        "recommended",
+        "free_shipping",
+        "see_all"
+      ],
+      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/23bc6220-a479-4cb3-b671-16bea5ef7450.jpeg"
+    },
+    {
+      "id": 3,
+      "name": "Libroteca",
+      "owner": "SA",
+      "contact_number": "595982844853",
+      "categories": [
+        0
+      ],
+      "working_hours": {
+        "lunes": {
+          "open_time": "08:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "martes": {
+          "open_time": "08:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "miércoles": {
+          "open_time": "08:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "jueves": {
+          "open_time": "08:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "viernes": {
+          "open_time": "08:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "sábado": null,
+        "domingo": null
+      },
+      "city": "Asunción",
+      "zone_id": 0,
+      "categorie_pages": [
+        "recommended",
+        "free_shipping",
+        "see_all"
+      ],
+      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/23bc6220-a479-4cb3-b671-16bea5ef7450.jpeg"
+    },
+    {
+      "id": 4,
+      "name": "Libroteca",
+      "owner": "SA",
+      "contact_number": "595982844853",
+      "categories": [
+        0
+      ],
+      "working_hours": {
+        "lunes": {
+          "open_time": "08:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "martes": {
+          "open_time": "08:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "miércoles": {
+          "open_time": "08:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "jueves": {
+          "open_time": "08:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "viernes": {
+          "open_time": "08:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "sábado": null,
+        "domingo": null
+      },
+      "city": "Asunción",
+      "zone_id": 0,
+      "categorie_pages": [
+        "recommended",
+        "free_shipping",
+        "see_all"
+      ],
+      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/23bc6220-a479-4cb3-b671-16bea5ef7450.jpeg"
+    },
+    {
+      "id": 5,
+      "name": "Libroteca",
+      "owner": "SA",
+      "contact_number": "595982844853",
+      "categories": [
+        0
+      ],
+      "working_hours": {
+        "lunes": {
+          "open_time": "08:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "martes": {
+          "open_time": "08:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "miércoles": {
+          "open_time": "08:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "jueves": {
+          "open_time": "08:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "viernes": {
+          "open_time": "08:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "sábado": null,
+        "domingo": null
+      },
+      "city": "Asunción",
+      "zone_id": 0,
+      "categorie_pages": [
+        "recommended",
+        "free_shipping",
+        "see_all"
+      ],
+      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/23bc6220-a479-4cb3-b671-16bea5ef7450.jpeg"
+    },
+    {
+      "id": 6,
+      "name": "Libroteca",
+      "owner": "SA",
+      "contact_number": "595982844853",
+      "categories": [
+        0
+      ],
+      "working_hours": {
+        "lunes": {
+          "open_time": "08:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "martes": {
+          "open_time": "08:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "miércoles": {
+          "open_time": "08:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "jueves": {
+          "open_time": "08:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "viernes": {
+          "open_time": "08:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "sábado": null,
+        "domingo": null
+      },
+      "city": "Asunción",
+      "zone_id": 0,
+      "categorie_pages": [
+        "recommended",
+        "free_shipping",
+        "see_all"
+      ],
+      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/23bc6220-a479-4cb3-b671-16bea5ef7450.jpeg"
+    },
+    {
+      "id": 7,
+      "name": "Libroteca",
+      "owner": "SA",
+      "contact_number": "595982844853",
+      "categories": [
+        0
+      ],
+      "working_hours": {
+        "lunes": {
+          "open_time": "08:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "martes": {
+          "open_time": "08:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "miércoles": {
+          "open_time": "08:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "jueves": {
+          "open_time": "08:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "viernes": {
+          "open_time": "08:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "sábado": null,
+        "domingo": null
+      },
+      "city": "Asunción",
+      "zone_id": 0,
+      "categorie_pages": [
+        "recommended",
+        "free_shipping",
+        "see_all"
+      ],
+      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/23bc6220-a479-4cb3-b671-16bea5ef7450.jpeg"
+    },
+    {
+      "id": 8,
+      "name": "Libroteca",
+      "owner": "SA",
+      "contact_number": "595982844853",
+      "categories": [
+        0
+      ],
+      "working_hours": {
+        "lunes": {
+          "open_time": "08:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "martes": {
+          "open_time": "08:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "miércoles": {
+          "open_time": "08:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "jueves": {
+          "open_time": "08:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "viernes": {
+          "open_time": "08:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "sábado": null,
+        "domingo": null
+      },
+      "city": "Asunción",
+      "zone_id": 0,
+      "categorie_pages": [
+        "recommended",
+        "free_shipping",
+        "see_all"
+      ],
+      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/23bc6220-a479-4cb3-b671-16bea5ef7450.jpeg"
+    },
+    {
+      "id": 9,
+      "name": "Libroteca",
+      "owner": "SA",
+      "contact_number": "595982844853",
+      "categories": [
+        0
+      ],
+      "working_hours": {
+        "lunes": {
+          "open_time": "08:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "martes": {
+          "open_time": "08:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "miércoles": {
+          "open_time": "08:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "jueves": {
+          "open_time": "08:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "viernes": {
+          "open_time": "08:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "sábado": null,
+        "domingo": null
+      },
+      "city": "Asunción",
+      "zone_id": 0,
+      "categorie_pages": [
+        "recommended",
+        "free_shipping",
+        "see_all"
+      ],
+      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/23bc6220-a479-4cb3-b671-16bea5ef7450.jpeg"
     }
   ],
   "categories": [
     {
       "id": 0,
       "name": "Libros",
-      "icon": "LucideBook"
+      "icon": "LucideBookmarkCheck"
+    },
+    {
+      "id": 1,
+      "name": "Accesorios",
+      "icon": "LucideBookmarkCheck"
+    },
+    {
+      "id": 2,
+      "name": "Muebles",
+      "icon": "LucideBookmarkCheck"
+    },
+    {
+      "id": 3,
+      "name": "Electrónica",
+      "icon": "LucideBookmarkCheck"
+    },
+    {
+      "id": 4,
+      "name": "Electrodomésticos",
+      "icon": "LucideBookmarkCheck"
+    },
+    {
+      "id": 5,
+      "name": "Hogar",
+      "icon": "LucideBookmarkCheck"
+    },
+    {
+      "id": 6,
+      "name": "Belleza",
+      "icon": "LucideBookmarkCheck"
+    },
+    {
+      "id": 7,
+      "name": "Cosméticos",
+      "icon": "LucideBookmarkCheck"
+    },
+    {
+      "id": 8,
+      "name": "Deportes",
+      "icon": "LucideBookmarkCheck"
+    },
+    {
+      "id": 9,
+      "name": "Bazar",
+      "icon": "LucideBookmarkCheck"
     }
   ],
   "zones": [
     {
       "id": 0,
       "name": "Asunción"
+    },
+    {
+      "id": 1,
+      "name": "Lambaré"
+    },
+    {
+      "id": 2,
+      "name": "Luque"
+    },
+    {
+      "id": 3,
+      "name": "Fernando de la Mora"
+    },
+    {
+      "id": 4,
+      "name": "San Lorenzo"
+    },
+    {
+      "id": 5,
+      "name": "San Bernardino"
+    },
+    {
+      "id": 6,
+      "name": "Ciudad del Este"
+    },
+    {
+      "id": 7,
+      "name": "Encarnación"
+    },
+    {
+      "id": 8,
+      "name": "Concepción"
+    },
+    {
+      "id": 9,
+      "name": "Villa Elisa"
     }
   ],
   "primary_banner": [],
