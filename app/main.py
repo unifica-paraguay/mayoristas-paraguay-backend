@@ -57,8 +57,22 @@ data_structure = load_data()
 # Admin interface routes
 @app.get("/admin", response_class=HTMLResponse)
 async def admin_dashboard(request: Request):
-    return templates.TemplateResponse("base.html", {
+    # Calculate statistics
+    total_shops = len(data_structure.shops)
+    total_categories = len(data_structure.categories)
+    total_zones = len(data_structure.zones)
+    total_banners = sum(1 for banner in [
+        data_structure.primary_banner,
+        data_structure.secondary_banner,
+        data_structure.recommended_image
+    ] if banner and banner.url)
+
+    return templates.TemplateResponse("admin_dashboard.html", {
         "request": request,
+        "total_shops": total_shops,
+        "total_categories": total_categories,
+        "total_zones": total_zones,
+        "total_banners": total_banners,
         "title": "Admin Dashboard"
     })
 
