@@ -1,7 +1,9 @@
-from fastapi import FastAPI, HTTPException, Request, UploadFile, File
+from fastapi import FastAPI, HTTPException, Request, UploadFile, File, Depends, Form
 from fastapi.staticfiles import StaticFiles
-from fastapi.responses import HTMLResponse, JSONResponse, FileResponse
+from fastapi.responses import HTMLResponse, JSONResponse, FileResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
+from fastapi.security import HTTPBearer
+from starlette.middleware.sessions import SessionMiddleware
 import plotly.express as px
 import plotly.graph_objects as go
 import pandas as pd
@@ -13,6 +15,11 @@ import os
 from dotenv import load_dotenv
 from .utils.working_hours import parse_legacy_working_hours, is_shop_open, format_working_hours, parse_time
 from datetime import time
+import secrets
+from .utils.security import authenticate_user, create_access_token, get_current_user, ACCESS_TOKEN_EXPIRE_MINUTES
+from datetime import timedelta
+import jwt
+from jose import JWTError
 
 # Load environment variables from .env file
 load_dotenv()
@@ -20,8 +27,21 @@ load_dotenv()
 # Import storage after loading environment variables
 from .utils.storage import CloudStorage
 
+# Get security variables
+ALGORITHM = "HS256"
+SECRET_KEY = os.getenv("SECRET_KEY")
+ADMIN_USERNAME = os.getenv("ADMIN_USERNAME")
+
 app = FastAPI(title="Mayoristas Paraguay Backend")
 storage = CloudStorage()
+
+# Add session middleware for CSRF protection
+app.add_middleware(
+    SessionMiddleware,
+    secret_key=os.getenv("SECRET_KEY"),
+    session_cookie="session",
+    max_age=ACCESS_TOKEN_EXPIRE_MINUTES * 60,  # in seconds
+)
 
 # Mount static files
 app.mount("/static", StaticFiles(directory="app/static"), name="static")
@@ -54,9 +74,96 @@ def save_data(data: DataStructure):
 # Load initial data
 data_structure = load_data()
 
-# Admin interface routes
+# Authentication routes
+@app.get("/", response_class=HTMLResponse)
+async def login_page(request: Request):
+    print("DEBUG: Checking authentication at root path")  # Debug print
+    # Check if user is already authenticated
+    try:
+        auth_cookie = request.cookies.get("Authorization")
+        if auth_cookie and auth_cookie.startswith("Bearer "):
+            token = auth_cookie.replace("Bearer ", "")
+            print(f"DEBUG: Found token: {token[:20]}...")  # Debug print
+            payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+            username = payload.get("sub")
+            print(f"DEBUG: Decoded username: {username}")  # Debug print
+            if username == ADMIN_USERNAME:
+                print("DEBUG: User is authenticated, redirecting to /admin")  # Debug print
+                return RedirectResponse(url="/admin", status_code=302)
+    except JWTError as e:
+        print(f"DEBUG: JWT Error: {str(e)}")  # Debug print
+    except Exception as e:
+        print(f"DEBUG: Unexpected error: {str(e)}")  # Debug print
+
+    # If not authenticated, show login page
+    print("DEBUG: User not authenticated, showing login page")  # Debug print
+    csrf_token = secrets.token_hex(32)
+    request.session["csrf_token"] = csrf_token
+    return templates.TemplateResponse("login.html", {
+        "request": request,
+        "csrf_token": csrf_token
+    })
+
+@app.post("/login")
+async def login(
+    request: Request,
+    username: str = Form(...),
+    password: str = Form(...),
+    csrf_token: str = Form(...)
+):
+    # Verify CSRF token
+    stored_csrf = request.session.get("csrf_token")
+    if not stored_csrf or stored_csrf != csrf_token:
+        return templates.TemplateResponse("login.html", {
+            "request": request,
+            "error": "Invalid CSRF token"
+        }, status_code=400)
+
+    if authenticate_user(username, password):
+        access_token = create_access_token(
+            data={"sub": username},
+            expires_delta=timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+        )
+        # Create a simple redirect response
+        response = RedirectResponse(url="/admin", status_code=302)
+        # Set the auth cookie with development-friendly settings
+        response.set_cookie(
+            key="Authorization",
+            value=f"Bearer {access_token}",
+            httponly=True,
+            secure=False,  # Allow HTTP for development
+            samesite="lax",
+            path="/",  # Ensure cookie is sent for all paths
+            max_age=ACCESS_TOKEN_EXPIRE_MINUTES * 60
+        )
+        print("DEBUG: Setting cookie with token:", access_token[:20], "...")  # Debug print
+        return response
+    
+    return templates.TemplateResponse("login.html", {
+        "request": request,
+        "error": "Invalid username or password",
+        "csrf_token": csrf_token
+    })
+
+@app.get("/logout")
+async def logout():
+    response = RedirectResponse(url="/", status_code=303)
+    response.delete_cookie(
+        key="Authorization",
+        httponly=True,
+        secure=False,  # Allow HTTP for development
+        samesite="lax",
+        path="/"  # Match login cookie settings
+    )
+    return response
+
+# Admin interface routes - now protected
 @app.get("/admin", response_class=HTMLResponse)
-async def admin_dashboard(request: Request):
+async def admin_dashboard(
+    request: Request,
+    current_user: str = Depends(get_current_user)
+):
+    print("DEBUG: Reached admin_dashboard with user:", current_user)  # Debug print
     # Calculate statistics
     total_shops = len(data_structure.shops)
     total_categories = len(data_structure.categories)
@@ -77,7 +184,10 @@ async def admin_dashboard(request: Request):
     })
 
 @app.get("/admin/shops", response_class=HTMLResponse)
-async def admin_shops(request: Request):
+async def admin_shops(
+    request: Request,
+    current_user: str = Depends(get_current_user)
+):
     return templates.TemplateResponse("shops.html", {
         "request": request,
         "shops": data_structure.shops,
@@ -86,21 +196,30 @@ async def admin_shops(request: Request):
     })
 
 @app.get("/admin/categories", response_class=HTMLResponse)
-async def admin_categories(request: Request):
+async def admin_categories(
+    request: Request,
+    current_user: str = Depends(get_current_user)
+):
     return templates.TemplateResponse("categories.html", {
         "request": request,
         "categories": data_structure.categories
     })
 
 @app.get("/admin/zones", response_class=HTMLResponse)
-async def admin_zones(request: Request):
+async def admin_zones(
+    request: Request,
+    current_user: str = Depends(get_current_user)
+):
     return templates.TemplateResponse("zones.html", {
         "request": request,
         "zones": data_structure.zones
     })
 
 @app.get("/admin/banners", response_class=HTMLResponse)
-async def admin_banners(request: Request):
+async def admin_banners(
+    request: Request,
+    current_user: str = Depends(get_current_user)
+):
     return templates.TemplateResponse("banners.html", {
         "request": request,
         "primary_banner": data_structure.primary_banner,
@@ -111,18 +230,18 @@ async def admin_banners(request: Request):
 
 # CRUD Operations for Shops
 @app.get("/api/shops", response_model=List[Shop])
-async def get_shops():
+async def get_shops(current_user: str = Depends(get_current_user)):
     return data_structure.shops
 
 @app.get("/api/shops/{shop_id}", response_model=Shop)
-async def get_shop(shop_id: int):
+async def get_shop(shop_id: int, current_user: str = Depends(get_current_user)):
     for shop in data_structure.shops:
         if shop.id == shop_id:
             return shop
     raise HTTPException(status_code=404, detail="Shop not found")
 
 @app.post("/api/shops", response_model=Shop)
-async def create_shop(shop: Shop):
+async def create_shop(shop: Shop, current_user: str = Depends(get_current_user)):
     # Check if ID already exists
     if any(s.id == shop.id for s in data_structure.shops):
         raise HTTPException(status_code=400, detail="Shop ID already exists")
@@ -198,18 +317,18 @@ async def delete_shop(shop_id: int):
 
 # CRUD Operations for Categories
 @app.get("/api/categories", response_model=List[Category])
-async def get_categories():
+async def get_categories(current_user: str = Depends(get_current_user)):
     return data_structure.categories
 
 @app.get("/api/categories/{category_id}", response_model=Category)
-async def get_category(category_id: int):
+async def get_category(category_id: int, current_user: str = Depends(get_current_user)):
     for category in data_structure.categories:
         if category.id == category_id:
             return category
     raise HTTPException(status_code=404, detail="Category not found")
 
 @app.post("/api/categories", response_model=Category)
-async def create_category(category: Category):
+async def create_category(category: Category, current_user: str = Depends(get_current_user)):
     if any(c.id == category.id for c in data_structure.categories):
         raise HTTPException(status_code=400, detail="Category ID already exists")
     data_structure.categories.append(category)
@@ -244,18 +363,18 @@ async def delete_category(category_id: int):
 
 # CRUD Operations for Zones
 @app.get("/api/zones", response_model=List[Zone])
-async def get_zones():
+async def get_zones(current_user: str = Depends(get_current_user)):
     return data_structure.zones
 
 @app.get("/api/zones/{zone_id}", response_model=Zone)
-async def get_zone(zone_id: int):
+async def get_zone(zone_id: int, current_user: str = Depends(get_current_user)):
     for zone in data_structure.zones:
         if zone.id == zone_id:
             return zone
     raise HTTPException(status_code=404, detail="Zone not found")
 
 @app.post("/api/zones", response_model=Zone)
-async def create_zone(zone: Zone):
+async def create_zone(zone: Zone, current_user: str = Depends(get_current_user)):
     if any(z.id == zone.id for z in data_structure.zones):
         raise HTTPException(status_code=400, detail="Zone ID already exists")
     data_structure.zones.append(zone)
@@ -320,8 +439,9 @@ async def update_other_businesses_image(image: ImageUrl):
     save_data(data_structure)
     return {"message": "Other businesses image updated successfully"}
 
-@app.get("/", response_class=HTMLResponse)
-async def root():
+@app.get("/analytics", response_class=HTMLResponse)
+async def analytics_dashboard(request: Request, current_user: str = Depends(get_current_user)):
+    """Analytics dashboard moved to /analytics and protected with authentication"""
     return """
     <html>
         <head>
