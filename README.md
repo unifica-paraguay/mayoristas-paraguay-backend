@@ -4,11 +4,13 @@ This is a FastAPI backend application that provides data management and visualiz
 
 ## Features
 
-- Complete CRUD API for shops, categories, and zones
+- Complete CRUD API for shops, categories, and zones with authentication
+- Secure admin interface with login system
 - Banner and image management
 - Data visualization dashboard
 - Interactive charts using Plotly
 - Modern, responsive UI using Tailwind CSS
+- Protected API endpoints with JWT authentication
 
 ## Requirements
 
@@ -34,6 +36,13 @@ source venv/bin/activate  # On Windows, use: venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
+4. Set up environment variables:
+   - Copy `.env.example` to `.env`
+   - Update the values in `.env` with your configuration:
+     - Set up Google Cloud Storage credentials
+     - Configure admin username and password
+     - Set a secure secret key for JWT authentication
+
 ## Running the Application
 
 1. Make sure you're in the project directory and your virtual environment is activated (if you created one).
@@ -48,6 +57,18 @@ uvicorn app.main:app --reload
 http://localhost:8000
 ```
 
+4. Log in with your admin credentials (configured in `.env`)
+
+## Authentication
+
+The application uses JWT-based authentication with the following features:
+- Secure login system with CSRF protection
+- HttpOnly cookies for JWT storage
+- Protected API endpoints requiring authentication
+- Automatic redirection to login for unauthenticated users
+- Session persistence across browser tabs
+- Configurable session expiration
+
 ## Docker Support
 
 You can also run the application using Docker:
@@ -59,10 +80,12 @@ docker build -t mayoristas-backend .
 
 2. Run the container:
 ```bash
-docker run -p 8000:8000 -v $(pwd)/data.json:/app/data.json mayoristas-backend
+docker run -p 8000:8000 -v $(pwd)/data.json:/app/data.json --env-file .env mayoristas-backend
 ```
 
 ## API Endpoints
+
+All API endpoints require authentication. You must first log in through the web interface to obtain the necessary authentication token.
 
 ### Shops
 
@@ -99,9 +122,18 @@ docker run -p 8000:8000 -v $(pwd)/data.json:/app/data.json mayoristas-backend
 
 - `GET /api/data` - Get the complete data.json file
 
+### Admin Interface
+
+- `/` - Login page (when not authenticated) or redirect to admin dashboard
+- `/admin` - Main admin dashboard
+- `/admin/shops` - Shop management interface
+- `/admin/categories` - Category management interface
+- `/admin/zones` - Zone management interface
+- `/admin/banners` - Banner management interface
+- `/analytics` - Data visualization dashboard
+
 ### Visualization Endpoints
 
-- `/` - Main dashboard with all visualizations
 - `/shops-by-zone` - Bar chart showing distribution of shops across zones
 - `/categories-distribution` - Pie chart showing top 10 categories
 - `/shops-by-category` - Bar chart showing top 15 categories by number of shops
@@ -109,11 +141,13 @@ docker run -p 8000:8000 -v $(pwd)/data.json:/app/data.json mayoristas-backend
 
 ## API Examples
 
-### Creating a New Shop
+### Creating a New Shop (with Authentication)
 
 ```bash
+# First, log in through the web interface to get the authentication cookie
 curl -X POST "http://localhost:8000/api/shops" \
      -H "Content-Type: application/json" \
+     -H "Cookie: Authorization=Bearer your_jwt_token" \
      -d '{
        "id": 12,
        "name": "New Shop",
@@ -127,11 +161,12 @@ curl -X POST "http://localhost:8000/api/shops" \
      }'
 ```
 
-### Updating a Category
+### Updating a Category (with Authentication)
 
 ```bash
 curl -X PUT "http://localhost:8000/api/categories/1" \
      -H "Content-Type: application/json" \
+     -H "Cookie: Authorization=Bearer your_jwt_token" \
      -d '{
        "id": 1,
        "name": "Updated Category Name",
@@ -147,6 +182,16 @@ The API includes several validation checks:
 - Validates that referenced categories exist when creating/updating shops
 - Validates that referenced zones exist when creating/updating shops
 - Prevents deletion of categories and zones that are in use by shops
+- Validates authentication tokens and user permissions
+
+## Security Features
+
+- JWT-based authentication
+- CSRF protection for forms
+- HttpOnly cookies for token storage
+- Secure session management
+- Protected API endpoints
+- Environment-based configuration
 
 ## Contributing
 
