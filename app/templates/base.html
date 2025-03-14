@@ -19,23 +19,23 @@
                     </div>
                     <!-- Desktop Menu -->
                     <div class="hidden md:ml-6 md:flex md:space-x-8">
-                        <a href="/admin" class="inline-flex items-center px-1 pt-1 text-gray-500 border-b-2 border-transparent hover:text-indigo-500 hover:border-indigo-500">
+                        <a href="/admin" class="inline-flex items-center px-1 pt-1 border-b-2 {% if request.url.path == '/admin' %}text-pink-500 border-pink-500{% else %}text-gray-500 border-transparent hover:text-pink-500 hover:border-pink-500{% endif %}">
                             <i data-lucide="layout-dashboard" class="w-5 h-5 mr-1"></i>
                             Dashboard
                         </a>
-                        <a href="/admin/shops" class="inline-flex items-center px-1 pt-1 text-gray-500 border-b-2 border-transparent hover:text-blue-500 hover:border-blue-500">
+                        <a href="/admin/shops" class="inline-flex items-center px-1 pt-1 border-b-2 {% if request.url.path == '/admin/shops' %}text-blue-500 border-blue-500{% else %}text-gray-500 border-transparent hover:text-blue-500 hover:border-blue-500{% endif %}">
                             <i data-lucide="shopping-cart" class="w-5 h-5 mr-1"></i>
                             Shops
                         </a>
-                        <a href="/admin/categories" class="inline-flex items-center px-1 pt-1 text-gray-500 border-b-2 border-transparent hover:text-green-500 hover:border-green-500">
+                        <a href="/admin/categories" class="inline-flex items-center px-1 pt-1 border-b-2 {% if request.url.path == '/admin/categories' %}text-green-500 border-green-500{% else %}text-gray-500 border-transparent hover:text-green-500 hover:border-green-500{% endif %}">
                             <i data-lucide="tag" class="w-5 h-5 mr-1"></i>
                             Categories
                         </a>
-                        <a href="/admin/zones" class="inline-flex items-center px-1 pt-1 text-gray-500 border-b-2 border-transparent hover:text-yellow-500 hover:border-yellow-500">
+                        <a href="/admin/zones" class="inline-flex items-center px-1 pt-1 border-b-2 {% if request.url.path == '/admin/zones' %}text-yellow-500 border-yellow-500{% else %}text-gray-500 border-transparent hover:text-yellow-500 hover:border-yellow-500{% endif %}">
                             <i data-lucide="map-pin" class="w-5 h-5 mr-1"></i>
                             Zones
                         </a>
-                        <a href="/admin/banners" class="inline-flex items-center px-1 pt-1 text-gray-500 border-b-2 border-transparent hover:text-purple-500 hover:border-purple-500">
+                        <a href="/admin/banners" class="inline-flex items-center px-1 pt-1 border-b-2 {% if request.url.path == '/admin/banners' %}text-purple-500 border-purple-500{% else %}text-gray-500 border-transparent hover:text-purple-500 hover:border-purple-500{% endif %}">
                             <i data-lucide="image" class="w-5 h-5 mr-1"></i>
                             Banners
                         </a>
@@ -58,23 +58,23 @@
             <!-- Mobile menu -->
             <div class="hidden md:hidden" id="mobile-menu">
                 <div class="pt-2 pb-3 space-y-1">
-                    <a href="/admin" class="block pl-3 pr-4 py-2 text-base font-medium text-gray-500 hover:text-indigo-500 hover:underline hover:bg-gray-50 rounded-md flex items-center">
+                    <a href="/admin" class="block pl-3 pr-4 py-2 text-base font-medium rounded-md flex items-center {% if request.url.path == '/admin' %}text-pink-500 bg-pink-50{% else %}text-gray-500 hover:text-pink-500 hover:bg-gray-50{% endif %}">
                         <i data-lucide="layout-dashboard" class="w-5 h-5 mr-2"></i>
                         Dashboard
                     </a>
-                    <a href="/admin/shops" class="block pl-3 pr-4 py-2 text-base font-medium text-gray-500 hover:text-blue-500 hover:underline hover:bg-gray-50 rounded-md flex items-center">
+                    <a href="/admin/shops" class="block pl-3 pr-4 py-2 text-base font-medium rounded-md flex items-center {% if request.url.path == '/admin/shops' %}text-blue-500 bg-blue-50{% else %}text-gray-500 hover:text-blue-500 hover:bg-gray-50{% endif %}">
                         <i data-lucide="shopping-cart" class="w-5 h-5 mr-2"></i>
                         Shops
                     </a>
-                    <a href="/admin/categories" class="block pl-3 pr-4 py-2 text-base font-medium text-gray-500 hover:text-green-500 hover:underline hover:bg-gray-50 rounded-md flex items-center">
+                    <a href="/admin/categories" class="block pl-3 pr-4 py-2 text-base font-medium rounded-md flex items-center {% if request.url.path == '/admin/categories' %}text-green-500 bg-green-50{% else %}text-gray-500 hover:text-green-500 hover:bg-gray-50{% endif %}">
                         <i data-lucide="tag" class="w-5 h-5 mr-2"></i>
                         Categories
                     </a>
-                    <a href="/admin/zones" class="block pl-3 pr-4 py-2 text-base font-medium text-gray-500 hover:text-yellow-500 hover:underline hover:bg-gray-50 rounded-md flex items-center">
+                    <a href="/admin/zones" class="block pl-3 pr-4 py-2 text-base font-medium rounded-md flex items-center {% if request.url.path == '/admin/zones' %}text-yellow-500 bg-yellow-50{% else %}text-gray-500 hover:text-yellow-500 hover:bg-gray-50{% endif %}">
                         <i data-lucide="map-pin" class="w-5 h-5 mr-2"></i>
                         Zones
                     </a>
-                    <a href="/admin/banners" class="block pl-3 pr-4 py-2 text-base font-medium text-gray-500 hover:text-purple-500 hover:underline hover:bg-gray-50 rounded-md flex items-center">
+                    <a href="/admin/banners" class="block pl-3 pr-4 py-2 text-base font-medium rounded-md flex items-center {% if request.url.path == '/admin/banners' %}text-purple-500 bg-purple-50{% else %}text-gray-500 hover:text-purple-500 hover:bg-gray-50{% endif %}">
                         <i data-lucide="image" class="w-5 h-5 mr-2"></i>
                         Banners
                     </a>
