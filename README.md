@@ -250,14 +250,14 @@ The API includes several validation checks:
 
 ### Support
 For technical support or inquiries:
-- Email: support@unifica.com.py
-- Phone: [Your support phone number]
+- Email: dev@unificadesign.com.py
+- Phone: +595 984 637337
 - Business hours: Monday to Friday, 9:00 - 18:00 PYT
 
 ## Contact Information
 
 Unifica
-- Website: https://unifica.com.py
-- Email: info@unifica.com.py
-- Address: [Your business address]
-- Phone: [Your business phone]
+- Website: https://unificadesign.com.py
+- Email: dev@unificadesign.com.py
+- Address: Asunción, Paraguay
+- Phone: +595 984 637337
