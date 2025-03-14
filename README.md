@@ -1,27 +1,47 @@
 # Mayoristas Paraguay Backend
 
+A comprehensive backend system for the Mayoristas Paraguay platform - a digital marketplace connecting wholesalers in Paraguay with their customers. This system provides secure administration of shops, product categories, and geographical zones, along with data visualization and analytics capabilities.
+
 This is a FastAPI backend application that provides data management and visualization for the Mayoristas Paraguay platform. The application provides CRUD operations for shops, categories, and zones, as well as various data visualizations.
 
 ## License
 
 This software is proprietary and confidential. Unauthorized copying, modification, distribution, or use of this software, via any medium, is strictly prohibited. This software is owned exclusively by Unifica and is protected by copyright law and international treaties.
 
-For licensing inquiries, please contact Unifica.
+For licensing inquiries, please contact Unifica at info@unifica.com.py.
 
 ## Features
 
 - Complete CRUD API for shops, categories, and zones with authentication
 - Secure admin interface with login system
-- Banner and image management
-- Data visualization dashboard
+- Banner and image management with Google Cloud Storage integration
+- Data visualization dashboard with real-time analytics
 - Interactive charts using Plotly
 - Modern, responsive UI using Tailwind CSS
 - Protected API endpoints with JWT authentication
+- Flexible deployment options (Docker/SaaS)
+
+## System Architecture
+
+### Data Storage
+- JSON-based data storage for business data (shops, categories, zones)
+- Google Cloud Storage for image and banner storage
+- Environment-based configuration for easy deployment
+- JWT-based session management
+
+### Security
+- Role-based access control
+- CSRF protection
+- Secure cookie handling
+- Protected API endpoints
+- Environment variable configuration
 
 ## Requirements
 
 - Python 3.8+
 - pip (Python package installer)
+- Google Cloud Storage account (for image storage)
+- Environment variables configured
 
 ## Installation
 
@@ -75,9 +95,10 @@ The application uses JWT-based authentication with the following features:
 - Session persistence across browser tabs
 - Configurable session expiration
 
-## Docker Support
+## Deployment Options
 
-You can also run the application using Docker:
+### Docker Deployment
+Recommended for self-hosted installations:
 
 1. Build the Docker image:
 ```bash
@@ -88,6 +109,26 @@ docker build -t mayoristas-backend .
 ```bash
 docker run -p 8000:8000 -v $(pwd)/data.json:/app/data.json --env-file .env mayoristas-backend
 ```
+
+### SaaS Deployment
+For managed hosting by Unifica:
+- Fully managed cloud deployment
+- Automatic updates and maintenance
+- Dedicated support
+- Data backup and recovery
+- Contact Unifica for pricing and setup
+
+## Data Management
+
+### File Structure
+- `data.json`: Main data store for shops, categories, and zones
+- Images and banners: Stored in Google Cloud Storage
+- Environment variables: Stored in `.env` file
+
+### Backup and Recovery
+- Regular automated backups of data.json
+- Google Cloud Storage redundancy for images
+- Easy data import/export functionality
 
 ## API Endpoints
 
@@ -199,10 +240,24 @@ The API includes several validation checks:
 - Protected API endpoints
 - Environment-based configuration
 
-## Contributing
+## Maintenance and Updates
 
-1. Fork the repository
-2. Create your feature branch
-3. Commit your changes
-4. Push to the branch
-5. Create a new Pull Request
+### Version Updates
+- Regular security updates
+- Feature additions
+- Bug fixes
+- Performance improvements
+
+### Support
+For technical support or inquiries:
+- Email: support@unifica.com.py
+- Phone: [Your support phone number]
+- Business hours: Monday to Friday, 9:00 - 18:00 PYT
+
+## Contact Information
+
+Unifica
+- Website: https://unifica.com.py
+- Email: info@unifica.com.py
+- Address: [Your business address]
+- Phone: [Your business phone]
