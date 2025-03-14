@@ -3,9 +3,9 @@
 {% block title %}Categories Management - Mayoristas Paraguay{% endblock %}
 
 {% block content %}
-<div class="bg-white shadow rounded-lg p-6">
+<div class="bg-white dark:bg-gray-800 shadow rounded-lg p-6">
     <div class="flex justify-between items-center mb-6">
-        <h2 class="text-2xl font-bold text-gray-800">Categories Management</h2>
+        <h2 class="text-2xl font-bold text-gray-800 dark:text-white">Categories Management</h2>
         <button onclick="document.getElementById('createCategoryModal').classList.remove('hidden')" 
                 class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded inline-flex items-center gap-2">
             <i data-lucide="plus-circle" class="w-5 h-5"></i>
@@ -16,21 +16,21 @@
     <!-- Desktop view (table) -->
     <div class="hidden md:block">
         <div class="overflow-x-auto">
-            <table class="min-w-full divide-y divide-gray-200">
-                <thead class="bg-gray-50">
+            <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                <thead class="bg-gray-50 dark:bg-gray-700">
                     <tr>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Icon</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">ID</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Name</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Icon</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Actions</th>
                     </tr>
                 </thead>
-                <tbody class="bg-white divide-y divide-gray-200">
+                <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
                     {% for category in categories %}
                     <tr>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ category.id }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ category.name }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ category.id }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">{{ category.name }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
                             {% if category.icon %}
                                 {% set icon_name = category.icon[6:] %}
                                 {% set kebab_case = namespace(value='') %}
@@ -41,7 +41,7 @@
                                         {% set kebab_case.value = kebab_case.value + char.lower() %}
                                     {% endif %}
                                 {% endfor %}
-                                <i data-lucide="{{ kebab_case.value }}"></i>
+                                <i data-lucide="{{ kebab_case.value }}" class="text-gray-600 dark:text-gray-400"></i>
                             {% else %}
                                 No icon
                             {% endif %}
@@ -50,12 +50,12 @@
                             <div class="flex items-center space-x-3">
                                 <button data-category='{{ category.model_dump() | tojson | safe }}' 
                                         onclick="editCategory(this.dataset.category)" 
-                                        class="text-indigo-600 hover:text-indigo-900 inline-flex items-center gap-1 bg-indigo-50 hover:bg-indigo-100 px-3 py-1.5 rounded-md transition-colors">
+                                        class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300 inline-flex items-center gap-1 bg-indigo-50 dark:bg-indigo-900/50 hover:bg-indigo-100 dark:hover:bg-indigo-900 px-3 py-1.5 rounded-md transition-colors">
                                     <i data-lucide="edit-2" class="w-4 h-4"></i>
                                     Edit
                                 </button>
                                 <button onclick="deleteCategory('{{ category.id }}')"
-                                        class="text-red-600 hover:text-red-900 inline-flex items-center gap-1 bg-red-50 hover:bg-red-100 px-3 py-1.5 rounded-md transition-colors">
+                                        class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300 inline-flex items-center gap-1 bg-red-50 dark:bg-red-900/50 hover:bg-red-100 dark:hover:bg-red-900 px-3 py-1.5 rounded-md transition-colors">
                                     <i data-lucide="trash-2" class="w-4 h-4"></i>
                                     Delete
                                 </button>
@@ -71,7 +71,7 @@
     <!-- Mobile view (cards) -->
     <div class="md:hidden space-y-4">
         {% for category in categories %}
-        <div class="bg-white rounded-lg shadow p-4">
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
             <div class="flex items-center justify-between">
                 <div class="flex items-center space-x-3">
                     {% if category.icon %}
@@ -84,26 +84,26 @@
                                 {% set kebab_case.value = kebab_case.value + char.lower() %}
                             {% endif %}
                         {% endfor %}
-                        <div class="w-10 h-10 bg-gray-50 rounded-full flex items-center justify-center">
-                            <i data-lucide="{{ kebab_case.value }}" class="w-6 h-6 text-gray-600"></i>
+                        <div class="w-10 h-10 bg-gray-50 dark:bg-gray-700 rounded-full flex items-center justify-center">
+                            <i data-lucide="{{ kebab_case.value }}" class="w-6 h-6 text-gray-600 dark:text-gray-400"></i>
                         </div>
                     {% endif %}
                     <div>
-                        <h3 class="text-lg font-medium text-gray-900">{{ category.name }}</h3>
-                        <p class="text-sm text-gray-500">#{{ category.id }}</p>
+                        <h3 class="text-lg font-medium text-gray-900 dark:text-white">{{ category.name }}</h3>
+                        <p class="text-sm text-gray-500 dark:text-gray-400">#{{ category.id }}</p>
                     </div>
                 </div>
             </div>
 
-            <div class="flex items-center justify-end space-x-2 pt-3 mt-3 border-t">
+            <div class="flex items-center justify-end space-x-2 pt-3 mt-3 border-t dark:border-gray-700">
                 <button data-category='{{ category.model_dump() | tojson | safe }}' 
                         onclick="editCategory(this.dataset.category)" 
-                        class="text-indigo-600 hover:text-indigo-900 inline-flex items-center gap-1 bg-indigo-50 hover:bg-indigo-100 px-3 py-1.5 rounded-md transition-colors">
+                        class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300 inline-flex items-center gap-1 bg-indigo-50 dark:bg-indigo-900/50 hover:bg-indigo-100 dark:hover:bg-indigo-900 px-3 py-1.5 rounded-md transition-colors">
                     <i data-lucide="edit-2" class="w-4 h-4"></i>
                     Edit
                 </button>
                 <button onclick="deleteCategory('{{ category.id }}')"
-                        class="text-red-600 hover:text-red-900 inline-flex items-center gap-1 bg-red-50 hover:bg-red-100 px-3 py-1.5 rounded-md transition-colors">
+                        class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300 inline-flex items-center gap-1 bg-red-50 dark:bg-red-900/50 hover:bg-red-100 dark:hover:bg-red-900 px-3 py-1.5 rounded-md transition-colors">
                     <i data-lucide="trash-2" class="w-4 h-4"></i>
                     Delete
                 </button>
@@ -114,36 +114,36 @@
 </div>
 
 <!-- Create Category Modal -->
-<div id="createCategoryModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full">
-    <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+<div id="createCategoryModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 dark:bg-gray-900 dark:bg-opacity-50 overflow-y-auto h-full w-full">
+    <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white dark:bg-gray-800 dark:border-gray-700">
         <div class="mt-3">
-            <h3 class="text-lg font-medium leading-6 text-gray-900 mb-4">Create New Category</h3>
+            <h3 class="text-lg font-medium leading-6 text-gray-900 dark:text-white mb-4">Create New Category</h3>
             <form id="createCategoryForm">
                 <div class="mb-4">
-                    <label class="block text-gray-700 text-sm font-bold mb-2" for="id">ID</label>
+                    <label class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2" for="id">ID</label>
                     <input type="number" name="id" required
-                           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                           class="shadow appearance-none border dark:border-gray-600 rounded w-full py-2 px-3 text-gray-700 dark:text-white dark:bg-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                 </div>
                 <div class="mb-4">
-                    <label class="block text-gray-700 text-sm font-bold mb-2" for="name">Name</label>
+                    <label class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2" for="name">Name</label>
                     <input type="text" name="name" required
-                           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                           class="shadow appearance-none border dark:border-gray-600 rounded w-full py-2 px-3 text-gray-700 dark:text-white dark:bg-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                 </div>
                 <div class="mb-4">
-                    <label class="block text-gray-700 text-sm font-bold mb-2" for="icon">Icon</label>
+                    <label class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2" for="icon">Icon</label>
                     <div class="relative">
                         <select name="icon" id="icon_select" required
-                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                class="shadow appearance-none border dark:border-gray-600 rounded w-full py-2 px-3 text-gray-700 dark:text-white dark:bg-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                             <option value="">Select an icon</option>
                         </select>
                         <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
-                            <i id="selected_icon" class="w-5 h-5"></i>
+                            <i id="selected_icon" class="w-5 h-5 text-gray-600 dark:text-gray-400"></i>
                         </div>
                     </div>
-                    <div class="mt-2 grid grid-cols-8 gap-2 p-2 border rounded max-h-40 overflow-y-auto" id="icon_preview">
+                    <div class="mt-2 grid grid-cols-8 gap-2 p-2 border dark:border-gray-600 rounded max-h-40 overflow-y-auto" id="icon_preview">
                         <!-- Icons will be populated here -->
                     </div>
-                    <div class="mt-2 text-sm text-gray-500 text-center" id="icon_counter">
+                    <div class="mt-2 text-sm text-gray-500 dark:text-gray-400 text-center" id="icon_counter">
                         Total icons: 0 | Selected: -
                     </div>
                 </div>
@@ -164,32 +164,32 @@
 </div>
 
 <!-- Edit Category Modal -->
-<div id="editCategoryModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full">
-    <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+<div id="editCategoryModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 dark:bg-gray-900 dark:bg-opacity-50 overflow-y-auto h-full w-full">
+    <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white dark:bg-gray-800 dark:border-gray-700">
         <div class="mt-3">
-            <h3 class="text-lg font-medium leading-6 text-gray-900 mb-4">Edit Category</h3>
+            <h3 class="text-lg font-medium leading-6 text-gray-900 dark:text-white mb-4">Edit Category</h3>
             <form id="editCategoryForm">
                 <input type="hidden" name="id" id="edit_category_id">
                 <div class="mb-4">
-                    <label class="block text-gray-700 text-sm font-bold mb-2" for="edit_category_name">Name</label>
+                    <label class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2" for="edit_category_name">Name</label>
                     <input type="text" name="name" id="edit_category_name" required
-                           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                           class="shadow appearance-none border dark:border-gray-600 rounded w-full py-2 px-3 text-gray-700 dark:text-white dark:bg-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                 </div>
                 <div class="mb-4">
-                    <label class="block text-gray-700 text-sm font-bold mb-2" for="edit_icon_select">Icon</label>
+                    <label class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2" for="edit_icon_select">Icon</label>
                     <div class="relative">
                         <select name="icon" id="edit_icon_select" required
-                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                class="shadow appearance-none border dark:border-gray-600 rounded w-full py-2 px-3 text-gray-700 dark:text-white dark:bg-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                             <option value="">Select an icon</option>
                         </select>
                         <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
-                            <i id="edit_selected_icon" class="w-5 h-5"></i>
+                            <i id="edit_selected_icon" class="w-5 h-5 text-gray-600 dark:text-gray-400"></i>
                         </div>
                     </div>
-                    <div class="mt-2 grid grid-cols-8 gap-2 p-2 border rounded max-h-40 overflow-y-auto" id="edit_icon_preview">
+                    <div class="mt-2 grid grid-cols-8 gap-2 p-2 border dark:border-gray-600 rounded max-h-40 overflow-y-auto" id="edit_icon_preview">
                         <!-- Icons will be populated here -->
                     </div>
-                    <div class="mt-2 text-sm text-gray-500 text-center" id="edit_icon_counter">
+                    <div class="mt-2 text-sm text-gray-500 dark:text-gray-400 text-center" id="edit_icon_counter">
                         Total icons: 0 | Selected: -
                     </div>
                 </div>
