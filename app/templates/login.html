@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="h-full">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,17 +7,18 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <script src="https://unpkg.com/htmx.org@1.9.10"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
 </head>
-<body class="bg-gray-100 h-screen flex items-center justify-center">
+<body class="bg-gray-100 dark:bg-gray-900 h-screen flex items-center justify-center">
     <div class="max-w-md w-full mx-4">
         <div class="text-center mb-8">
-            <h2 class="text-3xl font-bold text-gray-800">Mayoristas Paraguay</h2>
-            <p class="text-gray-600">Admin Panel</p>
+            <h2 class="text-3xl font-bold text-gray-800 dark:text-white">Mayoristas Paraguay</h2>
+            <p class="text-gray-600 dark:text-gray-400">Admin Panel</p>
         </div>
         
-        <div class="bg-white p-8 rounded-lg shadow-md">
+        <div class="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-md">
             {% if error %}
-            <div class="mb-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded" role="alert">
+            <div class="mb-4 bg-red-100 dark:bg-red-900/50 border border-red-400 dark:border-red-700 text-red-700 dark:text-red-400 px-4 py-3 rounded" role="alert">
                 <p>{{ error }}</p>
             </div>
             {% endif %}
@@ -26,23 +27,61 @@
                 <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
                 
                 <div>
-                    <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
+                    <label for="username" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Username</label>
                     <input type="text" name="username" id="username" required
-                           class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                           class="mt-1 block w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                 </div>
 
                 <div>
-                    <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+                    <label for="password" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Password</label>
                     <input type="password" name="password" id="password" required
-                           class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                           class="mt-1 block w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                 </div>
 
                 <button type="submit"
-                        class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                        class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-gray-800">
                     Sign in
                 </button>
             </form>
         </div>
+        
+        <!-- Theme Toggle Button -->
+        <div class="mt-4 text-center">
+            <button id="theme-toggle" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200">
+                <i data-lucide="sun" class="w-5 h-5 hidden dark:block"></i>
+                <i data-lucide="moon" class="w-5 h-5 block dark:hidden"></i>
+            </button>
+        </div>
     </div>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Theme toggle functionality
+        function initTheme() {
+            if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        }
+
+        function toggleTheme() {
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.theme = 'light';
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.theme = 'dark';
+            }
+        }
+
+        // Initialize theme on load
+        initTheme();
+
+        // Add click handler for theme toggle button
+        document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
+    </script>
 </body>
 </html> 

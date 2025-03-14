@@ -4,64 +4,64 @@
 <div class="space-y-6">
     <!-- Summary Statistics -->
     <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <div class="bg-white overflow-hidden shadow rounded-lg hover:shadow-md transition-shadow duration-200">
+        <div class="bg-white dark:bg-gray-800 overflow-hidden shadow rounded-lg hover:shadow-md transition-shadow duration-200">
             <div class="p-5">
                 <div class="flex items-center">
                     <div class="flex-shrink-0">
-                        <i data-lucide="shopping-cart" class="h-6 w-6 text-gray-400"></i>
+                        <i data-lucide="shopping-cart" class="h-6 w-6 text-gray-400 dark:text-gray-500"></i>
                     </div>
                     <div class="ml-5 w-0 flex-1">
                         <dl>
-                            <dt class="text-sm font-medium text-gray-500 truncate">Total Shops</dt>
-                            <dd class="text-lg font-medium text-gray-900">{{ total_shops }}</dd>
+                            <dt class="text-sm font-medium text-gray-500 dark:text-gray-400 truncate">Total Shops</dt>
+                            <dd class="text-lg font-medium text-gray-900 dark:text-white">{{ total_shops }}</dd>
                         </dl>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="bg-white overflow-hidden shadow rounded-lg hover:shadow-md transition-shadow duration-200">
+        <div class="bg-white dark:bg-gray-800 overflow-hidden shadow rounded-lg hover:shadow-md transition-shadow duration-200">
             <div class="p-5">
                 <div class="flex items-center">
                     <div class="flex-shrink-0">
-                        <i data-lucide="tag" class="h-6 w-6 text-gray-400"></i>
+                        <i data-lucide="tag" class="h-6 w-6 text-gray-400 dark:text-gray-500"></i>
                     </div>
                     <div class="ml-5 w-0 flex-1">
                         <dl>
-                            <dt class="text-sm font-medium text-gray-500 truncate">Categories</dt>
-                            <dd class="text-lg font-medium text-gray-900">{{ total_categories }}</dd>
+                            <dt class="text-sm font-medium text-gray-500 dark:text-gray-400 truncate">Categories</dt>
+                            <dd class="text-lg font-medium text-gray-900 dark:text-white">{{ total_categories }}</dd>
                         </dl>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="bg-white overflow-hidden shadow rounded-lg hover:shadow-md transition-shadow duration-200">
+        <div class="bg-white dark:bg-gray-800 overflow-hidden shadow rounded-lg hover:shadow-md transition-shadow duration-200">
             <div class="p-5">
                 <div class="flex items-center">
                     <div class="flex-shrink-0">
-                        <i data-lucide="map-pin" class="h-6 w-6 text-gray-400"></i>
+                        <i data-lucide="map-pin" class="h-6 w-6 text-gray-400 dark:text-gray-500"></i>
                     </div>
                     <div class="ml-5 w-0 flex-1">
                         <dl>
-                            <dt class="text-sm font-medium text-gray-500 truncate">Zones</dt>
-                            <dd class="text-lg font-medium text-gray-900">{{ total_zones }}</dd>
+                            <dt class="text-sm font-medium text-gray-500 dark:text-gray-400 truncate">Zones</dt>
+                            <dd class="text-lg font-medium text-gray-900 dark:text-white">{{ total_zones }}</dd>
                         </dl>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="bg-white overflow-hidden shadow rounded-lg hover:shadow-md transition-shadow duration-200">
+        <div class="bg-white dark:bg-gray-800 overflow-hidden shadow rounded-lg hover:shadow-md transition-shadow duration-200">
             <div class="p-5">
                 <div class="flex items-center">
                     <div class="flex-shrink-0">
-                        <i data-lucide="image" class="h-6 w-6 text-gray-400"></i>
+                        <i data-lucide="image" class="h-6 w-6 text-gray-400 dark:text-gray-500"></i>
                     </div>
                     <div class="ml-5 w-0 flex-1">
                         <dl>
-                            <dt class="text-sm font-medium text-gray-500 truncate">Active Banners</dt>
-                            <dd class="text-lg font-medium text-gray-900">{{ total_banners }}</dd>
+                            <dt class="text-sm font-medium text-gray-500 dark:text-gray-400 truncate">Active Banners</dt>
+                            <dd class="text-lg font-medium text-gray-900 dark:text-white">{{ total_banners }}</dd>
                         </dl>
                     </div>
                 </div>
@@ -71,49 +71,49 @@
 
     <!-- Quick Access Cards -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <a href="/admin/shops" class="bg-white overflow-hidden shadow rounded-lg hover:shadow-md transition-shadow duration-200">
+        <a href="/admin/shops" class="bg-white dark:bg-gray-800 overflow-hidden shadow rounded-lg hover:shadow-md transition-shadow duration-200">
             <div class="p-5">
                 <div class="flex items-center">
                     <i data-lucide="shopping-cart" class="h-8 w-8 text-blue-500"></i>
                     <div class="ml-4">
-                        <h3 class="text-lg font-medium text-gray-900">Manage Shops</h3>
-                        <p class="text-sm text-gray-500">Add, edit, or remove shops</p>
+                        <h3 class="text-lg font-medium text-gray-900 dark:text-white">Manage Shops</h3>
+                        <p class="text-sm text-gray-500 dark:text-gray-400">Add, edit, or remove shops</p>
                     </div>
                 </div>
             </div>
         </a>
 
-        <a href="/admin/categories" class="bg-white overflow-hidden shadow rounded-lg hover:shadow-md transition-shadow duration-200">
+        <a href="/admin/categories" class="bg-white dark:bg-gray-800 overflow-hidden shadow rounded-lg hover:shadow-md transition-shadow duration-200">
             <div class="p-5">
                 <div class="flex items-center">
                     <i data-lucide="tag" class="h-8 w-8 text-green-500"></i>
                     <div class="ml-4">
-                        <h3 class="text-lg font-medium text-gray-900">Manage Categories</h3>
-                        <p class="text-sm text-gray-500">Organize shop categories</p>
+                        <h3 class="text-lg font-medium text-gray-900 dark:text-white">Manage Categories</h3>
+                        <p class="text-sm text-gray-500 dark:text-gray-400">Organize shop categories</p>
                     </div>
                 </div>
             </div>
         </a>
 
-        <a href="/admin/zones" class="bg-white overflow-hidden shadow rounded-lg hover:shadow-md transition-shadow duration-200">
+        <a href="/admin/zones" class="bg-white dark:bg-gray-800 overflow-hidden shadow rounded-lg hover:shadow-md transition-shadow duration-200">
             <div class="p-5">
                 <div class="flex items-center">
                     <i data-lucide="map-pin" class="h-8 w-8 text-yellow-500"></i>
                     <div class="ml-4">
-                        <h3 class="text-lg font-medium text-gray-900">Manage Zones</h3>
-                        <p class="text-sm text-gray-500">Define delivery zones</p>
+                        <h3 class="text-lg font-medium text-gray-900 dark:text-white">Manage Zones</h3>
+                        <p class="text-sm text-gray-500 dark:text-gray-400">Define delivery zones</p>
                     </div>
                 </div>
             </div>
         </a>
 
-        <a href="/admin/banners" class="bg-white overflow-hidden shadow rounded-lg hover:shadow-md transition-shadow duration-200">
+        <a href="/admin/banners" class="bg-white dark:bg-gray-800 overflow-hidden shadow rounded-lg hover:shadow-md transition-shadow duration-200">
             <div class="p-5">
                 <div class="flex items-center">
                     <i data-lucide="image" class="h-8 w-8 text-purple-500"></i>
                     <div class="ml-4">
-                        <h3 class="text-lg font-medium text-gray-900">Manage Banners</h3>
-                        <p class="text-sm text-gray-500">Update promotional banners</p>
+                        <h3 class="text-lg font-medium text-gray-900 dark:text-white">Manage Banners</h3>
+                        <p class="text-sm text-gray-500 dark:text-gray-400">Update promotional banners</p>
                     </div>
                 </div>
             </div>
@@ -122,12 +122,12 @@
 
     <!-- Analytics Section -->
     <div class="space-y-4">
-        <h2 class="text-lg font-medium text-gray-900">Analytics Overview</h2>
+        <h2 class="text-lg font-medium text-gray-900 dark:text-white">Analytics Overview</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div class="bg-white p-4 rounded-lg shadow">
+            <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow">
                 <iframe src="/shops-by-zone" class="w-full h-80 border-0"></iframe>
             </div>
-            <div class="bg-white p-4 rounded-lg shadow">
+            <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow">
                 <iframe src="/categories-distribution" class="w-full h-80 border-0"></iframe>
             </div>
         </div>

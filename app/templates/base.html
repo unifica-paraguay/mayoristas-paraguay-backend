@@ -1,53 +1,79 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="h-full">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Mayoristas Paraguay Admin{% endblock %}</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <!-- Dark mode script - must be before Tailwind CSS -->
+    <script>
+        // On page load or when changing themes, best to add inline in `head` to avoid FOUC
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+    <!-- Tailwind CSS with dark mode enabled -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {}
+            }
+        }
+    </script>
     <script src="https://unpkg.com/htmx.org@1.9.10"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
 </head>
-<body class="bg-gray-100">
-    <nav class="bg-white shadow-lg">
+<body class="h-full bg-gray-100 dark:bg-gray-900">
+    <nav class="bg-white dark:bg-gray-800 shadow-lg">
         <div class="max-w-7xl mx-auto px-4">
             <div class="flex justify-between h-16">
                 <div class="flex justify-between w-full">
                     <div class="flex-shrink-0 flex items-center">
-                        <a href="/admin" class="text-xl font-bold text-gray-800">Mayoristas Paraguay</a>
+                        <a href="/admin" class="text-xl font-bold text-gray-800 dark:text-white">Mayoristas Paraguay</a>
                     </div>
                     <!-- Desktop Menu -->
                     <div class="hidden md:ml-6 md:flex md:space-x-8">
-                        <a href="/admin" class="inline-flex items-center px-1 pt-1 border-b-2 {% if request.url.path == '/admin' %}text-pink-500 border-pink-500{% else %}text-gray-500 border-transparent hover:text-pink-500 hover:border-pink-500{% endif %}">
+                        <a href="/admin" class="inline-flex items-center px-1 pt-1 border-b-2 {% if request.url.path == '/admin' %}text-indigo-500 border-indigo-500{% else %}text-gray-500 dark:text-gray-400 border-transparent hover:text-indigo-500 hover:border-indigo-500{% endif %}">
                             <i data-lucide="layout-dashboard" class="w-5 h-5 mr-1"></i>
                             Dashboard
                         </a>
-                        <a href="/admin/shops" class="inline-flex items-center px-1 pt-1 border-b-2 {% if request.url.path == '/admin/shops' %}text-blue-500 border-blue-500{% else %}text-gray-500 border-transparent hover:text-blue-500 hover:border-blue-500{% endif %}">
+                        <a href="/admin/shops" class="inline-flex items-center px-1 pt-1 border-b-2 {% if request.url.path == '/admin/shops' %}text-blue-500 border-blue-500{% else %}text-gray-500 dark:text-gray-400 border-transparent hover:text-blue-500 hover:border-blue-500{% endif %}">
                             <i data-lucide="shopping-cart" class="w-5 h-5 mr-1"></i>
                             Shops
                         </a>
-                        <a href="/admin/categories" class="inline-flex items-center px-1 pt-1 border-b-2 {% if request.url.path == '/admin/categories' %}text-green-500 border-green-500{% else %}text-gray-500 border-transparent hover:text-green-500 hover:border-green-500{% endif %}">
+                        <a href="/admin/categories" class="inline-flex items-center px-1 pt-1 border-b-2 {% if request.url.path == '/admin/categories' %}text-green-500 border-green-500{% else %}text-gray-500 dark:text-gray-400 border-transparent hover:text-green-500 hover:border-green-500{% endif %}">
                             <i data-lucide="tag" class="w-5 h-5 mr-1"></i>
                             Categories
                         </a>
-                        <a href="/admin/zones" class="inline-flex items-center px-1 pt-1 border-b-2 {% if request.url.path == '/admin/zones' %}text-yellow-500 border-yellow-500{% else %}text-gray-500 border-transparent hover:text-yellow-500 hover:border-yellow-500{% endif %}">
+                        <a href="/admin/zones" class="inline-flex items-center px-1 pt-1 border-b-2 {% if request.url.path == '/admin/zones' %}text-yellow-500 border-yellow-500{% else %}text-gray-500 dark:text-gray-400 border-transparent hover:text-yellow-500 hover:border-yellow-500{% endif %}">
                             <i data-lucide="map-pin" class="w-5 h-5 mr-1"></i>
                             Zones
                         </a>
-                        <a href="/admin/banners" class="inline-flex items-center px-1 pt-1 border-b-2 {% if request.url.path == '/admin/banners' %}text-purple-500 border-purple-500{% else %}text-gray-500 border-transparent hover:text-purple-500 hover:border-purple-500{% endif %}">
+                        <a href="/admin/banners" class="inline-flex items-center px-1 pt-1 border-b-2 {% if request.url.path == '/admin/banners' %}text-purple-500 border-purple-500{% else %}text-gray-500 dark:text-gray-400 border-transparent hover:text-purple-500 hover:border-purple-500{% endif %}">
                             <i data-lucide="image" class="w-5 h-5 mr-1"></i>
                             Banners
                         </a>
+                        <button id="theme-toggle" type="button" class="inline-flex items-center px-1 pt-1 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200">
+                            <i data-lucide="sun" class="w-5 h-5 hidden dark:block"></i>
+                            <i data-lucide="moon" class="w-5 h-5 block dark:hidden"></i>
+                        </button>
                         <a href="/logout" class="inline-flex items-center px-1 pt-1 text-red-500 hover:text-red-700">
                             <i data-lucide="log-out" class="w-5 h-5 mr-1"></i>
                             Logout
                         </a>
                     </div>
                     <!-- Mobile menu button -->
-                    <div class="flex items-center md:hidden">
+                    <div class="flex items-center space-x-2 md:hidden">
+                        <button id="theme-toggle-mobile" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 dark:hover:text-gray-300">
+                            <i data-lucide="sun" class="w-6 h-6 hidden dark:block"></i>
+                            <i data-lucide="moon" class="w-6 h-6 block dark:hidden"></i>
+                        </button>
                         <button type="button" 
-                                class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500"
+                                class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500"
                                 onclick="toggleMobileMenu()">
                             <i data-lucide="menu" class="block h-6 w-6" id="menu-icon"></i>
                             <i data-lucide="x" class="hidden h-6 w-6" id="close-icon"></i>
@@ -58,27 +84,27 @@
             <!-- Mobile menu -->
             <div class="hidden md:hidden" id="mobile-menu">
                 <div class="pt-2 pb-3 space-y-1">
-                    <a href="/admin" class="block pl-3 pr-4 py-2 text-base font-medium rounded-md flex items-center {% if request.url.path == '/admin' %}text-pink-500 bg-pink-50{% else %}text-gray-500 hover:text-pink-500 hover:bg-gray-50{% endif %}">
+                    <a href="/admin" class="block pl-3 pr-4 py-2 text-base font-medium rounded-md flex items-center {% if request.url.path == '/admin' %}text-indigo-500 bg-indigo-50 dark:bg-indigo-900/50{% else %}text-gray-500 dark:text-gray-400 hover:text-indigo-500 hover:bg-gray-50 dark:hover:bg-gray-700{% endif %}">
                         <i data-lucide="layout-dashboard" class="w-5 h-5 mr-2"></i>
                         Dashboard
                     </a>
-                    <a href="/admin/shops" class="block pl-3 pr-4 py-2 text-base font-medium rounded-md flex items-center {% if request.url.path == '/admin/shops' %}text-blue-500 bg-blue-50{% else %}text-gray-500 hover:text-blue-500 hover:bg-gray-50{% endif %}">
+                    <a href="/admin/shops" class="block pl-3 pr-4 py-2 text-base font-medium rounded-md flex items-center {% if request.url.path == '/admin/shops' %}text-blue-500 bg-blue-50 dark:bg-blue-900/50{% else %}text-gray-500 dark:text-gray-400 hover:text-blue-500 hover:bg-gray-50 dark:hover:bg-gray-700{% endif %}">
                         <i data-lucide="shopping-cart" class="w-5 h-5 mr-2"></i>
                         Shops
                     </a>
-                    <a href="/admin/categories" class="block pl-3 pr-4 py-2 text-base font-medium rounded-md flex items-center {% if request.url.path == '/admin/categories' %}text-green-500 bg-green-50{% else %}text-gray-500 hover:text-green-500 hover:bg-gray-50{% endif %}">
+                    <a href="/admin/categories" class="block pl-3 pr-4 py-2 text-base font-medium rounded-md flex items-center {% if request.url.path == '/admin/categories' %}text-green-500 bg-green-50 dark:bg-green-900/50{% else %}text-gray-500 dark:text-gray-400 hover:text-green-500 hover:bg-gray-50 dark:hover:bg-gray-700{% endif %}">
                         <i data-lucide="tag" class="w-5 h-5 mr-2"></i>
                         Categories
                     </a>
-                    <a href="/admin/zones" class="block pl-3 pr-4 py-2 text-base font-medium rounded-md flex items-center {% if request.url.path == '/admin/zones' %}text-yellow-500 bg-yellow-50{% else %}text-gray-500 hover:text-yellow-500 hover:bg-gray-50{% endif %}">
+                    <a href="/admin/zones" class="block pl-3 pr-4 py-2 text-base font-medium rounded-md flex items-center {% if request.url.path == '/admin/zones' %}text-yellow-500 bg-yellow-50 dark:bg-yellow-900/50{% else %}text-gray-500 dark:text-gray-400 hover:text-yellow-500 hover:bg-gray-50 dark:hover:bg-gray-700{% endif %}">
                         <i data-lucide="map-pin" class="w-5 h-5 mr-2"></i>
                         Zones
                     </a>
-                    <a href="/admin/banners" class="block pl-3 pr-4 py-2 text-base font-medium rounded-md flex items-center {% if request.url.path == '/admin/banners' %}text-purple-500 bg-purple-50{% else %}text-gray-500 hover:text-purple-500 hover:bg-gray-50{% endif %}">
+                    <a href="/admin/banners" class="block pl-3 pr-4 py-2 text-base font-medium rounded-md flex items-center {% if request.url.path == '/admin/banners' %}text-purple-500 bg-purple-50 dark:bg-purple-900/50{% else %}text-gray-500 dark:text-gray-400 hover:text-purple-500 hover:bg-gray-50 dark:hover:bg-gray-700{% endif %}">
                         <i data-lucide="image" class="w-5 h-5 mr-2"></i>
                         Banners
                     </a>
-                    <a href="/logout" class="block pl-3 pr-4 py-2 text-base font-medium text-red-500 hover:text-red-700 hover:bg-red-50 rounded-md flex items-center">
+                    <a href="/logout" class="block pl-3 pr-4 py-2 text-base font-medium text-red-500 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-900/50 rounded-md flex items-center">
                         <i data-lucide="log-out" class="w-5 h-5 mr-2"></i>
                         Logout
                     </a>
@@ -94,6 +120,23 @@
     <script>
         // Initialize Lucide icons
         lucide.createIcons();
+
+        // Theme toggle functionality
+        function toggleTheme() {
+            // Toggle dark class on documentElement
+            document.documentElement.classList.toggle('dark');
+            
+            // Update localStorage
+            if (document.documentElement.classList.contains('dark')) {
+                localStorage.theme = 'dark';
+            } else {
+                localStorage.theme = 'light';
+            }
+        }
+
+        // Add click handlers for theme toggle buttons
+        document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
+        document.getElementById('theme-toggle-mobile').addEventListener('click', toggleTheme);
 
         // Mobile menu toggle
         function toggleMobileMenu() {
