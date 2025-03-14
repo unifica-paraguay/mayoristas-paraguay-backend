@@ -265,7 +265,15 @@
                 body: JSON.stringify(newUrls)
             });
             
-            window.location.reload();
+            Swal.fire({
+                title: 'Uploaded!',
+                text: 'The banner has been uploaded.',
+                icon: 'success',
+                timer: 1500,
+                showConfirmButton: false
+            }).then(() => {
+                window.location.reload();
+            });
         }
     });
 
@@ -303,7 +311,15 @@
                 body: JSON.stringify(newUrls)
             });
             
-            window.location.reload();
+            Swal.fire({
+                title: 'Uploaded!',
+                text: 'The banner has been uploaded.',
+                icon: 'success',
+                timer: 1500,
+                showConfirmButton: false
+            }).then(() => {
+                window.location.reload();
+            });
         }
     });
 
@@ -338,7 +354,15 @@
                     const errorData = await updateResponse.json();
                     console.error('Error response:', errorData);
                 } else {
-                    window.location.reload();
+                    Swal.fire({
+                        title: 'Uploaded!',
+                        text: 'The image has been uploaded.',
+                        icon: 'success',
+                        timer: 1500,
+                        showConfirmButton: false
+                    }).then(() => {
+                        window.location.reload();
+                    });
                 }
             }
         } catch (error) {
@@ -366,10 +390,18 @@
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ url: data.url })  // Enviando objeto con propiedad url
+                    body: JSON.stringify({ url: data.url })
                 });
                 
-                window.location.reload();
+                Swal.fire({
+                    title: 'Uploaded!',
+                    text: 'The image has been uploaded.',
+                    icon: 'success',
+                    timer: 1500,
+                    showConfirmButton: false
+                }).then(() => {
+                    window.location.reload();
+                });
             }
         } catch (error) {
             console.error('Error uploading file:', error);
@@ -407,11 +439,13 @@
                     body: JSON.stringify(newUrls)
                 });
                 
-                Swal.fire(
-                    'Deleted!',
-                    'The banner has been deleted.',
-                    'success'
-                ).then(() => {
+                Swal.fire({
+                    title: 'Deleted!',
+                    text: 'The banner has been deleted.',
+                    icon: 'success',
+                    timer: 1500,
+                    showConfirmButton: false
+                }).then(() => {
                     window.location.reload();
                 });
             } catch (error) {
@@ -455,11 +489,13 @@
                     body: JSON.stringify(newUrls)
                 });
                 
-                Swal.fire(
-                    'Deleted!',
-                    'The banner has been deleted.',
-                    'success'
-                ).then(() => {
+                Swal.fire({
+                    title: 'Deleted!',
+                    text: 'The banner has been deleted.',
+                    icon: 'success',
+                    timer: 1500,
+                    showConfirmButton: false
+                }).then(() => {
                     window.location.reload();
                 });
             } catch (error) {
@@ -500,11 +536,13 @@
                     body: JSON.stringify({ url: "" })
                 });
                 
-                Swal.fire(
-                    'Deleted!',
-                    'The image has been deleted.',
-                    'success'
-                ).then(() => {
+                Swal.fire({
+                    title: 'Deleted!',
+                    text: 'The image has been deleted.',
+                    icon: 'success',
+                    timer: 1500,
+                    showConfirmButton: false
+                }).then(() => {
                     window.location.reload();
                 });
             } catch (error) {
@@ -545,11 +583,13 @@
                     body: JSON.stringify({ url: "" })
                 });
                 
-                Swal.fire(
-                    'Deleted!',
-                    'The image has been deleted.',
-                    'success'
-                ).then(() => {
+                Swal.fire({
+                    title: 'Deleted!',
+                    text: 'The image has been deleted.',
+                    icon: 'success',
+                    timer: 1500,
+                    showConfirmButton: false
+                }).then(() => {
                     window.location.reload();
                 });
             } catch (error) {
