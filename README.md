@@ -2,6 +2,12 @@
 
 This is a FastAPI backend application that provides data management and visualization for the Mayoristas Paraguay platform. The application provides CRUD operations for shops, categories, and zones, as well as various data visualizations.
 
+## License
+
+This software is proprietary and confidential. Unauthorized copying, modification, distribution, or use of this software, via any medium, is strictly prohibited. This software is owned exclusively by Unifica and is protected by copyright law and international treaties.
+
+For licensing inquiries, please contact Unifica.
+
 ## Features
 
 - Complete CRUD API for shops, categories, and zones with authentication
