@@ -169,10 +169,11 @@ async def admin_dashboard(
     total_categories = len(data_structure.categories)
     total_zones = len(data_structure.zones)
     total_banners = sum(1 for banner in [
-        data_structure.primary_banner,
-        data_structure.secondary_banner,
-        data_structure.recommended_image
-    ] if banner and banner.url)
+        *data_structure.primary_banner,
+        *data_structure.secondary_banner,
+        data_structure.recommended_image,
+        data_structure.other_businesses
+    ] if banner)
 
     return templates.TemplateResponse("admin_dashboard.html", {
         "request": request,
