@@ -1,0 +1,48 @@
+Proprietary License
+
+Copyright (c) 2024 Unifica. All rights reserved.
+
+This software and associated documentation files (the "Software") are the exclusive property of Unifica. The Software is protected by copyright laws and international copyright treaties, as well as other intellectual property laws and treaties.
+
+Terms and Conditions:
+
+1. Ownership
+   - All rights, title, and interest in and to the Software are owned exclusively by Unifica.
+   - This includes, but is not limited to, all intellectual property rights, source code, designs, logic, and implementation details.
+
+2. Restrictions
+   - No part of this Software may be copied, modified, merged, distributed, sublicensed, or sold without explicit written permission from Unifica.
+   - Access to the source code is strictly prohibited except for authorized Unifica personnel.
+   - Reverse engineering, decompilation, or disassembly of the Software is strictly prohibited.
+
+3. Distribution and Deployment
+   - The Software may only be distributed in the form of:
+     a) Docker images provided by Unifica
+     b) Software as a Service (SaaS) deployments managed by Unifica
+   - Clients receive only the right to use the deployed Software under the terms of their service agreement.
+
+4. Commercial Rights
+   - Unifica reserves the right to:
+     a) Reuse any part of the Software in other projects
+     b) Sell or license the Software to multiple clients
+     c) Modify or adapt the Software for different use cases
+   - The purchase or use of the Software does not grant any ownership rights to clients.
+
+5. Confidentiality
+   - The Software contains trade secrets and proprietary information of Unifica.
+   - Recipients of the Software agree to maintain its confidentiality and prevent unauthorized access or disclosure.
+
+6. Warranty Disclaimer
+   - The Software is provided "as is" without warranty of any kind, express or implied.
+   - Unifica makes no warranties regarding the use or performance of the Software.
+
+7. Limitation of Liability
+   - In no event shall Unifica be liable for any damages arising out of the use or inability to use the Software.
+
+8. Termination
+   - Any violation of these terms will result in immediate termination of the right to use the Software.
+   - Upon termination, all access to the Software must cease immediately.
+
+For licensing inquiries, please contact Unifica.
+
+This license is governed by the laws of Paraguay. 
