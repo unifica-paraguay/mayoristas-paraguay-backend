@@ -463,7 +463,7 @@ async def analytics_dashboard(request: Request, current_user: str = Depends(get_
     """
 
 @app.get("/shops-by-zone")
-async def get_shops_by_zone():
+async def get_shops_by_zone(request: Request):
     # Count shops per zone
     zone_counts = {}
     for shop in data_structure.shops:
@@ -478,11 +478,25 @@ async def get_shops_by_zone():
         for zone_id, count in zone_counts.items()
     ])
     
+    # Create figure with dark mode support
     fig = px.bar(df, x="zone", y="count", title="Shops by Zone")
-    return HTMLResponse(fig.to_html())
+    
+    # Update layout for dark mode
+    fig.update_layout(
+        template="plotly_dark",
+        paper_bgcolor="rgba(0,0,0,0)",
+        plot_bgcolor="rgba(0,0,0,0)",
+        font=dict(color="#9CA3AF")  # text-gray-400 in Tailwind
+    )
+    
+    # Update axes for dark mode
+    fig.update_xaxes(gridcolor="#374151")  # gray-700 in Tailwind
+    fig.update_yaxes(gridcolor="#374151")  # gray-700 in Tailwind
+    
+    return HTMLResponse(fig.to_html(full_html=False, include_plotlyjs=True))
 
 @app.get("/categories-distribution")
-async def get_categories_distribution():
+async def get_categories_distribution(request: Request):
     # Count category occurrences
     category_counts = {}
     for shop in data_structure.shops:
@@ -500,11 +514,21 @@ async def get_categories_distribution():
         for cat_id, count in top_categories
     ])
     
+    # Create figure with dark mode support
     fig = px.pie(df, values="count", names="category", title="Top 10 Categories Distribution")
-    return HTMLResponse(fig.to_html())
+    
+    # Update layout for dark mode
+    fig.update_layout(
+        template="plotly_dark",
+        paper_bgcolor="rgba(0,0,0,0)",
+        plot_bgcolor="rgba(0,0,0,0)",
+        font=dict(color="#9CA3AF")  # text-gray-400 in Tailwind
+    )
+    
+    return HTMLResponse(fig.to_html(full_html=False, include_plotlyjs=True))
 
 @app.get("/shops-by-category")
-async def get_shops_by_category():
+async def get_shops_by_category(request: Request):
     # Count shops per category
     category_shop_counts = {}
     for shop in data_structure.shops:
@@ -522,22 +546,46 @@ async def get_shops_by_category():
         for cat_id, count in top_categories
     ])
     
+    # Create figure with dark mode support
     fig = px.bar(df, x="category", y="count", title="Top 15 Categories by Number of Shops")
-    fig.update_layout(xaxis_tickangle=-45)
-    return HTMLResponse(fig.to_html())
+    
+    # Update layout for dark mode
+    fig.update_layout(
+        template="plotly_dark",
+        paper_bgcolor="rgba(0,0,0,0)",
+        plot_bgcolor="rgba(0,0,0,0)",
+        font=dict(color="#9CA3AF"),  # text-gray-400 in Tailwind
+        xaxis_tickangle=-45
+    )
+    
+    # Update axes for dark mode
+    fig.update_xaxes(gridcolor="#374151")  # gray-700 in Tailwind
+    fig.update_yaxes(gridcolor="#374151")  # gray-700 in Tailwind
+    
+    return HTMLResponse(fig.to_html(full_html=False, include_plotlyjs=True))
 
 @app.get("/working-hours-distribution")
-async def get_working_hours_distribution():
+async def get_working_hours_distribution(request: Request):
     # Count shops with and without working hours
     with_hours = len([shop for shop in data_structure.shops if shop.working_hours])
     without_hours = len(data_structure.shops) - with_hours
     
+    # Create figure with dark mode support
     fig = go.Figure(data=[go.Pie(
         labels=['With Working Hours', 'Without Working Hours'],
         values=[with_hours, without_hours],
         title="Working Hours Distribution"
     )])
-    return HTMLResponse(fig.to_html())
+    
+    # Update layout for dark mode
+    fig.update_layout(
+        template="plotly_dark",
+        paper_bgcolor="rgba(0,0,0,0)",
+        plot_bgcolor="rgba(0,0,0,0)",
+        font=dict(color="#9CA3AF")  # text-gray-400 in Tailwind
+    )
+    
+    return HTMLResponse(fig.to_html(full_html=False, include_plotlyjs=True))
 
 @app.get("/api/data")
 async def get_data_json():
