@@ -3,16 +3,16 @@
 {% block title %}Banners Management - Mayoristas Paraguay{% endblock %}
 
 {% block content %}
-<div class="container mx-auto px-4 py-8">
+<div class="container mx-auto px-4 py-8 dark:bg-gray-900">
     <!-- Primary Banner Section -->
     <div class="mb-8">
-        <h2 class="text-2xl font-bold mb-4">Primary Banner</h2>
+        <h2 class="text-2xl font-bold mb-4 text-gray-900 dark:text-white">Primary Banner</h2>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
             {% for url in primary_banner %}
             <div class="relative group">
-                <img src="{{ url }}" alt="Primary Banner" class="w-full h-48 object-cover rounded-lg">
+                <img src="{{ url }}" alt="Primary Banner" class="w-full h-48 object-cover rounded-lg shadow-md">
                 <button onclick="removePrimaryBanner('{{ url }}')"
-                        class="absolute top-2 right-2 bg-red-500 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+                        class="absolute top-2 right-2 bg-red-500 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-600">
                     <i data-lucide="trash-2" class="w-4 h-4"></i>
                 </button>
             </div>
@@ -25,7 +25,7 @@
                            class="hidden"
                            onchange="handleFileSelect(this, 'primaryBannerPreview')">
                     <label for="primaryBannerInput" 
-                           class="cursor-pointer inline-flex items-center px-4 py-2 bg-blue-50 text-blue-700 rounded-lg hover:bg-blue-100 transition-colors">
+                           class="cursor-pointer inline-flex items-center px-4 py-2 bg-indigo-100 dark:bg-indigo-900 text-indigo-700 dark:text-indigo-300 rounded-lg hover:bg-indigo-200 dark:hover:bg-indigo-800 transition-colors">
                         <i data-lucide="upload" class="w-4 h-4 mr-2"></i>
                         Choose Files
                     </label>
@@ -34,7 +34,7 @@
                     <!-- Image previews will be added here -->
                 </div>
                 <button type="submit"
-                        class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors w-full md:w-auto">
+                        class="bg-indigo-500 dark:bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-600 dark:hover:bg-indigo-700 transition-colors w-full md:w-auto">
                     Upload Selected Files
                 </button>
             </div>
@@ -43,13 +43,13 @@
 
     <!-- Secondary Banner Section -->
     <div class="mb-8">
-        <h2 class="text-2xl font-bold mb-4">Secondary Banner</h2>
+        <h2 class="text-2xl font-bold mb-4 text-gray-900 dark:text-white">Secondary Banner</h2>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
             {% for url in secondary_banner %}
             <div class="relative group">
-                <img src="{{ url }}" alt="Secondary Banner" class="w-full h-48 object-cover rounded-lg">
+                <img src="{{ url }}" alt="Secondary Banner" class="w-full h-48 object-cover rounded-lg shadow-md">
                 <button onclick="removeSecondaryBanner('{{ url }}')"
-                        class="absolute top-2 right-2 bg-red-500 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+                        class="absolute top-2 right-2 bg-red-500 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-600">
                     <i data-lucide="trash-2" class="w-4 h-4"></i>
                 </button>
             </div>
@@ -62,7 +62,7 @@
                            class="hidden"
                            onchange="handleFileSelect(this, 'secondaryBannerPreview')">
                     <label for="secondaryBannerInput"
-                           class="cursor-pointer inline-flex items-center px-4 py-2 bg-blue-50 text-blue-700 rounded-lg hover:bg-blue-100 transition-colors">
+                           class="cursor-pointer inline-flex items-center px-4 py-2 bg-indigo-100 dark:bg-indigo-900 text-indigo-700 dark:text-indigo-300 rounded-lg hover:bg-indigo-200 dark:hover:bg-indigo-800 transition-colors">
                         <i data-lucide="upload" class="w-4 h-4 mr-2"></i>
                         Choose Files
                     </label>
@@ -71,7 +71,7 @@
                     <!-- Image previews will be added here -->
                 </div>
                 <button type="submit"
-                        class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors w-full md:w-auto">
+                        class="bg-indigo-500 dark:bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-600 dark:hover:bg-indigo-700 transition-colors w-full md:w-auto">
                     Upload Selected Files
                 </button>
             </div>
@@ -80,12 +80,12 @@
 
     <!-- Recommended Image Section -->
     <div class="mb-8">
-        <h2 class="text-2xl font-bold mb-4">Recommended Image</h2>
+        <h2 class="text-2xl font-bold mb-4 text-gray-900 dark:text-white">Recommended Image</h2>
         {% if recommended_image %}
         <div class="relative group inline-block">
-            <img src="{{ recommended_image }}" alt="Recommended" class="w-64 h-64 object-cover rounded-lg">
+            <img src="{{ recommended_image }}" alt="Recommended" class="w-64 h-64 object-cover rounded-lg shadow-md">
             <button onclick="removeRecommendedImage('{{ recommended_image }}')"
-                    class="absolute top-2 right-2 bg-red-500 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+                    class="absolute top-2 right-2 bg-red-500 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-600">
                 <i data-lucide="trash-2" class="w-4 h-4"></i>
             </button>
         </div>
@@ -97,7 +97,7 @@
                            class="hidden"
                            onchange="handleSingleFileSelect(this, 'recommendedPreview')">
                     <label for="recommendedInput"
-                           class="cursor-pointer inline-flex items-center px-4 py-2 bg-blue-50 text-blue-700 rounded-lg hover:bg-blue-100 transition-colors">
+                           class="cursor-pointer inline-flex items-center px-4 py-2 bg-indigo-100 dark:bg-indigo-900 text-indigo-700 dark:text-indigo-300 rounded-lg hover:bg-indigo-200 dark:hover:bg-indigo-800 transition-colors">
                         <i data-lucide="upload" class="w-4 h-4 mr-2"></i>
                         Choose File
                     </label>
@@ -106,7 +106,7 @@
                     <!-- Image preview will be added here -->
                 </div>
                 <button type="submit"
-                        class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors w-full md:w-auto">
+                        class="bg-indigo-500 dark:bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-600 dark:hover:bg-indigo-700 transition-colors w-full md:w-auto">
                     Upload Selected File
                 </button>
             </div>
@@ -115,12 +115,12 @@
 
     <!-- Other Businesses Image Section -->
     <div class="mb-8">
-        <h2 class="text-2xl font-bold mb-4">Other Businesses Image</h2>
+        <h2 class="text-2xl font-bold mb-4 text-gray-900 dark:text-white">Other Businesses Image</h2>
         {% if other_businesses %}
         <div class="relative group inline-block">
-            <img src="{{ other_businesses }}" alt="Other Businesses" class="w-64 h-64 object-cover rounded-lg">
+            <img src="{{ other_businesses }}" alt="Other Businesses" class="w-64 h-64 object-cover rounded-lg shadow-md">
             <button onclick="removeOtherBusinessImage('{{ other_businesses }}')"
-                    class="absolute top-2 right-2 bg-red-500 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+                    class="absolute top-2 right-2 bg-red-500 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-600">
                 <i data-lucide="trash-2" class="w-4 h-4"></i>
             </button>
         </div>
@@ -132,7 +132,7 @@
                            class="hidden"
                            onchange="handleSingleFileSelect(this, 'otherBusinessPreview')">
                     <label for="otherBusinessInput"
-                           class="cursor-pointer inline-flex items-center px-4 py-2 bg-blue-50 text-blue-700 rounded-lg hover:bg-blue-100 transition-colors">
+                           class="cursor-pointer inline-flex items-center px-4 py-2 bg-indigo-100 dark:bg-indigo-900 text-indigo-700 dark:text-indigo-300 rounded-lg hover:bg-indigo-200 dark:hover:bg-indigo-800 transition-colors">
                         <i data-lucide="upload" class="w-4 h-4 mr-2"></i>
                         Choose File
                     </label>
@@ -141,7 +141,7 @@
                     <!-- Image preview will be added here -->
                 </div>
                 <button type="submit"
-                        class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors w-full md:w-auto">
+                        class="bg-indigo-500 dark:bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-600 dark:hover:bg-indigo-700 transition-colors w-full md:w-auto">
                     Upload Selected File
                 </button>
             </div>
