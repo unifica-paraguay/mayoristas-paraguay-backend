@@ -25,6 +25,7 @@
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">City</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Zone</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Categories</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Opening Hours</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Actions</th>
                     </tr>
                 </thead>
@@ -64,6 +65,40 @@
                                     {% endif %}
                                 {% endfor %}
                             </div>
+                        </td>
+                        <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">
+                            {% if shop.working_hours %}
+                                <div class="flex flex-col gap-2">
+                                    {% set ns = namespace(hours_map={}) %}
+                                    {% set days = ['lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado', 'domingo'] %}
+                                    
+                                    {% for day in days %}
+                                        {% if shop.working_hours[day] and shop.working_hours[day].is_open %}
+                                            {% set hours_str = shop.working_hours[day].open_time.strftime('%H:%M') + '-' + shop.working_hours[day].close_time.strftime('%H:%M') %}
+                                            {% if hours_str not in ns.hours_map %}
+                                                {% set _ = ns.hours_map.update({hours_str: []}) %}
+                                            {% endif %}
+                                            {% set _ = ns.hours_map[hours_str].append(day) %}
+                                        {% endif %}
+                                    {% endfor %}
+
+                                    {% for hours, days_list in ns.hours_map.items() %}
+                                        <div class="flex items-center gap-1.5">
+                                            <i data-lucide="clock" class="w-4 h-4 text-gray-400 dark:text-gray-500"></i>
+                                            <div class="flex flex-wrap gap-1 items-center">
+                                                {% for day in days_list %}
+                                                    <span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 text-xs font-medium">
+                                                        {{ day[:2]|capitalize }}
+                                                    </span>
+                                                {% endfor %}
+                                                <span class="ml-2">{{ hours }}</span>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                <span class="text-gray-400 dark:text-gray-500 italic">No schedule set</span>
+                            {% endif %}
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                             <div class="flex items-center space-x-3">
@@ -126,28 +161,39 @@
                     </p>
                 </div>
                 <div class="col-span-2">
-                    <p class="text-gray-500 dark:text-gray-400 mb-1">Categories</p>
-                    <div class="flex flex-wrap gap-1">
-                        {% for category in categories %}
-                            {% if category.id in shop.categories %}
-                                <span class="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium bg-gray-100 dark:bg-gray-700">
-                                    {% if category.icon %}
-                                        {% set icon_name = category.icon[6:] %}
-                                        {% set kebab_case = namespace(value='') %}
-                                        {% for char in icon_name %}
-                                            {% if char.isupper() and not loop.first %}
-                                                {% set kebab_case.value = kebab_case.value + '-' + char.lower() %}
-                                            {% else %}
-                                                {% set kebab_case.value = kebab_case.value + char.lower() %}
-                                            {% endif %}
-                                        {% endfor %}
-                                        <i data-lucide="{{ kebab_case.value }}" class="w-5 h-5 text-gray-600 dark:text-gray-400"></i>
+                    <p class="text-gray-500 dark:text-gray-400 mb-2">Opening Hours</p>
+                    {% if shop.working_hours %}
+                        <div class="space-y-2">
+                            {% set ns = namespace(hours_map={}) %}
+                            {% set days = ['lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado', 'domingo'] %}
+                            
+                            {% for day in days %}
+                                {% if shop.working_hours[day] and shop.working_hours[day].is_open %}
+                                    {% set hours_str = shop.working_hours[day].open_time.strftime('%H:%M') + '-' + shop.working_hours[day].close_time.strftime('%H:%M') %}
+                                    {% if hours_str not in ns.hours_map %}
+                                        {% set _ = ns.hours_map.update({hours_str: []}) %}
                                     {% endif %}
-                                    {{ category.name }}
-                                </span>
-                            {% endif %}
-                        {% endfor %}
-                    </div>
+                                    {% set _ = ns.hours_map[hours_str].append(day) %}
+                                {% endif %}
+                            {% endfor %}
+
+                            {% for hours, days_list in ns.hours_map.items() %}
+                                <div class="flex items-center gap-1.5 text-gray-700 dark:text-gray-300">
+                                    <i data-lucide="clock" class="w-4 h-4 text-gray-400 dark:text-gray-500"></i>
+                                    <div class="flex flex-wrap gap-1 items-center">
+                                        {% for day in days_list %}
+                                            <span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 text-xs font-medium">
+                                                {{ day[:2]|capitalize }}
+                                            </span>
+                                        {% endfor %}
+                                        <span class="ml-2">{{ hours }}</span>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <span class="text-gray-400 dark:text-gray-500 italic">No schedule set</span>
+                    {% endif %}
                 </div>
             </div>
 
