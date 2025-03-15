@@ -2,380 +2,678 @@
   "shops": [
     {
       "id": 0,
-      "name": "Libroteca",
-      "owner": "SA",
-      "contact_number": "595982844853",
-      "categories": [
-        0
-      ],
+      "name": "Ximeval Joyas",
+      "owner": "Andrea Vera",
+      "contact_number": "595986363873",
+      "categories": [33, 1, 11, 44],
       "working_hours": {
-        "lunes": {
-          "open_time": "08:00",
-          "close_time": "18:00",
-          "is_open": true
-        },
-        "martes": {
-          "open_time": "08:00",
-          "close_time": "18:00",
-          "is_open": true
-        },
-        "miércoles": {
-          "open_time": "08:00",
-          "close_time": "18:00",
-          "is_open": true
-        },
-        "jueves": {
-          "open_time": "08:00",
-          "close_time": "18:00",
-          "is_open": true
-        },
-        "viernes": {
-          "open_time": "08:00",
-          "close_time": "18:00",
-          "is_open": true
-        },
+        "lunes": null,
+        "martes": null,
+        "miércoles": null,
+        "jueves": null,
+        "viernes": null,
         "sábado": null,
         "domingo": null
       },
-      "city": "Asunción",
-      "zone_id": 0,
-      "categorie_pages": [
-        "recommended",
-        "free_shipping",
-        "see_all"
-      ],
-      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/23bc6220-a479-4cb3-b671-16bea5ef7450.jpeg"
+      "city": "Ciudad del Este",
+      "zone_id": 6,
+      "categorie_pages": ["see_all"],
+      "img": ""
     },
     {
       "id": 1,
-      "name": "Libroteca",
-      "owner": "SA",
-      "contact_number": "595982844853",
-      "categories": [
-        0
-      ],
+      "name": "Lasertec",
+      "owner": "Nelson Benítez",
+      "contact_number": "595984311003",
+      "categories": [28, 30, 69, 26],
       "working_hours": {
-        "lunes": {
-          "open_time": "08:00",
-          "close_time": "18:00",
-          "is_open": true
-        },
-        "martes": {
-          "open_time": "08:00",
-          "close_time": "18:00",
-          "is_open": true
-        },
-        "miércoles": {
-          "open_time": "08:00",
-          "close_time": "18:00",
-          "is_open": true
-        },
-        "jueves": {
-          "open_time": "08:00",
-          "close_time": "18:00",
-          "is_open": true
-        },
-        "viernes": {
-          "open_time": "08:00",
-          "close_time": "18:00",
-          "is_open": true
-        },
+        "lunes": null,
+        "martes": null,
+        "miércoles": null,
+        "jueves": null,
+        "viernes": null,
         "sábado": null,
         "domingo": null
       },
-      "city": "Asunción",
-      "zone_id": 0,
-      "categorie_pages": [
-        "recommended",
-        "free_shipping",
-        "see_all"
-      ],
-      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/23bc6220-a479-4cb3-b671-16bea5ef7450.jpeg"
+      "city": "Ciudad del Este",
+      "zone_id": 6,
+      "categorie_pages": ["see_all"],
+      "img": ""
     },
     {
       "id": 2,
-      "name": "Libroteca",
-      "owner": "SA",
-      "contact_number": "595982844853",
-      "categories": [
-        0
-      ],
+      "name": "Yoly Novedades",
+      "owner": "Yolanda Nuñez",
+      "contact_number": "595971290063",
+      "categories": [62, 44, 11, 7],
       "working_hours": {
         "lunes": {
-          "open_time": "08:00",
-          "close_time": "18:00",
+          "open_time": "07:00",
+          "close_time": "19:00",
           "is_open": true
         },
         "martes": {
-          "open_time": "08:00",
-          "close_time": "18:00",
+          "open_time": "07:00",
+          "close_time": "19:00",
           "is_open": true
         },
         "miércoles": {
-          "open_time": "08:00",
-          "close_time": "18:00",
+          "open_time": "07:00",
+          "close_time": "19:00",
           "is_open": true
         },
         "jueves": {
-          "open_time": "08:00",
-          "close_time": "18:00",
+          "open_time": "07:00",
+          "close_time": "19:00",
           "is_open": true
         },
         "viernes": {
-          "open_time": "08:00",
-          "close_time": "18:00",
+          "open_time": "07:00",
+          "close_time": "19:00",
           "is_open": true
         },
-        "sábado": null,
+        "sábado": {
+          "open_time": "07:00",
+          "close_time": "19:00",
+          "is_open": true
+        },
         "domingo": null
       },
-      "city": "Asunción",
-      "zone_id": 0,
-      "categorie_pages": [
-        "recommended",
-        "free_shipping",
-        "see_all"
-      ],
-      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/23bc6220-a479-4cb3-b671-16bea5ef7450.jpeg"
+      "city": "Ciudad del Este",
+      "zone_id": 6,
+      "categorie_pages": ["see_all"],
+      "img": ""
     },
     {
       "id": 3,
-      "name": "Libroteca",
-      "owner": "SA",
-      "contact_number": "595982844853",
-      "categories": [
-        0
-      ],
+      "name": "Espacio Belleza",
+      "owner": "",
+      "contact_number": "5545998885770",
+      "categories": [41],
       "working_hours": {
-        "lunes": {
-          "open_time": "08:00",
-          "close_time": "18:00",
-          "is_open": true
-        },
-        "martes": {
-          "open_time": "08:00",
-          "close_time": "18:00",
-          "is_open": true
-        },
-        "miércoles": {
-          "open_time": "08:00",
-          "close_time": "18:00",
-          "is_open": true
-        },
-        "jueves": {
-          "open_time": "08:00",
-          "close_time": "18:00",
-          "is_open": true
-        },
-        "viernes": {
-          "open_time": "08:00",
-          "close_time": "18:00",
-          "is_open": true
-        },
+        "lunes": null,
+        "martes": null,
+        "miércoles": null,
+        "jueves": null,
+        "viernes": null,
         "sábado": null,
         "domingo": null
       },
-      "city": "Asunción",
-      "zone_id": 0,
-      "categorie_pages": [
-        "recommended",
-        "free_shipping",
-        "see_all"
-      ],
-      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/23bc6220-a479-4cb3-b671-16bea5ef7450.jpeg"
+      "city": "Ciudad del Este",
+      "zone_id": 6,
+      "categorie_pages": ["see_all"],
+      "img": ""
     },
     {
       "id": 4,
-      "name": "Libroteca",
-      "owner": "SA",
-      "contact_number": "595982844853",
-      "categories": [
-        0
-      ],
+      "name": "Sailor Shop Py",
+      "owner": "Lya Cardozo",
+      "contact_number": "595991708674",
+      "categories": [38, 21, 43, 64, 54, 33, 34],
       "working_hours": {
         "lunes": {
-          "open_time": "08:00",
+          "open_time": "09:00",
           "close_time": "18:00",
           "is_open": true
         },
         "martes": {
-          "open_time": "08:00",
+          "open_time": "09:00",
           "close_time": "18:00",
           "is_open": true
         },
         "miércoles": {
-          "open_time": "08:00",
+          "open_time": "09:00",
           "close_time": "18:00",
           "is_open": true
         },
         "jueves": {
-          "open_time": "08:00",
+          "open_time": "09:00",
           "close_time": "18:00",
           "is_open": true
         },
         "viernes": {
-          "open_time": "08:00",
+          "open_time": "09:00",
           "close_time": "18:00",
           "is_open": true
         },
         "sábado": null,
         "domingo": null
       },
-      "city": "Asunción",
-      "zone_id": 0,
-      "categorie_pages": [
-        "recommended",
-        "free_shipping",
-        "see_all"
-      ],
-      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/23bc6220-a479-4cb3-b671-16bea5ef7450.jpeg"
+      "city": "Ciudad del Este",
+      "zone_id": 6,
+      "categorie_pages": ["see_all"],
+      "img": ""
     },
     {
       "id": 5,
-      "name": "Libroteca",
-      "owner": "SA",
-      "contact_number": "595982844853",
-      "categories": [
-        0
-      ],
+      "name": "NG NOVEDADES",
+      "owner": "Norma Gomez",
+      "contact_number": "595972570322",
+      "categories": [44, 11, 0],
       "working_hours": {
         "lunes": {
-          "open_time": "08:00",
-          "close_time": "18:00",
+          "open_time": "07:00",
+          "close_time": "17:00",
           "is_open": true
         },
         "martes": {
-          "open_time": "08:00",
-          "close_time": "18:00",
+          "open_time": "07:00",
+          "close_time": "17:00",
           "is_open": true
         },
         "miércoles": {
-          "open_time": "08:00",
-          "close_time": "18:00",
+          "open_time": "07:00",
+          "close_time": "17:00",
           "is_open": true
         },
         "jueves": {
-          "open_time": "08:00",
-          "close_time": "18:00",
+          "open_time": "07:00",
+          "close_time": "17:00",
           "is_open": true
         },
         "viernes": {
-          "open_time": "08:00",
-          "close_time": "18:00",
+          "open_time": "07:00",
+          "close_time": "17:00",
           "is_open": true
         },
         "sábado": null,
         "domingo": null
       },
-      "city": "Asunción",
-      "zone_id": 0,
-      "categorie_pages": [
-        "recommended",
-        "free_shipping",
-        "see_all"
-      ],
-      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/23bc6220-a479-4cb3-b671-16bea5ef7450.jpeg"
+      "city": "Luque",
+      "zone_id": 2,
+      "categorie_pages": ["see_all"],
+      "img": ""
     },
     {
       "id": 6,
-      "name": "Libroteca",
-      "owner": "SA",
-      "contact_number": "595982844853",
-      "categories": [
-        0
-      ],
+      "name": "Mars Shop",
+      "owner": "",
+      "contact_number": "595994888946",
+      "categories": [43, 23, 53, 27],
       "working_hours": {
-        "lunes": {
-          "open_time": "08:00",
-          "close_time": "18:00",
-          "is_open": true
-        },
-        "martes": {
-          "open_time": "08:00",
-          "close_time": "18:00",
-          "is_open": true
-        },
-        "miércoles": {
-          "open_time": "08:00",
-          "close_time": "18:00",
-          "is_open": true
-        },
-        "jueves": {
-          "open_time": "08:00",
-          "close_time": "18:00",
-          "is_open": true
-        },
-        "viernes": {
-          "open_time": "08:00",
-          "close_time": "18:00",
-          "is_open": true
-        },
+        "lunes": null,
+        "martes": null,
+        "miércoles": null,
+        "jueves": null,
+        "viernes": null,
         "sábado": null,
         "domingo": null
       },
-      "city": "Asunción",
-      "zone_id": 0,
-      "categorie_pages": [
-        "recommended",
-        "free_shipping",
-        "see_all"
-      ],
-      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/23bc6220-a479-4cb3-b671-16bea5ef7450.jpeg"
+      "city": "San Lorenzo",
+      "zone_id": 4,
+      "categorie_pages": ["see_all"],
+      "img": ""
     },
     {
       "id": 7,
-      "name": "Libroteca",
-      "owner": "SA",
-      "contact_number": "595982844853",
-      "categories": [
-        0
-      ],
+      "name": "Concu Store",
+      "owner": "Natalia Gonzalez",
+      "contact_number": "595985550954",
+      "categories": [40, 13, 16],
       "working_hours": {
         "lunes": {
-          "open_time": "08:00",
+          "open_time": "07:00",
           "close_time": "18:00",
           "is_open": true
         },
         "martes": {
-          "open_time": "08:00",
+          "open_time": "07:00",
           "close_time": "18:00",
           "is_open": true
         },
         "miércoles": {
-          "open_time": "08:00",
+          "open_time": "07:00",
           "close_time": "18:00",
           "is_open": true
         },
         "jueves": {
-          "open_time": "08:00",
+          "open_time": "07:00",
           "close_time": "18:00",
           "is_open": true
         },
         "viernes": {
-          "open_time": "08:00",
+          "open_time": "07:00",
           "close_time": "18:00",
           "is_open": true
         },
         "sábado": null,
         "domingo": null
       },
-      "city": "Asunción",
-      "zone_id": 0,
-      "categorie_pages": [
-        "recommended",
-        "free_shipping",
-        "see_all"
-      ],
-      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/23bc6220-a479-4cb3-b671-16bea5ef7450.jpeg"
+      "city": "Ciudad del Este",
+      "zone_id": 6,
+      "categorie_pages": ["see_all"],
+      "img": ""
     },
     {
       "id": 8,
-      "name": "Libroteca",
-      "owner": "SA",
-      "contact_number": "595982844853",
-      "categories": [
-        0
-      ],
+      "name": "CANTS FASHION",
+      "owner": "Dahiana Alcaráz",
+      "contact_number": "595982619028",
+      "categories": [49, 21],
+      "working_hours": {
+        "lunes": {
+          "open_time": "08:00",
+          "close_time": "19:00",
+          "is_open": true
+        },
+        "martes": {
+          "open_time": "08:00",
+          "close_time": "19:00",
+          "is_open": true
+        },
+        "miércoles": {
+          "open_time": "08:00",
+          "close_time": "19:00",
+          "is_open": true
+        },
+        "jueves": {
+          "open_time": "08:00",
+          "close_time": "19:00",
+          "is_open": true
+        },
+        "viernes": {
+          "open_time": "08:00",
+          "close_time": "19:00",
+          "is_open": true
+        },
+        "sábado": null,
+        "domingo": null
+      },
+      "city": "J.Augusto Saldivar",
+      "zone_id": 6,
+      "categorie_pages": ["see_all"],
+      "img": ""
+    },
+    {
+      "id": 9,
+      "name": "Solbenz Store",
+      "owner": "Kiara Benítez",
+      "contact_number": "595984570814",
+      "categories": [35, 56, 60, 30, 64, 42, 70, 65, 29],
+      "working_hours": {
+        "lunes": null,
+        "martes": null,
+        "miércoles": null,
+        "jueves": null,
+        "viernes": null,
+        "sábado": null,
+        "domingo": null
+      },
+      "city": "Capiatá",
+      "zone_id": 6,
+      "categorie_pages": ["see_all"],
+      "img": ""
+    },
+    {
+      "id": 10,
+      "name": "Mariel Novedades",
+      "owner": "Mariela Dávalos",
+      "contact_number": "595973106722",
+      "categories": [16, 32, 55, 21],
+      "working_hours": {
+        "lunes": {
+          "open_time": "07:00",
+          "close_time": "17:00",
+          "is_open": true
+        },
+        "martes": {
+          "open_time": "07:00",
+          "close_time": "17:00",
+          "is_open": true
+        },
+        "miércoles": {
+          "open_time": "07:00",
+          "close_time": "17:00",
+          "is_open": true
+        },
+        "jueves": {
+          "open_time": "07:00",
+          "close_time": "17:00",
+          "is_open": true
+        },
+        "viernes": {
+          "open_time": "07:00",
+          "close_time": "17:00",
+          "is_open": true
+        },
+        "sábado": {
+          "open_time": "07:30",
+          "close_time": "17:00",
+          "is_open": true
+        },
+        "domingo": null
+      },
+      "city": "Ciudad del Este",
+      "zone_id": 6,
+      "categorie_pages": ["see_all"],
+      "img": ""
+    },
+    {
+      "id": 11,
+      "name": "Gaby Modas",
+      "owner": "Silvina Nuñez",
+      "contact_number": "595973708088",
+      "categories": [50, 18, 24, 36, 9, 48, 11, 17, 64],
+      "working_hours": {
+        "lunes": {
+          "open_time": "07:00",
+          "close_time": "15:00",
+          "is_open": true
+        },
+        "martes": {
+          "open_time": "07:00",
+          "close_time": "15:00",
+          "is_open": true
+        },
+        "miércoles": {
+          "open_time": "07:00",
+          "close_time": "15:00",
+          "is_open": true
+        },
+        "jueves": {
+          "open_time": "07:00",
+          "close_time": "15:00",
+          "is_open": true
+        },
+        "viernes": {
+          "open_time": "07:00",
+          "close_time": "15:00",
+          "is_open": true
+        },
+        "sábado": null,
+        "domingo": null
+      },
+      "city": "Ciudad del Este",
+      "zone_id": 6,
+      "categorie_pages": ["see_all"],
+      "img": ""
+    },
+    {
+      "id": 12,
+      "name": "DIVAS FASHION",
+      "owner": "WILMA ELIZABETH GONZALEZ PORTILLO",
+      "contact_number": "595976938190",
+      "categories": [51, 11],
+      "working_hours": {
+        "lunes": {
+          "open_time": "07:30",
+          "close_time": "17:00",
+          "is_open": true
+        },
+        "martes": {
+          "open_time": "07:30",
+          "close_time": "17:00",
+          "is_open": true
+        },
+        "miércoles": {
+          "open_time": "07:30",
+          "close_time": "17:00",
+          "is_open": true
+        },
+        "jueves": {
+          "open_time": "07:30",
+          "close_time": "17:00",
+          "is_open": true
+        },
+        "viernes": {
+          "open_time": "07:30",
+          "close_time": "17:00",
+          "is_open": true
+        },
+        "sábado": null,
+        "domingo": null
+      },
+      "city": "Ciudad del Este",
+      "zone_id": 6,
+      "categorie_pages": ["see_all"],
+      "img": ""
+    },
+    {
+      "id": 13,
+      "name": "Nanny Shop EAS",
+      "owner": "Eliana Da Silva",
+      "contact_number": "595986720471",
+      "categories": [38, 21, 37],
+      "working_hours": {
+        "lunes": {
+          "open_time": "07:00",
+          "close_time": "16:00",
+          "is_open": true
+        },
+        "martes": {
+          "open_time": "07:00",
+          "close_time": "16:00",
+          "is_open": true
+        },
+        "miércoles": {
+          "open_time": "07:00",
+          "close_time": "16:00",
+          "is_open": true
+        },
+        "jueves": {
+          "open_time": "07:00",
+          "close_time": "16:00",
+          "is_open": true
+        },
+        "viernes": {
+          "open_time": "07:00",
+          "close_time": "16:00",
+          "is_open": true
+        },
+        "sábado": null,
+        "domingo": null
+      },
+      "city": "Ciudad del Este",
+      "zone_id": 6,
+      "categorie_pages": ["see_all"],
+      "img": ""
+    },
+    {
+      "id": 14,
+      "name": "Tudo Brazil",
+      "owner": "Mary Florencio",
+      "contact_number": "595982402913",
+      "categories": [52, 26, 11],
+      "working_hours": {
+        "lunes": null,
+        "martes": null,
+        "miércoles": null,
+        "jueves": null,
+        "viernes": null,
+        "sábado": null,
+        "domingo": null
+      },
+      "city": "Capiatá",
+      "zone_id": 6,
+      "categorie_pages": ["see_all"],
+      "img": ""
+    },
+    {
+      "id": 15,
+      "name": "Di Casa - Premium",
+      "owner": "Sandra Cañete",
+      "contact_number": "595973736453",
+      "categories": [46, 49, 39, 15, 3, 6],
+      "working_hours": {
+        "lunes": null,
+        "martes": null,
+        "miércoles": null,
+        "jueves": null,
+        "viernes": null,
+        "sábado": null,
+        "domingo": null
+      },
+      "city": "Ciudad del Este",
+      "zone_id": 6,
+      "categorie_pages": ["see_all"],
+      "img": ""
+    },
+    {
+      "id": 16,
+      "name": "Amapola",
+      "owner": "Ruth Torres",
+      "contact_number": "595994214753",
+      "categories": [33, 1, 8, 31],
+      "working_hours": {
+        "lunes": null,
+        "martes": null,
+        "miércoles": null,
+        "jueves": null,
+        "viernes": null,
+        "sábado": null,
+        "domingo": null
+      },
+      "city": "Ciudad del Este",
+      "zone_id": 6,
+      "categorie_pages": ["free_shipping", "see_all"],
+      "img": ""
+    },
+    {
+      "id": 17,
+      "name": "Camila Calzados",
+      "owner": "Silvina Britez",
+      "contact_number": "595984501871",
+      "categories": [71, 9, 21, 48],
+      "working_hours": {
+        "lunes": null,
+        "martes": null,
+        "miércoles": null,
+        "jueves": null,
+        "viernes": null,
+        "sábado": null,
+        "domingo": null
+      },
+      "city": "Ciudad del Este",
+      "zone_id": 6,
+      "categorie_pages": ["see_all"],
+      "img": ""
+    },
+    {
+      "id": 18,
+      "name": "Juma Decora",
+      "owner": "Bienestar Company S.R.L",
+      "contact_number": "595983627955",
+      "categories": [29, 63, 61, 20],
+      "working_hours": {
+        "lunes": null,
+        "martes": null,
+        "miércoles": null,
+        "jueves": null,
+        "viernes": null,
+        "sábado": null,
+        "domingo": null
+      },
+      "city": "Ciudad del Este",
+      "zone_id": 6,
+      "categorie_pages": ["see_all"],
+      "img": ""
+    },
+    {
+      "id": 19,
+      "name": "A&A tienda",
+      "owner": "Mónica Villalba colman",
+      "contact_number": "595986897050",
+      "categories": [11, 48, 38, 43, 26, 25, 64, 67, 22],
+      "working_hours": {
+        "lunes": {
+          "open_time": "08:00",
+          "close_time": "17:30",
+          "is_open": true
+        },
+        "martes": {
+          "open_time": "08:00",
+          "close_time": "17:30",
+          "is_open": true
+        },
+        "miércoles": {
+          "open_time": "08:00",
+          "close_time": "17:30",
+          "is_open": true
+        },
+        "jueves": {
+          "open_time": "08:00",
+          "close_time": "17:30",
+          "is_open": true
+        },
+        "viernes": {
+          "open_time": "08:00",
+          "close_time": "17:30",
+          "is_open": true
+        },
+        "sábado": null,
+        "domingo": null
+      },
+      "city": "Ciudad del Este",
+      "zone_id": 6,
+      "categorie_pages": ["see_all"],
+      "img": ""
+    },
+    {
+      "id": 20,
+      "name": "Mary Novedades",
+      "owner": "María Villalba",
+      "contact_number": "595993506860",
+      "categories": [44, 11, 7],
+      "working_hours": {
+        "lunes": null,
+        "martes": null,
+        "miércoles": null,
+        "jueves": null,
+        "viernes": null,
+        "sábado": null,
+        "domingo": null
+      },
+      "city": "Ciudad del Este",
+      "zone_id": 6,
+      "categorie_pages": ["see_all"],
+      "img": ""
+    },
+    {
+      "id": 21,
+      "name": "Sandra Leggal Jeans",
+      "owner": "Sandra Leggal",
+      "contact_number": "595981247493",
+      "categories": [32, 45, 47, 12, 14, 26],
+      "working_hours": {
+        "lunes": {
+          "open_time": "07:30",
+          "close_time": "16:00",
+          "is_open": true
+        },
+        "martes": {
+          "open_time": "07:30",
+          "close_time": "16:00",
+          "is_open": true
+        },
+        "miércoles": {
+          "open_time": "07:30",
+          "close_time": "16:00",
+          "is_open": true
+        },
+        "jueves": {
+          "open_time": "07:30",
+          "close_time": "16:00",
+          "is_open": true
+        },
+        "viernes": {
+          "open_time": "07:30",
+          "close_time": "16:00",
+          "is_open": true
+        },
+        "sábado": null,
+        "domingo": null
+      },
+      "city": "Ciudad del Este",
+      "zone_id": 6,
+      "categorie_pages": ["see_all"],
+      "img": ""
+    },
+    {
+      "id": 22,
+      "name": "La tienda de Sonia",
+      "owner": "Sonia Duarte",
+      "contact_number": "595981984011",
+      "categories": [57, 11, 19, 29, 9],
       "working_hours": {
         "lunes": {
           "open_time": "08:00",
@@ -405,66 +703,516 @@
         "sábado": null,
         "domingo": null
       },
-      "city": "Asunción",
-      "zone_id": 0,
-      "categorie_pages": [
-        "recommended",
-        "free_shipping",
-        "see_all"
-      ],
-      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/23bc6220-a479-4cb3-b671-16bea5ef7450.jpeg"
+      "city": "Ciudad del Este",
+      "zone_id": 6,
+      "categorie_pages": ["see_all"],
+      "img": ""
+    },
+    {
+      "id": 23,
+      "name": "DahiaStorepy",
+      "owner": "Dahiana López",
+      "contact_number": "595975861002",
+      "categories": [61, 20, 2, 40, 17, 9],
+      "working_hours": {
+        "lunes": {
+          "open_time": "07:00",
+          "close_time": "17:00",
+          "is_open": true
+        },
+        "martes": {
+          "open_time": "07:00",
+          "close_time": "17:00",
+          "is_open": true
+        },
+        "miércoles": {
+          "open_time": "07:00",
+          "close_time": "17:00",
+          "is_open": true
+        },
+        "jueves": {
+          "open_time": "07:00",
+          "close_time": "17:00",
+          "is_open": true
+        },
+        "viernes": {
+          "open_time": "07:00",
+          "close_time": "17:00",
+          "is_open": true
+        },
+        "sábado": null,
+        "domingo": null
+      },
+      "city": "Ciudad del Este",
+      "zone_id": 6,
+      "categorie_pages": ["free_shipping", "see_all"],
+      "img": ""
+    },
+    {
+      "id": 24,
+      "name": "Abishop",
+      "owner": "Dahiana Barcovich",
+      "contact_number": "595986915393",
+      "categories": [11, 44, 9, 61, 68, 66],
+      "working_hours": {
+        "lunes": null,
+        "martes": null,
+        "miércoles": null,
+        "jueves": null,
+        "viernes": null,
+        "sábado": null,
+        "domingo": null
+      },
+      "city": "Ciudad del Este",
+      "zone_id": 6,
+      "categorie_pages": ["see_all"],
+      "img": ""
+    },
+    {
+      "id": 25,
+      "name": "La tienda de Patty",
+      "owner": "Patricia Martinez",
+      "contact_number": "595991431730",
+      "categories": [57, 11, 17, 63, 6, 40, 13],
+      "working_hours": {
+        "lunes": {
+          "open_time": "07:30",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "martes": {
+          "open_time": "07:30",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "miércoles": {
+          "open_time": "07:30",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "jueves": {
+          "open_time": "07:30",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "viernes": {
+          "open_time": "07:30",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "sábado": {
+          "open_time": "07:30",
+          "close_time": "13:00",
+          "is_open": true
+        },
+        "domingo": null
+      },
+      "city": "Ciudad del Este",
+      "zone_id": 6,
+      "categorie_pages": ["see_all"],
+      "img": ""
+    },
+    {
+      "id": 26,
+      "name": "MY LOOK MAYORISTA",
+      "owner": "Elizabeth Cespedes",
+      "contact_number": "595985294970",
+      "categories": [59, 58],
+      "working_hours": {
+        "lunes": {
+          "open_time": "08:30",
+          "close_time": "17:00",
+          "is_open": true
+        },
+        "martes": {
+          "open_time": "08:30",
+          "close_time": "17:00",
+          "is_open": true
+        },
+        "miércoles": {
+          "open_time": "08:30",
+          "close_time": "17:00",
+          "is_open": true
+        },
+        "jueves": {
+          "open_time": "08:30",
+          "close_time": "17:00",
+          "is_open": true
+        },
+        "viernes": {
+          "open_time": "08:30",
+          "close_time": "17:00",
+          "is_open": true
+        },
+        "sábado": null,
+        "domingo": null
+      },
+      "city": "Villa Elisa",
+      "zone_id": 9,
+      "categorie_pages": ["see_all"],
+      "img": ""
     }
   ],
   "categories": [
     {
       "id": 0,
-      "name": "Libros",
-      "icon": "LucideBookmarkCheck"
+      "name": "Accesorios",
+      "icon": "LucideGem"
     },
     {
       "id": 1,
-      "name": "Accesorios",
-      "icon": "LucideAlarmClockPlus"
+      "name": "Acero Quirúrgico",
+      "icon": "LucideShield"
     },
     {
       "id": 2,
-      "name": "Muebles",
-      "icon": "LucideCircleSlash"
+      "name": "Alfombras",
+      "icon": "LucideLayers"
     },
     {
       "id": 3,
-      "name": "Electrónica",
-      "icon": "LucideFish"
+      "name": "Artículos De Cama",
+      "icon": "LucideBedDouble"
     },
     {
       "id": 4,
-      "name": "Electrodomésticos",
-      "icon": "LucideBaby"
+      "name": "Artículos Electrónicos",
+      "icon": "LucideCpu"
     },
     {
       "id": 5,
-      "name": "Hogar",
-      "icon": "LucideBoomBox"
+      "name": "Artículos En General",
+      "icon": "LucidePackage"
     },
     {
       "id": 6,
-      "name": "Belleza",
-      "icon": "LucideLocateFixed"
+      "name": "Artículos Para El Hogar",
+      "icon": "LucideHome"
     },
     {
       "id": 7,
-      "name": "Cosméticos",
-      "icon": "LucideDatabaseZap"
+      "name": "Artículos Varios",
+      "icon": "LucideBoxes"
     },
     {
       "id": 8,
-      "name": "Deportes",
-      "icon": "LucideSailboat"
+      "name": "Bañado En Oro De 18K y 24K",
+      "icon": "LucideDollarSign"
     },
     {
       "id": 9,
       "name": "Bazar",
-      "icon": "LucideWineOff"
+      "icon": "LucideStore"
+    },
+    {
+      "id": 10,
+      "name": "Bazar Mayorista",
+      "icon": "LucideWarehouse"
+    },
+    {
+      "id": 11,
+      "name": "Calzados",
+      "icon": "LucideShoe"
+    },
+    {
+      "id": 12,
+      "name": "Calzados Adultos",
+      "icon": "LucideShoe"
+    },
+    {
+      "id": 13,
+      "name": "Calzados Escolares",
+      "icon": "LucideSchool"
+    },
+    {
+      "id": 14,
+      "name": "Calzados Niños",
+      "icon": "LucideBaby"
+    },
+    {
+      "id": 15,
+      "name": "Calzados Premium",
+      "icon": "LucideDiamond"
+    },
+    {
+      "id": 16,
+      "name": "Calzados Varios",
+      "icon": "LucideGrid"
+    },
+    {
+      "id": 17,
+      "name": "Carteras",
+      "icon": "LucideShoppingBag"
+    },
+    {
+      "id": 18,
+      "name": "Casual",
+      "icon": "LucideTShirt"
+    },
+    {
+      "id": 19,
+      "name": "Cocina",
+      "icon": "LucideUtensils"
+    },
+    {
+      "id": 20,
+      "name": "Cortinas",
+      "icon": "LucideCurtains"
+    },
+    {
+      "id": 21,
+      "name": "Cosméticos",
+      "icon": "LucideDroplet"
+    },
+    {
+      "id": 22,
+      "name": "Cotillón",
+      "icon": "LucidePartyPopper"
+    },
+    {
+      "id": 23,
+      "name": "Cremas",
+      "icon": "LucideDroplets"
+    },
+    {
+      "id": 24,
+      "name": "Deportivos",
+      "icon": "LucideRunning"
+    },
+    {
+      "id": 25,
+      "name": "Electrodomésticos",
+      "icon": "LucideFridge"
+    },
+    {
+      "id": 26,
+      "name": "Electrónica",
+      "icon": "LucideMonitor"
+    },
+    {
+      "id": 27,
+      "name": "Gigot",
+      "icon": "LucideShoppingCart"
+    },
+    {
+      "id": 28,
+      "name": "Grabados En Láser",
+      "icon": "LucideLaser"
+    },
+    {
+      "id": 29,
+      "name": "Hogar",
+      "icon": "LucideHome"
+    },
+    {
+      "id": 30,
+      "name": "Hoppies",
+      "icon": "LucidePuzzle"
+    },
+    {
+      "id": 31,
+      "name": "Insumos Para Joyería",
+      "icon": "LucideGem"
+    },
+    {
+      "id": 32,
+      "name": "Jeans",
+      "icon": "LucideTrousers"
+    },
+    {
+      "id": 33,
+      "name": "Joyas",
+      "icon": "LucideDiamond"
+    },
+    {
+      "id": 34,
+      "name": "Bijouterie",
+      "icon": "LucideSparkles"
+    },
+    {
+      "id": 35,
+      "name": "Kalua",
+      "icon": "LucideBox"
+    },
+    {
+      "id": 36,
+      "name": "Lencerías",
+      "icon": "LucideLingerie"
+    },
+    {
+      "id": 37,
+      "name": "D'HERMOSA by Bruna Wan",
+      "icon": "LucideCrown"
+    },
+    {
+      "id": 38,
+      "name": "Maquillajes",
+      "icon": "LucideBrush"
+    },
+    {
+      "id": 39,
+      "name": "Medias Premium",
+      "icon": "LucideSocks"
+    },
+    {
+      "id": 40,
+      "name": "Mochilas",
+      "icon": "LucideBriefcase"
+    },
+    {
+      "id": 41,
+      "name": "Natura Mayoristas",
+      "icon": "LucideTree"
+    },
+    {
+      "id": 42,
+      "name": "Parlantes",
+      "icon": "LucideSpeaker"
+    },
+    {
+      "id": 43,
+      "name": "Perfumes",
+      "icon": "LucideDroplet"
+    },
+    {
+      "id": 44,
+      "name": "Prendas",
+      "icon": "LucideShirt"
+    },
+    {
+      "id": 45,
+      "name": "Prendas Caballeros",
+      "icon": "LucideUser"
+    },
+    {
+      "id": 46,
+      "name": "Prendas Casuales",
+      "icon": "LucideTShirt"
+    },
+    {
+      "id": 47,
+      "name": "Prendas Damas",
+      "icon": "LucideUserFemale"
+    },
+    {
+      "id": 48,
+      "name": "Prendas de Vestir",
+      "icon": "LucideHanger"
+    },
+    {
+      "id": 49,
+      "name": "Prendas Deportivas",
+      "icon": "LucideRunning"
+    },
+    {
+      "id": 50,
+      "name": "Prendas Elegantes",
+      "icon": "LucideCrown"
+    },
+    {
+      "id": 51,
+      "name": "Prendas En General",
+      "icon": "LucideTShirt"
+    },
+    {
+      "id": 52,
+      "name": "Prendas Exclusivas Para Revendedores",
+      "icon": "LucideUsers"
+    },
+    {
+      "id": 53,
+      "name": "Productos De Higiene",
+      "icon": "LucideSoap"
+    },
+    {
+      "id": 54,
+      "name": "Productos Varios",
+      "icon": "LucidePackage"
+    },
+    {
+      "id": 55,
+      "name": "Remeras",
+      "icon": "LucideTShirt"
+    },
+    {
+      "id": 56,
+      "name": "Romance",
+      "icon": "LucideHeart"
+    },
+    {
+      "id": 57,
+      "name": "Ropa",
+      "icon": "LucideTShirt"
+    },
+    {
+      "id": 58,
+      "name": "Ropa Casual",
+      "icon": "LucideTShirt"
+    },
+    {
+      "id": 59,
+      "name": "Ropa Deportiva",
+      "icon": "LucideRunning"
+    },
+    {
+      "id": 60,
+      "name": "Route 66",
+      "icon": "LucideRoad"
+    },
+    {
+      "id": 61,
+      "name": "Sábanas",
+      "icon": "LucideBedDouble"
+    },
+    {
+      "id": 62,
+      "name": "Shein",
+      "icon": "LucideShoppingCart"
+    },
+    {
+      "id": 63,
+      "name": "Sobrecama",
+      "icon": "LucideBedDouble"
+    },
+    {
+      "id": 64,
+      "name": "Termos",
+      "icon": "LucideFlask"
+    },
+    {
+      "id": 65,
+      "name": "Termos Forrados",
+      "icon": "LucideFlask"
+    },
+    {
+      "id": 66,
+      "name": "Termos Personalizados",
+      "icon": "LucideFlask"
+    },
+    {
+      "id": 67,
+      "name": "Stanley",
+      "icon": "LucideCup"
+    },
+    {
+      "id": 68,
+      "name": "Toallas",
+      "icon": "LucideTowel"
+    },
+    {
+      "id": 69,
+      "name": "Vasos",
+      "icon": "LucideGlass"
+    },
+    {
+      "id": 70,
+      "name": "Vasos Térmicos",
+      "icon": "LucideGlass"
+    },
+    {
+      "id": 71,
+      "name": "Zapatillas Al Por Mayor",
+      "icon": "LucideShoe"
     }
   ],
   "zones": [
