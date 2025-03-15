@@ -364,16 +364,16 @@
                         <div class="bg-white dark:bg-gray-800 p-4 rounded-lg border dark:border-gray-700 shadow-sm">
                             <h4 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Quick Templates</h4>
                             <div class="flex flex-wrap gap-2">
-                                <button type="button" class="template-btn px-3 py-1 text-sm rounded border dark:border-gray-600 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 shadow-sm transition-colors" data-template="weekday-9-6">
+                                <button type="button" class="template-btn edit-template-btn px-3 py-1 text-sm rounded border dark:border-gray-600 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 shadow-sm transition-colors" data-template="weekday-9-6">
                                     Weekdays 9-6
                                 </button>
-                                <button type="button" class="template-btn px-3 py-1 text-sm rounded border dark:border-gray-600 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 shadow-sm transition-colors" data-template="weekday-8-5">
+                                <button type="button" class="template-btn edit-template-btn px-3 py-1 text-sm rounded border dark:border-gray-600 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 shadow-sm transition-colors" data-template="weekday-8-5">
                                     Weekdays 8-5
                                 </button>
-                                <button type="button" class="template-btn px-3 py-1 text-sm rounded border dark:border-gray-600 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 shadow-sm transition-colors" data-template="all-week-9-6">
+                                <button type="button" class="template-btn edit-template-btn px-3 py-1 text-sm rounded border dark:border-gray-600 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 shadow-sm transition-colors" data-template="all-week-9-6">
                                     All Week 9-6
                                 </button>
-                                <button type="button" class="template-btn px-3 py-1 text-sm rounded border dark:border-gray-600 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 shadow-sm transition-colors" data-template="all-week-8-5">
+                                <button type="button" class="template-btn edit-template-btn px-3 py-1 text-sm rounded border dark:border-gray-600 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 shadow-sm transition-colors" data-template="all-week-8-5">
                                     All Week 8-5
                                 </button>
                             </div>
@@ -569,16 +569,16 @@
                         <div class="bg-white dark:bg-gray-800 p-4 rounded-lg border dark:border-gray-700 shadow-sm">
                             <h4 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Quick Templates</h4>
                             <div class="flex flex-wrap gap-2">
-                                <button type="button" class="template-btn px-3 py-1 text-sm rounded border dark:border-gray-600 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 shadow-sm transition-colors" data-template="weekday-9-6">
+                                <button type="button" class="template-btn edit-template-btn px-3 py-1 text-sm rounded border dark:border-gray-600 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 shadow-sm transition-colors" data-template="weekday-9-6">
                                     Weekdays 9-6
                                 </button>
-                                <button type="button" class="template-btn px-3 py-1 text-sm rounded border dark:border-gray-600 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 shadow-sm transition-colors" data-template="weekday-8-5">
+                                <button type="button" class="template-btn edit-template-btn px-3 py-1 text-sm rounded border dark:border-gray-600 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 shadow-sm transition-colors" data-template="weekday-8-5">
                                     Weekdays 8-5
                                 </button>
-                                <button type="button" class="template-btn px-3 py-1 text-sm rounded border dark:border-gray-600 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 shadow-sm transition-colors" data-template="all-week-9-6">
+                                <button type="button" class="template-btn edit-template-btn px-3 py-1 text-sm rounded border dark:border-gray-600 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 shadow-sm transition-colors" data-template="all-week-9-6">
                                     All Week 9-6
                                 </button>
-                                <button type="button" class="template-btn px-3 py-1 text-sm rounded border dark:border-gray-600 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 shadow-sm transition-colors" data-template="all-week-8-5">
+                                <button type="button" class="template-btn edit-template-btn px-3 py-1 text-sm rounded border dark:border-gray-600 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 shadow-sm transition-colors" data-template="all-week-8-5">
                                     All Week 8-5
                                 </button>
                             </div>
@@ -934,36 +934,48 @@
 
     // Add new JavaScript for working hours management
     document.addEventListener('DOMContentLoaded', function() {
-        // Template handling
-        document.querySelectorAll('.template-btn').forEach(btn => {
+        // Template handling for both create and edit modals
+        function handleTemplateClick(btn, formId) {
+            const template = btn.dataset.template;
+            let openTime, closeTime, days;
+            
+            switch(template) {
+                case 'weekday-9-6':
+                    openTime = '09:00';
+                    closeTime = '18:00';
+                    days = ['lunes', 'martes', 'miércoles', 'jueves', 'viernes'];
+                    break;
+                case 'weekday-8-5':
+                    openTime = '08:00';
+                    closeTime = '17:00';
+                    days = ['lunes', 'martes', 'miércoles', 'jueves', 'viernes'];
+                    break;
+                case 'all-week-9-6':
+                    openTime = '09:00';
+                    closeTime = '18:00';
+                    days = ['lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado', 'domingo'];
+                    break;
+                case 'all-week-8-5':
+                    openTime = '08:00';
+                    closeTime = '17:00';
+                    days = ['lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado', 'domingo'];
+                    break;
+            }
+            
+            applyWorkingHours(days, openTime, closeTime, formId);
+        }
+
+        // Create modal templates
+        document.querySelectorAll('#createShopModal .template-btn').forEach(btn => {
             btn.addEventListener('click', function() {
-                const template = this.dataset.template;
-                let openTime, closeTime, days;
-                
-                switch(template) {
-                    case 'weekday-9-6':
-                        openTime = '09:00';
-                        closeTime = '18:00';
-                        days = ['lunes', 'martes', 'miércoles', 'jueves', 'viernes'];
-                        break;
-                    case 'weekday-8-5':
-                        openTime = '08:00';
-                        closeTime = '17:00';
-                        days = ['lunes', 'martes', 'miércoles', 'jueves', 'viernes'];
-                        break;
-                    case 'all-week-9-6':
-                        openTime = '09:00';
-                        closeTime = '18:00';
-                        days = ['lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado', 'domingo'];
-                        break;
-                    case 'all-week-8-5':
-                        openTime = '08:00';
-                        closeTime = '17:00';
-                        days = ['lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado', 'domingo'];
-                        break;
-                }
-                
-                applyWorkingHours(days, openTime, closeTime);
+                handleTemplateClick(this, 'createShopForm');
+            });
+        });
+
+        // Edit modal templates
+        document.querySelectorAll('#editShopModal .edit-template-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                handleTemplateClick(this, 'editShopForm');
             });
         });
 
@@ -1011,7 +1023,7 @@
             const selectedDays = Array.from(document.querySelectorAll('.working-hours-toggle:checked'))
                 .map(toggle => toggle.dataset.day);
             
-            applyWorkingHours(selectedDays, openTime, closeTime);
+            applyWorkingHours(selectedDays, openTime, closeTime, 'editShopForm');
         });
 
         // Working hours toggle functionality
@@ -1029,15 +1041,17 @@
             });
         });
 
-        function applyWorkingHours(days, openTime, closeTime) {
+        function applyWorkingHours(days, openTime, closeTime, formId) {
+            const form = document.getElementById(formId);
             days.forEach(day => {
-                const toggle = document.querySelector(`[name="working_hours_${day}_enabled"]`);
-                const openInput = document.querySelector(`[name="working_hours_${day}_open"]`);
-                const closeInput = document.querySelector(`[name="working_hours_${day}_close"]`);
+                const toggle = form.querySelector(`[name="working_hours_${day}_enabled"]`);
+                const openInput = form.querySelector(`[name="working_hours_${day}_open"]`);
+                const closeInput = form.querySelector(`[name="working_hours_${day}_close"]`);
                 
                 if (toggle && openInput && closeInput) {
                     toggle.checked = true;
-                    toggle.dispatchEvent(new Event('change'));
+                    openInput.disabled = false;
+                    closeInput.disabled = false;
                     openInput.value = openTime;
                     closeInput.value = closeTime;
                 }
