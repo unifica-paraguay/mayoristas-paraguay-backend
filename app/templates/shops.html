@@ -68,7 +68,7 @@
                         </td>
                         <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">
                             {% if shop.working_hours %}
-                                <div class="flex flex-col gap-2">
+                                <div class="flex flex-col gap-1">
                                     {% set ns = namespace(hours_map={}) %}
                                     {% set days = ['lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado', 'domingo'] %}
                                     
@@ -83,16 +83,23 @@
                                     {% endfor %}
 
                                     {% for hours, days_list in ns.hours_map.items() %}
-                                        <div class="flex items-center gap-1.5">
-                                            <i data-lucide="clock" class="w-4 h-4 text-gray-400 dark:text-gray-500"></i>
-                                            <div class="flex flex-wrap gap-1 items-center">
+                                        <div class="flex items-center gap-2 py-1 px-2 -mx-2 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+                                            <div class="flex flex-wrap gap-1 min-w-[120px]">
                                                 {% for day in days_list %}
-                                                    <span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 text-xs font-medium">
+                                                    <span title="{{ day|capitalize }}" 
+                                                          class="inline-flex items-center justify-center w-5 h-5 rounded-full text-[11px] font-medium tracking-wider uppercase
+                                                          {% if hours == '08:00-18:00' %}
+                                                              bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400
+                                                          {% elif hours == '09:00-18:00' %}
+                                                              bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-400
+                                                          {% else %}
+                                                              bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400
+                                                          {% endif %}">
                                                         {{ day[:2]|capitalize }}
                                                     </span>
                                                 {% endfor %}
-                                                <span class="ml-2">{{ hours }}</span>
                                             </div>
+                                            <span class="font-medium text-gray-900 dark:text-white">{{ hours }}</span>
                                         </div>
                                     {% endfor %}
                                 </div>
@@ -161,9 +168,12 @@
                     </p>
                 </div>
                 <div class="col-span-2">
-                    <p class="text-gray-500 dark:text-gray-400 mb-2">Opening Hours</p>
+                    <div class="flex items-center gap-1 text-gray-400 dark:text-gray-500 mb-2">
+                        <i data-lucide="clock" class="w-4 h-4"></i>
+                        <span class="text-xs uppercase tracking-wider font-medium">Opening Hours</span>
+                    </div>
                     {% if shop.working_hours %}
-                        <div class="space-y-2">
+                        <div class="space-y-1">
                             {% set ns = namespace(hours_map={}) %}
                             {% set days = ['lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado', 'domingo'] %}
                             
@@ -178,16 +188,23 @@
                             {% endfor %}
 
                             {% for hours, days_list in ns.hours_map.items() %}
-                                <div class="flex items-center gap-1.5 text-gray-700 dark:text-gray-300">
-                                    <i data-lucide="clock" class="w-4 h-4 text-gray-400 dark:text-gray-500"></i>
-                                    <div class="flex flex-wrap gap-1 items-center">
+                                <div class="flex items-center gap-2 py-1 px-2 -mx-2 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+                                    <div class="flex flex-wrap gap-1 min-w-[120px]">
                                         {% for day in days_list %}
-                                            <span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 text-xs font-medium">
+                                            <span title="{{ day|capitalize }}" 
+                                                  class="inline-flex items-center justify-center w-5 h-5 rounded-full text-[11px] font-medium tracking-wider uppercase
+                                                  {% if hours == '08:00-18:00' %}
+                                                      bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400
+                                                  {% elif hours == '09:00-18:00' %}
+                                                      bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-400
+                                                  {% else %}
+                                                      bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400
+                                                  {% endif %}">
                                                 {{ day[:2]|capitalize }}
                                             </span>
                                         {% endfor %}
-                                        <span class="ml-2">{{ hours }}</span>
                                     </div>
+                                    <span class="font-medium text-gray-900 dark:text-white">{{ hours }}</span>
                                 </div>
                             {% endfor %}
                         </div>
@@ -370,7 +387,7 @@
                                 </div>
                                 <div class="flex justify-end">
                                     <button type="button" id="apply_bulk_times"
-                                            class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white text-sm font-medium rounded-md shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 border border-blue-600 dark:border-blue-500">
+                                            class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white text-sm font-medium rounded-md shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800">
                                         Apply to Selected
                                     </button>
                                 </div>
