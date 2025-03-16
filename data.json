@@ -48,7 +48,6 @@
       "zone_id": 6,
       "categorie_pages": [
         "recommended",
-        "free_shipping",
         "see_all"
       ],
       "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/5fe0f8bf-70ba-4905-a17d-3f121f1768b0.jpg"
@@ -856,7 +855,7 @@
       "city": "Ciudad del Este",
       "zone_id": 6,
       "categorie_pages": [
-        "free_shipping",
+        "recommended",
         "see_all"
       ],
       "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/910aa0a6-fb8e-4ac3-8efe-fb350bf6a9a3.jpg"
@@ -1174,12 +1173,12 @@
       "owner": "Dahiana López",
       "contact_number": "123595975861002",
       "categories": [
-        61,
-        20,
         2,
-        40,
+        9,
         17,
-        9
+        20,
+        40,
+        61
       ],
       "working_hours": {
         "lunes": {
@@ -1213,7 +1212,7 @@
       "city": "Ciudad del Este",
       "zone_id": 6,
       "categorie_pages": [
-        "free_shipping",
+        "recommended",
         "see_all"
       ],
       "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/280bfe6f-4b37-411a-82dc-76a2080be51a.jpg"
@@ -1420,7 +1419,6 @@
       "zone_id": 0,
       "categorie_pages": [
         "recommended",
-        "free_shipping",
         "see_all"
       ],
       "img": ""

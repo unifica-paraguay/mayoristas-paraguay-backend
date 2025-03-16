@@ -836,14 +836,20 @@
 
         if (recommendedCheckbox && otherBusinessCheckbox) {
             recommendedCheckbox.addEventListener('change', function() {
-                if (this.checked && otherBusinessCheckbox.checked) {
+                if (this.checked) {
                     otherBusinessCheckbox.checked = false;
+                } else if (!otherBusinessCheckbox.checked) {
+                    // If unchecking recommended and other business is not checked, force other business
+                    otherBusinessCheckbox.checked = true;
                 }
             });
 
             otherBusinessCheckbox.addEventListener('change', function() {
-                if (this.checked && recommendedCheckbox.checked) {
+                if (this.checked) {
                     recommendedCheckbox.checked = false;
+                } else if (!recommendedCheckbox.checked) {
+                    // If unchecking other business and recommended is not checked, force recommended
+                    recommendedCheckbox.checked = true;
                 }
             });
         }
@@ -911,6 +917,16 @@
     document.getElementById('createShopForm').addEventListener('submit', function(e) {
         e.preventDefault();
         const formData = new FormData(this);
+        
+        // Validate category pages selection
+        const recommendedSelected = this.querySelector('input[name="categorie_pages"][value="recommended"]').checked;
+        const otherBusinessSelected = this.querySelector('input[name="categorie_pages"][value="other_business"]').checked;
+        
+        if (!recommendedSelected && !otherBusinessSelected) {
+            showError('Please select either "Recommended" or "Other Business" in Category Pages');
+            return;
+        }
+
         const data = {
             id: parseInt(formData.get('id')),
             name: formData.get('name'),
@@ -993,6 +1009,16 @@
     document.getElementById('editShopForm').addEventListener('submit', function(e) {
         e.preventDefault();
         const formData = new FormData(this);
+        
+        // Validate category pages selection
+        const recommendedSelected = this.querySelector('input[name="categorie_pages"][value="recommended"]').checked;
+        const otherBusinessSelected = this.querySelector('input[name="categorie_pages"][value="other_business"]').checked;
+        
+        if (!recommendedSelected && !otherBusinessSelected) {
+            showError('Please select either "Recommended" or "Other Business" in Category Pages');
+            return;
+        }
+
         const shopId = formData.get('id');
         const data = {
             id: parseInt(shopId),
