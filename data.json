@@ -4,48 +4,118 @@
       "id": 0,
       "name": "Ximeval Joyas",
       "owner": "Andrea Vera",
-      "contact_number": "595986363873",
-      "categories": [33, 1, 11, 44],
+      "contact_number": "123595986363873",
+      "categories": [
+        1,
+        11,
+        33,
+        44
+      ],
       "working_hours": {
-        "lunes": null,
-        "martes": null,
-        "miércoles": null,
-        "jueves": null,
-        "viernes": null,
-        "sábado": null,
+        "lunes": {
+          "open_time": "07:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "martes": {
+          "open_time": "07:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "miércoles": {
+          "open_time": "07:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "jueves": {
+          "open_time": "07:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "viernes": {
+          "open_time": "07:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "sábado": {
+          "open_time": "07:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
         "domingo": null
       },
       "city": "Ciudad del Este",
       "zone_id": 6,
-      "categorie_pages": ["see_all"],
-      "img": ""
+      "categorie_pages": [
+        "recommended",
+        "free_shipping",
+        "see_all"
+      ],
+      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/5fe0f8bf-70ba-4905-a17d-3f121f1768b0.jpg"
     },
     {
       "id": 1,
       "name": "Lasertec",
       "owner": "Nelson Benítez",
-      "contact_number": "595984311003",
-      "categories": [28, 30, 69, 26],
+      "contact_number": "123595984311003",
+      "categories": [
+        26,
+        28,
+        30,
+        69
+      ],
       "working_hours": {
-        "lunes": null,
-        "martes": null,
-        "miércoles": null,
-        "jueves": null,
-        "viernes": null,
-        "sábado": null,
+        "lunes": {
+          "open_time": "07:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "martes": {
+          "open_time": "07:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "miércoles": {
+          "open_time": "07:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "jueves": {
+          "open_time": "07:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "viernes": {
+          "open_time": "07:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "sábado": {
+          "open_time": "07:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
         "domingo": null
       },
       "city": "Ciudad del Este",
       "zone_id": 6,
-      "categorie_pages": ["see_all"],
-      "img": ""
+      "categorie_pages": [
+        "recommended",
+        "see_all"
+      ],
+      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/71f4c52e-2427-4eba-8bba-095cfcfd665b.jpg"
     },
     {
       "id": 2,
       "name": "Yoly Novedades",
       "owner": "Yolanda Nuñez",
-      "contact_number": "595971290063",
-      "categories": [62, 44, 11, 7],
+      "contact_number": "123595971290063",
+      "categories": [
+        62,
+        44,
+        11,
+        7
+      ],
       "working_hours": {
         "lunes": {
           "open_time": "07:00",
@@ -81,35 +151,75 @@
       },
       "city": "Ciudad del Este",
       "zone_id": 6,
-      "categorie_pages": ["see_all"],
-      "img": ""
+      "categorie_pages": [
+        "recommended",
+        "see_all"
+      ],
+      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/30e9ce89-fcf6-4657-afbf-6d9b9d98aede.jpg"
     },
     {
       "id": 3,
       "name": "Espacio Belleza",
-      "owner": "",
-      "contact_number": "5545998885770",
-      "categories": [41],
+      "owner": " ",
+      "contact_number": "1235545998885770",
+      "categories": [
+        41
+      ],
       "working_hours": {
-        "lunes": null,
-        "martes": null,
-        "miércoles": null,
-        "jueves": null,
-        "viernes": null,
-        "sábado": null,
+        "lunes": {
+          "open_time": "07:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "martes": {
+          "open_time": "07:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "miércoles": {
+          "open_time": "07:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "jueves": {
+          "open_time": "07:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "viernes": {
+          "open_time": "07:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "sábado": {
+          "open_time": "07:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
         "domingo": null
       },
       "city": "Ciudad del Este",
       "zone_id": 6,
-      "categorie_pages": ["see_all"],
-      "img": ""
+      "categorie_pages": [
+        "recommended",
+        "see_all"
+      ],
+      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/d5b6d99d-b06b-4c1f-82ea-9603d56250a1.jpg"
     },
     {
       "id": 4,
       "name": "Sailor Shop Py",
       "owner": "Lya Cardozo",
-      "contact_number": "595991708674",
-      "categories": [38, 21, 43, 64, 54, 33, 34],
+      "contact_number": "123595991708674",
+      "categories": [
+        38,
+        21,
+        43,
+        64,
+        54,
+        33,
+        34
+      ],
       "working_hours": {
         "lunes": {
           "open_time": "09:00",
@@ -141,15 +251,22 @@
       },
       "city": "Ciudad del Este",
       "zone_id": 6,
-      "categorie_pages": ["see_all"],
-      "img": ""
+      "categorie_pages": [
+        "recommended",
+        "see_all"
+      ],
+      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/2436cc20-9b88-470f-8b82-b4e7bb3a6ed8.jpg"
     },
     {
       "id": 5,
       "name": "NG NOVEDADES",
       "owner": "Norma Gomez",
-      "contact_number": "595972570322",
-      "categories": [44, 11, 0],
+      "contact_number": "123595972570322",
+      "categories": [
+        44,
+        11,
+        0
+      ],
       "working_hours": {
         "lunes": {
           "open_time": "07:00",
@@ -181,35 +298,74 @@
       },
       "city": "Luque",
       "zone_id": 2,
-      "categorie_pages": ["see_all"],
-      "img": ""
+      "categorie_pages": [
+        "recommended",
+        "see_all"
+      ],
+      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/a15bc7c5-e214-4589-8ec8-81017bbf23b7.jpg"
     },
     {
       "id": 6,
       "name": "Mars Shop",
-      "owner": "",
-      "contact_number": "595994888946",
-      "categories": [43, 23, 53, 27],
+      "owner": " ",
+      "contact_number": "123595994888946",
+      "categories": [
+        23,
+        27,
+        43,
+        53
+      ],
       "working_hours": {
-        "lunes": null,
-        "martes": null,
-        "miércoles": null,
-        "jueves": null,
-        "viernes": null,
-        "sábado": null,
+        "lunes": {
+          "open_time": "07:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "martes": {
+          "open_time": "07:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "miércoles": {
+          "open_time": "07:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "jueves": {
+          "open_time": "07:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "viernes": {
+          "open_time": "07:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "sábado": {
+          "open_time": "07:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
         "domingo": null
       },
       "city": "San Lorenzo",
       "zone_id": 4,
-      "categorie_pages": ["see_all"],
-      "img": ""
+      "categorie_pages": [
+        "recommended",
+        "see_all"
+      ],
+      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/407feab6-209b-48c4-a177-bb1900010a73.jpg"
     },
     {
       "id": 7,
       "name": "Concu Store",
       "owner": "Natalia Gonzalez",
-      "contact_number": "595985550954",
-      "categories": [40, 13, 16],
+      "contact_number": "123595985550954",
+      "categories": [
+        40,
+        13,
+        16
+      ],
       "working_hours": {
         "lunes": {
           "open_time": "07:00",
@@ -241,15 +397,21 @@
       },
       "city": "Ciudad del Este",
       "zone_id": 6,
-      "categorie_pages": ["see_all"],
-      "img": ""
+      "categorie_pages": [
+        "recommended",
+        "see_all"
+      ],
+      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/ec460695-52ac-46ad-9ab0-7fc261f4be4b.jpg"
     },
     {
       "id": 8,
       "name": "CANTS FASHION",
       "owner": "Dahiana Alcaráz",
-      "contact_number": "595982619028",
-      "categories": [49, 21],
+      "contact_number": "123595982619028",
+      "categories": [
+        21,
+        49
+      ],
       "working_hours": {
         "lunes": {
           "open_time": "08:00",
@@ -279,37 +441,82 @@
         "sábado": null,
         "domingo": null
       },
-      "city": "J.Augusto Saldivar",
-      "zone_id": 6,
-      "categorie_pages": ["see_all"],
-      "img": ""
+      "city": "J. Augusto Saldivar",
+      "zone_id": 11,
+      "categorie_pages": [
+        "recommended",
+        "see_all"
+      ],
+      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/eda0b3bb-84dc-4ccf-8c1b-e78dd2b38e0c.jpg"
     },
     {
       "id": 9,
       "name": "Solbenz Store",
       "owner": "Kiara Benítez",
-      "contact_number": "595984570814",
-      "categories": [35, 56, 60, 30, 64, 42, 70, 65, 29],
+      "contact_number": "123595984570814",
+      "categories": [
+        29,
+        30,
+        35,
+        42,
+        56,
+        60,
+        64,
+        65,
+        70
+      ],
       "working_hours": {
-        "lunes": null,
-        "martes": null,
-        "miércoles": null,
-        "jueves": null,
-        "viernes": null,
-        "sábado": null,
+        "lunes": {
+          "open_time": "07:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "martes": {
+          "open_time": "07:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "miércoles": {
+          "open_time": "07:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "jueves": {
+          "open_time": "07:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "viernes": {
+          "open_time": "07:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "sábado": {
+          "open_time": "07:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
         "domingo": null
       },
       "city": "Capiatá",
-      "zone_id": 6,
-      "categorie_pages": ["see_all"],
-      "img": ""
+      "zone_id": 10,
+      "categorie_pages": [
+        "recommended",
+        "see_all"
+      ],
+      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/5bb4024a-7cd6-4400-8eb8-81472fd39348.jpg"
     },
     {
       "id": 10,
       "name": "Mariel Novedades",
       "owner": "Mariela Dávalos",
-      "contact_number": "595973106722",
-      "categories": [16, 32, 55, 21],
+      "contact_number": "123595973106722",
+      "categories": [
+        16,
+        32,
+        55,
+        21
+      ],
       "working_hours": {
         "lunes": {
           "open_time": "07:00",
@@ -345,15 +552,28 @@
       },
       "city": "Ciudad del Este",
       "zone_id": 6,
-      "categorie_pages": ["see_all"],
-      "img": ""
+      "categorie_pages": [
+        "recommended",
+        "see_all"
+      ],
+      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/2f01c22a-6bc0-478f-8c46-0a16c16949b3.jpg"
     },
     {
       "id": 11,
       "name": "Gaby Modas",
       "owner": "Silvina Nuñez",
-      "contact_number": "595973708088",
-      "categories": [50, 18, 24, 36, 9, 48, 11, 17, 64],
+      "contact_number": "123595973708088",
+      "categories": [
+        50,
+        18,
+        24,
+        36,
+        9,
+        48,
+        11,
+        17,
+        64
+      ],
       "working_hours": {
         "lunes": {
           "open_time": "07:00",
@@ -385,15 +605,21 @@
       },
       "city": "Ciudad del Este",
       "zone_id": 6,
-      "categorie_pages": ["see_all"],
-      "img": ""
+      "categorie_pages": [
+        "recommended",
+        "see_all"
+      ],
+      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/8242890a-3b2d-4afb-b4f8-c87e2818c9ae.jpg"
     },
     {
       "id": 12,
       "name": "DIVAS FASHION",
       "owner": "WILMA ELIZABETH GONZALEZ PORTILLO",
-      "contact_number": "595976938190",
-      "categories": [51, 11],
+      "contact_number": "123595976938190",
+      "categories": [
+        51,
+        11
+      ],
       "working_hours": {
         "lunes": {
           "open_time": "07:30",
@@ -425,15 +651,22 @@
       },
       "city": "Ciudad del Este",
       "zone_id": 6,
-      "categorie_pages": ["see_all"],
-      "img": ""
+      "categorie_pages": [
+        "recommended",
+        "see_all"
+      ],
+      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/1422cac0-6ba7-4a3b-a420-7fe1374bf96e.jpg"
     },
     {
       "id": 13,
       "name": "Nanny Shop EAS",
       "owner": "Eliana Da Silva",
-      "contact_number": "595986720471",
-      "categories": [38, 21, 37],
+      "contact_number": "123595986720471",
+      "categories": [
+        38,
+        21,
+        37
+      ],
       "working_hours": {
         "lunes": {
           "open_time": "07:00",
@@ -465,115 +698,289 @@
       },
       "city": "Ciudad del Este",
       "zone_id": 6,
-      "categorie_pages": ["see_all"],
-      "img": ""
+      "categorie_pages": [
+        "recommended",
+        "see_all"
+      ],
+      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/e93a6575-81f6-4f9c-aa7b-29fae8c2473e.jpg"
     },
     {
       "id": 14,
       "name": "Tudo Brazil",
       "owner": "Mary Florencio",
-      "contact_number": "595982402913",
-      "categories": [52, 26, 11],
+      "contact_number": "123595982402913",
+      "categories": [
+        11,
+        26,
+        52
+      ],
       "working_hours": {
-        "lunes": null,
-        "martes": null,
-        "miércoles": null,
-        "jueves": null,
-        "viernes": null,
-        "sábado": null,
+        "lunes": {
+          "open_time": "07:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "martes": {
+          "open_time": "07:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "miércoles": {
+          "open_time": "07:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "jueves": {
+          "open_time": "07:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "viernes": {
+          "open_time": "07:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "sábado": {
+          "open_time": "07:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
         "domingo": null
       },
       "city": "Capiatá",
-      "zone_id": 6,
-      "categorie_pages": ["see_all"],
-      "img": ""
+      "zone_id": 10,
+      "categorie_pages": [
+        "recommended",
+        "see_all"
+      ],
+      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/1c156068-3004-4cd3-aadf-b6a3a96d2ad0.jpg"
     },
     {
       "id": 15,
       "name": "Di Casa - Premium",
       "owner": "Sandra Cañete",
-      "contact_number": "595973736453",
-      "categories": [46, 49, 39, 15, 3, 6],
+      "contact_number": "123595973736453",
+      "categories": [
+        3,
+        6,
+        15,
+        39,
+        46,
+        49
+      ],
       "working_hours": {
-        "lunes": null,
-        "martes": null,
-        "miércoles": null,
-        "jueves": null,
-        "viernes": null,
-        "sábado": null,
+        "lunes": {
+          "open_time": "07:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "martes": {
+          "open_time": "07:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "miércoles": {
+          "open_time": "07:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "jueves": {
+          "open_time": "07:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "viernes": {
+          "open_time": "07:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "sábado": {
+          "open_time": "07:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
         "domingo": null
       },
       "city": "Ciudad del Este",
       "zone_id": 6,
-      "categorie_pages": ["see_all"],
-      "img": ""
+      "categorie_pages": [
+        "recommended",
+        "see_all"
+      ],
+      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/4346047b-c419-4276-bbbe-e49ec9551e16.jpg"
     },
     {
       "id": 16,
       "name": "Amapola",
       "owner": "Ruth Torres",
-      "contact_number": "595994214753",
-      "categories": [33, 1, 8, 31],
+      "contact_number": "123595994214753",
+      "categories": [
+        1,
+        8,
+        31,
+        33
+      ],
       "working_hours": {
-        "lunes": null,
-        "martes": null,
-        "miércoles": null,
-        "jueves": null,
-        "viernes": null,
-        "sábado": null,
+        "lunes": {
+          "open_time": "07:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "martes": {
+          "open_time": "07:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "miércoles": {
+          "open_time": "07:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "jueves": {
+          "open_time": "07:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "viernes": {
+          "open_time": "07:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "sábado": {
+          "open_time": "07:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
         "domingo": null
       },
       "city": "Ciudad del Este",
       "zone_id": 6,
-      "categorie_pages": ["free_shipping", "see_all"],
-      "img": ""
+      "categorie_pages": [
+        "free_shipping",
+        "see_all"
+      ],
+      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/910aa0a6-fb8e-4ac3-8efe-fb350bf6a9a3.jpg"
     },
     {
       "id": 17,
       "name": "Camila Calzados",
       "owner": "Silvina Britez",
-      "contact_number": "595984501871",
-      "categories": [71, 9, 21, 48],
+      "contact_number": "123595984501871",
+      "categories": [
+        9,
+        21,
+        48,
+        71
+      ],
       "working_hours": {
-        "lunes": null,
-        "martes": null,
-        "miércoles": null,
-        "jueves": null,
-        "viernes": null,
-        "sábado": null,
+        "lunes": {
+          "open_time": "07:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "martes": {
+          "open_time": "07:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "miércoles": {
+          "open_time": "07:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "jueves": {
+          "open_time": "07:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "viernes": {
+          "open_time": "07:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "sábado": {
+          "open_time": "07:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
         "domingo": null
       },
       "city": "Ciudad del Este",
       "zone_id": 6,
-      "categorie_pages": ["see_all"],
-      "img": ""
+      "categorie_pages": [
+        "recommended",
+        "see_all"
+      ],
+      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/4a2ca035-b7a8-452c-92eb-b330e8d16e70.jpg"
     },
     {
       "id": 18,
       "name": "Juma Decora",
       "owner": "Bienestar Company S.R.L",
-      "contact_number": "595983627955",
-      "categories": [29, 63, 61, 20],
+      "contact_number": "123595983627955",
+      "categories": [
+        20,
+        29,
+        61,
+        63
+      ],
       "working_hours": {
-        "lunes": null,
-        "martes": null,
-        "miércoles": null,
-        "jueves": null,
-        "viernes": null,
-        "sábado": null,
+        "lunes": {
+          "open_time": "07:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "martes": {
+          "open_time": "07:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "miércoles": {
+          "open_time": "07:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "jueves": {
+          "open_time": "07:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "viernes": {
+          "open_time": "07:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "sábado": {
+          "open_time": "07:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
         "domingo": null
       },
       "city": "Ciudad del Este",
       "zone_id": 6,
-      "categorie_pages": ["see_all"],
-      "img": ""
+      "categorie_pages": [
+        "recommended",
+        "see_all"
+      ],
+      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/8c110f21-cc75-43c2-8bed-6795ec425f92.jpg"
     },
     {
       "id": 19,
       "name": "A&A tienda",
       "owner": "Mónica Villalba colman",
-      "contact_number": "595986897050",
-      "categories": [11, 48, 38, 43, 26, 25, 64, 67, 22],
+      "contact_number": "123595986897050",
+      "categories": [
+        11,
+        48,
+        38,
+        43,
+        26,
+        25,
+        64,
+        67,
+        22
+      ],
       "working_hours": {
         "lunes": {
           "open_time": "08:00",
@@ -605,35 +1012,76 @@
       },
       "city": "Ciudad del Este",
       "zone_id": 6,
-      "categorie_pages": ["see_all"],
-      "img": ""
+      "categorie_pages": [
+        "recommended",
+        "see_all"
+      ],
+      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/b4b80424-7277-46e1-b100-4ec2191276f8.jpg"
     },
     {
       "id": 20,
       "name": "Mary Novedades",
       "owner": "María Villalba",
-      "contact_number": "595993506860",
-      "categories": [44, 11, 7],
+      "contact_number": "123595993506860",
+      "categories": [
+        7,
+        11,
+        44
+      ],
       "working_hours": {
-        "lunes": null,
-        "martes": null,
-        "miércoles": null,
-        "jueves": null,
-        "viernes": null,
-        "sábado": null,
+        "lunes": {
+          "open_time": "07:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "martes": {
+          "open_time": "07:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "miércoles": {
+          "open_time": "07:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "jueves": {
+          "open_time": "07:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "viernes": {
+          "open_time": "07:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "sábado": {
+          "open_time": "07:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
         "domingo": null
       },
       "city": "Ciudad del Este",
       "zone_id": 6,
-      "categorie_pages": ["see_all"],
-      "img": ""
+      "categorie_pages": [
+        "recommended",
+        "see_all"
+      ],
+      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/e8dc8625-11c6-42fb-b007-fbf6e5432d9a.jpg"
     },
     {
       "id": 21,
       "name": "Sandra Leggal Jeans",
       "owner": "Sandra Leggal",
-      "contact_number": "595981247493",
-      "categories": [32, 45, 47, 12, 14, 26],
+      "contact_number": "123595981247493",
+      "categories": [
+        32,
+        45,
+        47,
+        12,
+        14,
+        26
+      ],
       "working_hours": {
         "lunes": {
           "open_time": "07:30",
@@ -665,15 +1113,24 @@
       },
       "city": "Ciudad del Este",
       "zone_id": 6,
-      "categorie_pages": ["see_all"],
-      "img": ""
+      "categorie_pages": [
+        "recommended",
+        "see_all"
+      ],
+      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/bfb3de9b-1405-4519-b9e6-527ce35cf4d1.jpg"
     },
     {
       "id": 22,
       "name": "La tienda de Sonia",
       "owner": "Sonia Duarte",
-      "contact_number": "595981984011",
-      "categories": [57, 11, 19, 29, 9],
+      "contact_number": "123595981984011",
+      "categories": [
+        57,
+        11,
+        19,
+        29,
+        9
+      ],
       "working_hours": {
         "lunes": {
           "open_time": "08:00",
@@ -705,15 +1162,25 @@
       },
       "city": "Ciudad del Este",
       "zone_id": 6,
-      "categorie_pages": ["see_all"],
-      "img": ""
+      "categorie_pages": [
+        "recommended",
+        "see_all"
+      ],
+      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/59375016-001a-424d-8c8a-6a58d36f8e2d.jpg"
     },
     {
       "id": 23,
       "name": "DahiaStorepy",
       "owner": "Dahiana López",
-      "contact_number": "595975861002",
-      "categories": [61, 20, 2, 40, 17, 9],
+      "contact_number": "123595975861002",
+      "categories": [
+        61,
+        20,
+        2,
+        40,
+        17,
+        9
+      ],
       "working_hours": {
         "lunes": {
           "open_time": "07:00",
@@ -745,35 +1212,80 @@
       },
       "city": "Ciudad del Este",
       "zone_id": 6,
-      "categorie_pages": ["free_shipping", "see_all"],
-      "img": ""
+      "categorie_pages": [
+        "free_shipping",
+        "see_all"
+      ],
+      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/280bfe6f-4b37-411a-82dc-76a2080be51a.jpg"
     },
     {
       "id": 24,
       "name": "Abishop",
       "owner": "Dahiana Barcovich",
-      "contact_number": "595986915393",
-      "categories": [11, 44, 9, 61, 68, 66],
+      "contact_number": "123595986915393",
+      "categories": [
+        9,
+        11,
+        44,
+        61,
+        66,
+        68
+      ],
       "working_hours": {
-        "lunes": null,
-        "martes": null,
-        "miércoles": null,
-        "jueves": null,
-        "viernes": null,
-        "sábado": null,
+        "lunes": {
+          "open_time": "07:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "martes": {
+          "open_time": "07:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "miércoles": {
+          "open_time": "07:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "jueves": {
+          "open_time": "07:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "viernes": {
+          "open_time": "07:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "sábado": {
+          "open_time": "07:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
         "domingo": null
       },
       "city": "Ciudad del Este",
       "zone_id": 6,
-      "categorie_pages": ["see_all"],
-      "img": ""
+      "categorie_pages": [
+        "recommended",
+        "see_all"
+      ],
+      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/4b771bff-bf92-4a68-88ad-6e7ec7190e08.jpg"
     },
     {
       "id": 25,
       "name": "La tienda de Patty",
       "owner": "Patricia Martinez",
-      "contact_number": "595991431730",
-      "categories": [57, 11, 17, 63, 6, 40, 13],
+      "contact_number": "123595991431730",
+      "categories": [
+        57,
+        11,
+        17,
+        63,
+        6,
+        40,
+        13
+      ],
       "working_hours": {
         "lunes": {
           "open_time": "07:30",
@@ -809,15 +1321,21 @@
       },
       "city": "Ciudad del Este",
       "zone_id": 6,
-      "categorie_pages": ["see_all"],
-      "img": ""
+      "categorie_pages": [
+        "recommended",
+        "see_all"
+      ],
+      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/2f5c74a1-ab0b-48c5-8a19-2abdb9a49f11.jpg"
     },
     {
       "id": 26,
       "name": "MY LOOK MAYORISTA",
       "owner": "Elizabeth Cespedes",
-      "contact_number": "595985294970",
-      "categories": [59, 58],
+      "contact_number": "123595985294970",
+      "categories": [
+        59,
+        58
+      ],
       "working_hours": {
         "lunes": {
           "open_time": "08:30",
@@ -849,7 +1367,62 @@
       },
       "city": "Villa Elisa",
       "zone_id": 9,
-      "categorie_pages": ["see_all"],
+      "categorie_pages": [
+        "recommended",
+        "see_all"
+      ],
+      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/8869128e-e574-476f-8f6a-c99157d17c90.jpg"
+    },
+    {
+      "id": 27,
+      "name": "Novedades SJM",
+      "owner": "Soledad Matto",
+      "contact_number": "123595992376104",
+      "categories": [
+        10,
+        11,
+        44
+      ],
+      "working_hours": {
+        "lunes": {
+          "open_time": "07:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "martes": {
+          "open_time": "07:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "miércoles": {
+          "open_time": "07:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "jueves": {
+          "open_time": "07:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "viernes": {
+          "open_time": "07:00",
+          "close_time": "18:00",
+          "is_open": true
+        },
+        "sábado": {
+          "open_time": "07:00",
+          "close_time": "15:00",
+          "is_open": true
+        },
+        "domingo": null
+      },
+      "city": "N/A",
+      "zone_id": 0,
+      "categorie_pages": [
+        "recommended",
+        "free_shipping",
+        "see_all"
+      ],
       "img": ""
     }
   ],
@@ -912,12 +1485,12 @@
     {
       "id": 11,
       "name": "Calzados",
-      "icon": "LucideShoe"
+      "icon": "LucideMove"
     },
     {
       "id": 12,
       "name": "Calzados Adultos",
-      "icon": "LucideShoe"
+      "icon": "LucideFootprints"
     },
     {
       "id": 13,
@@ -947,7 +1520,7 @@
     {
       "id": 18,
       "name": "Casual",
-      "icon": "LucideTShirt"
+      "icon": "LucideWand"
     },
     {
       "id": 19,
@@ -957,7 +1530,7 @@
     {
       "id": 20,
       "name": "Cortinas",
-      "icon": "LucideCurtains"
+      "icon": "LucideAlignVerticalSpaceAround"
     },
     {
       "id": 21,
@@ -977,12 +1550,12 @@
     {
       "id": 24,
       "name": "Deportivos",
-      "icon": "LucideRunning"
+      "icon": "LucideActivity"
     },
     {
       "id": 25,
       "name": "Electrodomésticos",
-      "icon": "LucideFridge"
+      "icon": "LucidePlug"
     },
     {
       "id": 26,
@@ -997,7 +1570,7 @@
     {
       "id": 28,
       "name": "Grabados En Láser",
-      "icon": "LucideLaser"
+      "icon": "LucideSparkles"
     },
     {
       "id": 29,
@@ -1017,7 +1590,7 @@
     {
       "id": 32,
       "name": "Jeans",
-      "icon": "LucideTrousers"
+      "icon": "LucideGripVertical"
     },
     {
       "id": 33,
@@ -1037,7 +1610,7 @@
     {
       "id": 36,
       "name": "Lencerías",
-      "icon": "LucideLingerie"
+      "icon": "LucideFeather"
     },
     {
       "id": 37,
@@ -1052,7 +1625,7 @@
     {
       "id": 39,
       "name": "Medias Premium",
-      "icon": "LucideSocks"
+      "icon": "LucideShieldCheck"
     },
     {
       "id": 40,
@@ -1062,7 +1635,7 @@
     {
       "id": 41,
       "name": "Natura Mayoristas",
-      "icon": "LucideTree"
+      "icon": "LucideLeaf"
     },
     {
       "id": 42,
@@ -1087,22 +1660,22 @@
     {
       "id": 46,
       "name": "Prendas Casuales",
-      "icon": "LucideTShirt"
+      "icon": "LucideScissors"
     },
     {
       "id": 47,
       "name": "Prendas Damas",
-      "icon": "LucideUserFemale"
+      "icon": "LucideFlower"
     },
     {
       "id": 48,
       "name": "Prendas de Vestir",
-      "icon": "LucideHanger"
+      "icon": "LucideLayers"
     },
     {
       "id": 49,
       "name": "Prendas Deportivas",
-      "icon": "LucideRunning"
+      "icon": "LucideWind"
     },
     {
       "id": 50,
@@ -1112,7 +1685,7 @@
     {
       "id": 51,
       "name": "Prendas En General",
-      "icon": "LucideTShirt"
+      "icon": "LucideList"
     },
     {
       "id": 52,
@@ -1122,7 +1695,7 @@
     {
       "id": 53,
       "name": "Productos De Higiene",
-      "icon": "LucideSoap"
+      "icon": "LucideDroplet"
     },
     {
       "id": 54,
@@ -1132,7 +1705,7 @@
     {
       "id": 55,
       "name": "Remeras",
-      "icon": "LucideTShirt"
+      "icon": "LucideLayoutGrid"
     },
     {
       "id": 56,
@@ -1142,22 +1715,22 @@
     {
       "id": 57,
       "name": "Ropa",
-      "icon": "LucideTShirt"
+      "icon": "LucideAlignJustify"
     },
     {
       "id": 58,
       "name": "Ropa Casual",
-      "icon": "LucideTShirt"
+      "icon": "LucideHand"
     },
     {
       "id": 59,
       "name": "Ropa Deportiva",
-      "icon": "LucideRunning"
+      "icon": "LucideTarget"
     },
     {
       "id": 60,
       "name": "Route 66",
-      "icon": "LucideRoad"
+      "icon": "LucideCompass"
     },
     {
       "id": 61,
@@ -1177,42 +1750,42 @@
     {
       "id": 64,
       "name": "Termos",
-      "icon": "LucideFlask"
+      "icon": "LucideThermometer"
     },
     {
       "id": 65,
       "name": "Termos Forrados",
-      "icon": "LucideFlask"
+      "icon": "LucideBox"
     },
     {
       "id": 66,
       "name": "Termos Personalizados",
-      "icon": "LucideFlask"
+      "icon": "LucidePenTool"
     },
     {
       "id": 67,
       "name": "Stanley",
-      "icon": "LucideCup"
+      "icon": "LucideMountain"
     },
     {
       "id": 68,
       "name": "Toallas",
-      "icon": "LucideTowel"
+      "icon": "LucideDroplets"
     },
     {
       "id": 69,
       "name": "Vasos",
-      "icon": "LucideGlass"
+      "icon": "LucideCupSoda"
     },
     {
       "id": 70,
       "name": "Vasos Térmicos",
-      "icon": "LucideGlass"
+      "icon": "LucideFlame"
     },
     {
       "id": 71,
       "name": "Zapatillas Al Por Mayor",
-      "icon": "LucideShoe"
+      "icon": "LucideShoppingBasket"
     }
   ],
   "zones": [
@@ -1255,10 +1828,18 @@
     {
       "id": 9,
       "name": "Villa Elisa"
+    },
+    {
+      "id": 10,
+      "name": "Capiatá"
+    },
+    {
+      "id": 11,
+      "name": "J. Augusto Saldívar"
     }
   ],
   "primary_banner": [],
   "secondary_banner": [],
-  "recommended_image": "",
-  "other_businesses": ""
+  "recommended_image": "https://storage.googleapis.com/mayoristas-paraguay-backend/recommended/af9b2d53-71a4-4db0-b90a-c17d42c3f080.gif",
+  "other_businesses": "https://storage.googleapis.com/mayoristas-paraguay-backend/other-business/78579912-e0da-4802-8555-b73beaae916e.gif"
 }

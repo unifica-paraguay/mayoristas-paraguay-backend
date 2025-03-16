@@ -308,7 +308,7 @@
 
 <!-- Create Shop Modal -->
 <div id="createShopModal" class="hidden fixed inset-0 bg-gray-600 dark:bg-gray-900 bg-opacity-50 dark:bg-opacity-50 overflow-y-auto h-full w-full">
-    <div class="relative top-20 mx-auto p-5 border w-[800px] shadow-lg rounded-md bg-white dark:bg-gray-800 dark:border-gray-700">
+    <div class="relative top-20 mx-auto p-4 sm:p-5 border w-full max-w-[800px] shadow-lg rounded-md bg-white dark:bg-gray-800 dark:border-gray-700 m-4">
         <div class="mt-3">
             <h3 class="text-lg font-medium leading-6 text-gray-900 dark:text-white mb-4">Create New Shop</h3>
             <form id="createShopForm" hx-post="/api/shops" hx-on::after-request="handleShopSubmit(event)">
@@ -350,7 +350,7 @@
                 </div>
                 <div class="mb-4">
                     <label class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2" for="categories">Categories</label>
-                    <div class="grid grid-cols-3 gap-2 max-h-60 overflow-y-auto p-2 border dark:border-gray-600 rounded">
+                    <div class="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 gap-2 max-h-60 overflow-y-auto p-2 border dark:border-gray-600 rounded">
                         {% for category in categories %}
                         <label class="flex items-center space-x-2 p-2 hover:bg-gray-50 dark:hover:bg-gray-700 rounded cursor-pointer">
                             <input type="checkbox" name="categories" value="{{ category.id }}"
@@ -377,23 +377,19 @@
                 <div class="grid grid-cols-2 gap-4">
                     <div class="mb-4">
                         <label class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2" for="img">Image</label>
-                        <div class="flex items-start space-x-4">
-                            <div class="flex-1">
-                                <input type="file" accept="image/*" id="shop_image"
-                                       class="block w-full text-sm text-gray-500 dark:text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 dark:file:bg-blue-900/20 file:text-blue-700 dark:file:text-blue-400 hover:file:bg-blue-100 dark:hover:file:bg-blue-900/30">
-                                <input type="hidden" name="img" id="shop_image_url" required>
-                            </div>
-                            <div class="w-32 h-32 bg-gray-100 dark:bg-gray-700 rounded-lg overflow-hidden">
-                                <img id="shop_image_preview" src="" alt="" class="w-full h-full object-cover hidden">
-                                <div id="shop_image_placeholder" class="w-full h-full flex items-center justify-center text-gray-400 dark:text-gray-500">
-                                    <i data-lucide="image" class="w-8 h-8"></i>
-                                </div>
+                        <input type="file" accept="image/*" id="shop_image"
+                               class="block w-full text-sm text-gray-500 dark:text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 dark:file:bg-blue-900/20 file:text-blue-700 dark:file:text-blue-400 hover:file:bg-blue-100 dark:hover:file:bg-blue-900/30">
+                        <input type="hidden" name="img" id="shop_image_url" required>
+                        <div class="mt-3 w-full h-32 bg-gray-100 dark:bg-gray-700 rounded-lg overflow-hidden">
+                            <img id="shop_image_preview" src="" alt="" class="w-full h-full object-contain hidden">
+                            <div id="shop_image_placeholder" class="w-full h-full flex items-center justify-center text-gray-400 dark:text-gray-500">
+                                <i data-lucide="image" class="w-8 h-8"></i>
                             </div>
                         </div>
                     </div>
                     <div class="mb-4">
                         <label class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2" for="categorie_pages">Category Pages</label>
-                        <div class="grid grid-cols-2 gap-2 p-2 border dark:border-gray-600 rounded">
+                        <div class="grid grid-cols-1 gap-2 p-2 border dark:border-gray-600 rounded">
                             <label class="flex items-center space-x-2 p-2 hover:bg-gray-50 dark:hover:bg-gray-700 rounded cursor-pointer">
                                 <input type="checkbox" name="categorie_pages" value="recommended"
                                        class="form-checkbox h-4 w-4 text-blue-600 rounded border-gray-300 dark:border-gray-600 focus:ring-blue-500">
@@ -475,21 +471,18 @@
                         <!-- Bulk Time Setting -->
                         <div class="bg-white dark:bg-gray-800 p-4 rounded-lg border dark:border-gray-700 shadow-sm">
                             <h4 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Set Time for Selected Days</h4>
-                            <div class="flex items-center justify-end gap-4">
-                                <div>
-                                    <label class="block text-gray-600 dark:text-gray-400 text-xs mb-1">Opening Time</label>
-                                    <input type="time" id="bulk_opening_time"
-                                           class="block w-full px-3 py-1.5 text-sm border dark:border-gray-600 rounded text-gray-700 dark:text-white dark:bg-gray-700">
+                            <div class="flex flex-col sm:flex-row items-start sm:items-end gap-4">
+                                <div class="w-full sm:flex-1">
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Opening Time</label>
+                                    <input type="time" id="bulk_opening_time" class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 dark:bg-gray-700 dark:text-white">
                                 </div>
-                                <div>
-                                    <label class="block text-gray-600 dark:text-gray-400 text-xs mb-1">Closing Time</label>
-                                    <input type="time" id="bulk_closing_time"
-                                           class="block w-full px-3 py-1.5 text-sm border dark:border-gray-600 rounded text-gray-700 dark:text-white dark:bg-gray-700">
+                                <div class="w-full sm:flex-1">
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Closing Time</label>
+                                    <input type="time" id="bulk_closing_time" class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 dark:bg-gray-700 dark:text-white">
                                 </div>
-                                <div class="flex justify-end">
-                                    <button type="button" id="apply_bulk_times"
-                                            class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white text-sm font-medium rounded-md shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800">
-                                        Apply to Selected
+                                <div class="w-full sm:w-auto">
+                                    <button type="button" id="apply_bulk_times" class="w-full sm:w-auto px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white text-sm font-medium rounded-md shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 border border-blue-600 dark:border-blue-500">
+                                        Apply to Selected Days
                                     </button>
                                 </div>
                             </div>
@@ -546,7 +539,7 @@
 
 <!-- Edit Shop Modal -->
 <div id="editShopModal" class="hidden fixed inset-0 bg-gray-600 dark:bg-gray-900 bg-opacity-50 dark:bg-opacity-50 overflow-y-auto h-full w-full">
-    <div class="relative top-20 mx-auto p-5 border w-[800px] shadow-lg rounded-md bg-white dark:bg-gray-800 dark:border-gray-700">
+    <div class="relative top-20 mx-auto p-4 sm:p-5 border w-full max-w-[800px] shadow-lg rounded-md bg-white dark:bg-gray-800 dark:border-gray-700 m-4">
         <div class="mt-3">
             <h3 class="text-lg font-medium leading-6 text-gray-900 dark:text-white mb-4">Edit Shop</h3>
             <form id="editShopForm">
@@ -584,7 +577,7 @@
                 </div>
                 <div class="mb-4">
                     <label class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2" for="edit_categories">Categories</label>
-                    <div class="grid grid-cols-3 gap-2 max-h-60 overflow-y-auto p-2 border dark:border-gray-600 rounded">
+                    <div class="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 gap-2 max-h-60 overflow-y-auto p-2 border dark:border-gray-600 rounded">
                         {% for category in categories %}
                         <label class="flex items-center space-x-2 p-2 hover:bg-gray-50 dark:hover:bg-gray-700 rounded cursor-pointer">
                             <input type="checkbox" name="categories" value="{{ category.id }}"
@@ -611,23 +604,19 @@
                 <div class="grid grid-cols-2 gap-4">
                     <div class="mb-4">
                         <label class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2" for="edit_img">Image</label>
-                        <div class="flex items-start space-x-4">
-                            <div class="flex-1">
-                                <input type="file" accept="image/*" id="edit_shop_image"
-                                       class="block w-full text-sm text-gray-500 dark:text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 dark:file:bg-blue-900/20 file:text-blue-700 dark:file:text-blue-400 hover:file:bg-blue-100 dark:hover:file:bg-blue-900/30">
-                                <input type="hidden" name="img" id="edit_shop_image_url" required>
-                            </div>
-                            <div class="w-32 h-32 bg-gray-100 dark:bg-gray-700 rounded-lg overflow-hidden">
-                                <img id="edit_shop_image_preview" src="" alt="" class="w-full h-full object-cover hidden">
-                                <div id="edit_shop_image_placeholder" class="w-full h-full flex items-center justify-center text-gray-400 dark:text-gray-500">
-                                    <i data-lucide="image" class="w-8 h-8"></i>
-                                </div>
+                        <input type="file" accept="image/*" id="edit_shop_image"
+                               class="block w-full text-sm text-gray-500 dark:text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 dark:file:bg-blue-900/20 file:text-blue-700 dark:file:text-blue-400 hover:file:bg-blue-100 dark:hover:file:bg-blue-900/30">
+                        <input type="hidden" name="img" id="edit_shop_image_url" required>
+                        <div class="mt-3 w-full h-32 bg-gray-100 dark:bg-gray-700 rounded-lg overflow-hidden">
+                            <img id="edit_shop_image_preview" src="" alt="" class="w-full h-full object-contain hidden">
+                            <div id="edit_shop_image_placeholder" class="w-full h-full flex items-center justify-center text-gray-400 dark:text-gray-500">
+                                <i data-lucide="image" class="w-8 h-8"></i>
                             </div>
                         </div>
                     </div>
                     <div class="mb-4">
                         <label class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2" for="edit_categorie_pages">Category Pages</label>
-                        <div class="grid grid-cols-2 gap-2 p-2 border dark:border-gray-600 rounded">
+                        <div class="grid grid-cols-1 gap-2 p-2 border dark:border-gray-600 rounded">
                             <label class="flex items-center space-x-2 p-2 hover:bg-gray-50 dark:hover:bg-gray-700 rounded cursor-pointer">
                                 <input type="checkbox" name="categorie_pages" value="recommended"
                                        class="form-checkbox h-4 w-4 text-blue-600 rounded border-gray-300 dark:border-gray-600 focus:ring-blue-500">
@@ -715,8 +704,8 @@
                                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Closing Time</label>
                                     <input type="time" id="bulk_closing_time" class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 dark:bg-gray-700 dark:text-white">
                                 </div>
-                                <div class="flex justify-end">
-                                    <button type="button" id="apply_bulk_times" class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white text-sm font-medium rounded-md shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 border border-blue-600 dark:border-blue-500">
+                                <div class="w-full sm:w-auto">
+                                    <button type="button" id="apply_bulk_times" class="w-full sm:w-auto px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white text-sm font-medium rounded-md shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 border border-blue-600 dark:border-blue-500">
                                         Apply to Selected Days
                                     </button>
                                 </div>
