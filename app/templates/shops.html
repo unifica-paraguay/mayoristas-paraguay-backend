@@ -844,6 +844,34 @@
         }
     }
 
+    // Add mutual exclusivity handling for category pages
+    function setupCategoryPagesExclusivity(formId) {
+        const form = document.getElementById(formId);
+        const recommendedCheckbox = form.querySelector('input[name="categorie_pages"][value="recommended"]');
+        const otherBusinessCheckbox = form.querySelector('input[name="categorie_pages"][value="other_business"]');
+
+        if (recommendedCheckbox && otherBusinessCheckbox) {
+            recommendedCheckbox.addEventListener('change', function() {
+                if (this.checked && otherBusinessCheckbox.checked) {
+                    otherBusinessCheckbox.checked = false;
+                }
+            });
+
+            otherBusinessCheckbox.addEventListener('change', function() {
+                if (this.checked && recommendedCheckbox.checked) {
+                    recommendedCheckbox.checked = false;
+                }
+            });
+        }
+    }
+
+    // Initialize mutual exclusivity for both forms when the DOM is loaded
+    document.addEventListener('DOMContentLoaded', function() {
+        setupCategoryPagesExclusivity('createShopForm');
+        setupCategoryPagesExclusivity('editShopForm');
+        // ... existing DOMContentLoaded code ...
+    });
+
     function getWorkingHours(form) {
         const workingHours = {};
         const days = ['lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado', 'domingo'];
