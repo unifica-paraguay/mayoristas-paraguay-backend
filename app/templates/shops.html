@@ -393,13 +393,40 @@
                     </div>
                     <div class="mb-4">
                         <label class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2" for="categorie_pages">Category Pages</label>
-                        <select name="categorie_pages" multiple required
-                                class="shadow appearance-none border dark:border-gray-600 rounded w-full py-2 px-3 text-gray-700 dark:text-white dark:bg-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                            <option value="recommended">Recommended</option>
-                            <option value="free_shipping">Free Shipping</option>
-                            <option value="other_business">Other Business</option>
-                            <option value="see_all">See All</option>
-                        </select>
+                        <div class="grid grid-cols-2 gap-2 p-2 border dark:border-gray-600 rounded">
+                            <label class="flex items-center space-x-2 p-2 hover:bg-gray-50 dark:hover:bg-gray-700 rounded cursor-pointer">
+                                <input type="checkbox" name="categorie_pages" value="recommended"
+                                       class="form-checkbox h-4 w-4 text-blue-600 rounded border-gray-300 dark:border-gray-600 focus:ring-blue-500">
+                                <div class="flex items-center space-x-2">
+                                    <i data-lucide="star" class="w-5 h-5 text-gray-600 dark:text-gray-400"></i>
+                                    <span class="text-sm text-gray-700 dark:text-gray-300">Recommended</span>
+                                </div>
+                            </label>
+                            <label class="flex items-center space-x-2 p-2 hover:bg-gray-50 dark:hover:bg-gray-700 rounded cursor-pointer">
+                                <input type="checkbox" name="categorie_pages" value="free_shipping"
+                                       class="form-checkbox h-4 w-4 text-blue-600 rounded border-gray-300 dark:border-gray-600 focus:ring-blue-500">
+                                <div class="flex items-center space-x-2">
+                                    <i data-lucide="truck" class="w-5 h-5 text-gray-600 dark:text-gray-400"></i>
+                                    <span class="text-sm text-gray-700 dark:text-gray-300">Free Shipping</span>
+                                </div>
+                            </label>
+                            <label class="flex items-center space-x-2 p-2 hover:bg-gray-50 dark:hover:bg-gray-700 rounded cursor-pointer">
+                                <input type="checkbox" name="categorie_pages" value="other_business"
+                                       class="form-checkbox h-4 w-4 text-blue-600 rounded border-gray-300 dark:border-gray-600 focus:ring-blue-500">
+                                <div class="flex items-center space-x-2">
+                                    <i data-lucide="briefcase" class="w-5 h-5 text-gray-600 dark:text-gray-400"></i>
+                                    <span class="text-sm text-gray-700 dark:text-gray-300">Other Business</span>
+                                </div>
+                            </label>
+                            <label class="flex items-center space-x-2 p-2 hover:bg-gray-50 dark:hover:bg-gray-700 rounded cursor-pointer">
+                                <input type="checkbox" name="categorie_pages" value="see_all"
+                                       class="form-checkbox h-4 w-4 text-blue-600 rounded border-gray-300 dark:border-gray-600 focus:ring-blue-500">
+                                <div class="flex items-center space-x-2">
+                                    <i data-lucide="list" class="w-5 h-5 text-gray-600 dark:text-gray-400"></i>
+                                    <span class="text-sm text-gray-700 dark:text-gray-300">See All</span>
+                                </div>
+                            </label>
+                        </div>
                     </div>
                 </div>
 
@@ -600,13 +627,40 @@
                     </div>
                     <div class="mb-4">
                         <label class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2" for="edit_categorie_pages">Category Pages</label>
-                        <select name="categorie_pages" id="edit_categorie_pages" multiple required
-                                class="shadow appearance-none border dark:border-gray-600 rounded w-full py-2 px-3 text-gray-700 dark:text-white dark:bg-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                            <option value="recommended">Recommended</option>
-                            <option value="free_shipping">Free Shipping</option>
-                            <option value="other_business">Other Business</option>
-                            <option value="see_all">See All</option>
-                        </select>
+                        <div class="grid grid-cols-2 gap-2 p-2 border dark:border-gray-600 rounded">
+                            <label class="flex items-center space-x-2 p-2 hover:bg-gray-50 dark:hover:bg-gray-700 rounded cursor-pointer">
+                                <input type="checkbox" name="categorie_pages" value="recommended"
+                                       class="form-checkbox h-4 w-4 text-blue-600 rounded border-gray-300 dark:border-gray-600 focus:ring-blue-500">
+                                <div class="flex items-center space-x-2">
+                                    <i data-lucide="star" class="w-5 h-5 text-gray-600 dark:text-gray-400"></i>
+                                    <span class="text-sm text-gray-700 dark:text-gray-300">Recommended</span>
+                                </div>
+                            </label>
+                            <label class="flex items-center space-x-2 p-2 hover:bg-gray-50 dark:hover:bg-gray-700 rounded cursor-pointer">
+                                <input type="checkbox" name="categorie_pages" value="free_shipping"
+                                       class="form-checkbox h-4 w-4 text-blue-600 rounded border-gray-300 dark:border-gray-600 focus:ring-blue-500">
+                                <div class="flex items-center space-x-2">
+                                    <i data-lucide="truck" class="w-5 h-5 text-gray-600 dark:text-gray-400"></i>
+                                    <span class="text-sm text-gray-700 dark:text-gray-300">Free Shipping</span>
+                                </div>
+                            </label>
+                            <label class="flex items-center space-x-2 p-2 hover:bg-gray-50 dark:hover:bg-gray-700 rounded cursor-pointer">
+                                <input type="checkbox" name="categorie_pages" value="other_business"
+                                       class="form-checkbox h-4 w-4 text-blue-600 rounded border-gray-300 dark:border-gray-600 focus:ring-blue-500">
+                                <div class="flex items-center space-x-2">
+                                    <i data-lucide="briefcase" class="w-5 h-5 text-gray-600 dark:text-gray-400"></i>
+                                    <span class="text-sm text-gray-700 dark:text-gray-300">Other Business</span>
+                                </div>
+                            </label>
+                            <label class="flex items-center space-x-2 p-2 hover:bg-gray-50 dark:hover:bg-gray-700 rounded cursor-pointer">
+                                <input type="checkbox" name="categorie_pages" value="see_all"
+                                       class="form-checkbox h-4 w-4 text-blue-600 rounded border-gray-300 dark:border-gray-600 focus:ring-blue-500">
+                                <div class="flex items-center space-x-2">
+                                    <i data-lucide="list" class="w-5 h-5 text-gray-600 dark:text-gray-400"></i>
+                                    <span class="text-sm text-gray-700 dark:text-gray-300">See All</span>
+                                </div>
+                            </label>
+                        </div>
                     </div>
                 </div>
                 <div class="mb-6">
@@ -853,7 +907,7 @@
             city: formData.get('city'),
             zone_id: parseInt(formData.get('zone_id')),
             categories: Array.from(this.querySelectorAll('input[name="categories"]:checked')).map(cb => parseInt(cb.value)),
-            categorie_pages: Array.from(this.querySelector('[name="categorie_pages"]').selectedOptions).map(opt => opt.value),
+            categorie_pages: Array.from(this.querySelectorAll('input[name="categorie_pages"]:checked')).map(cb => cb.value),
             img: formData.get('img'),
             working_hours: getWorkingHours(this)
         };
@@ -891,6 +945,7 @@
 
         // Clear all checkboxes first
         document.querySelectorAll('#editShopForm input[name="categories"]').forEach(cb => cb.checked = false);
+        document.querySelectorAll('#editShopForm input[name="categorie_pages"]').forEach(cb => cb.checked = false);
         
         // Check the boxes for selected categories
         shop.categories.forEach(catId => {
@@ -898,10 +953,10 @@
             if (checkbox) checkbox.checked = true;
         });
 
-        // Handle category pages
-        const categoryPagesSelect = document.getElementById('edit_categorie_pages');
-        Array.from(categoryPagesSelect.options).forEach(option => {
-            option.selected = shop.categorie_pages.includes(option.value);
+        // Check the boxes for selected category pages
+        shop.categorie_pages.forEach(page => {
+            const checkbox = document.querySelector(`#editShopForm input[name="categorie_pages"][value="${page}"]`);
+            if (checkbox) checkbox.checked = true;
         });
         
         // Update image preview
@@ -935,7 +990,7 @@
             city: formData.get('city'),
             zone_id: parseInt(formData.get('zone_id')),
             categories: Array.from(this.querySelectorAll('input[name="categories"]:checked')).map(cb => parseInt(cb.value)),
-            categorie_pages: Array.from(this.querySelector('[name="categorie_pages"]').selectedOptions).map(opt => opt.value),
+            categorie_pages: Array.from(this.querySelectorAll('input[name="categorie_pages"]:checked')).map(cb => cb.value),
             img: formData.get('img'),
             working_hours: getWorkingHours(this)
         };
