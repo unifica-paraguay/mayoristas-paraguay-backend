@@ -21,7 +21,6 @@
                     <tr>
                         <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider w-[80px]">ID</th>
                         <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Basic Info</th>
-                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Location</th>
                         <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Categories</th>
                         <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Pages</th>
                         <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Schedule</th>
@@ -45,20 +44,16 @@
                                     <i data-lucide="phone" class="w-4 h-4"></i>
                                     <span>{{ shop.contact_number }}</span>
                                 </div>
-                            </div>
-                        </td>
-
-                        <!-- Location Column -->
-                        <td class="px-4 py-4">
-                            <div class="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
-                                <i data-lucide="map-pin" class="w-4 h-4"></i>
-                                <span>
-                                    {% for zone in zones %}
-                                        {% if zone.id == shop.zone_id %}
-                                            {{ zone.name }}
-                                        {% endif %}
-                                    {% endfor %}
-                                </span>
+                                <div class="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
+                                    <i data-lucide="map-pin" class="w-4 h-4"></i>
+                                    <span>{{ shop.city }} - 
+                                        {% for zone in zones %}
+                                            {% if zone.id == shop.zone_id %}
+                                                {{ zone.name }}
+                                            {% endif %}
+                                        {% endfor %}
+                                    </span>
+                                </div>
                             </div>
                         </td>
 
