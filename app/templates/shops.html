@@ -166,11 +166,19 @@
                         <!-- Actions Column -->
                         <td class="px-4 py-4">
                             <div class="flex flex-col gap-2">
+                                {% if shop.img %}
                                 <button onclick="openShopImage('{{ shop.img }}')"
                                         class="text-yellow-600 dark:text-yellow-500 hover:text-yellow-900 dark:hover:text-yellow-400 inline-flex items-center justify-between w-full gap-1 bg-yellow-50 dark:bg-yellow-900/20 hover:bg-yellow-100 dark:hover:bg-yellow-900/30 px-2 py-1 rounded-md transition-colors text-xs">
                                     <i data-lucide="image" class="w-3 h-3"></i>
                                     <span>View</span>
                                 </button>
+                                {% else %}
+                                <button onclick="uploadShopImage('{{ shop.id }}')"
+                                        class="text-emerald-600 dark:text-emerald-500 hover:text-emerald-900 dark:hover:text-emerald-400 inline-flex items-center justify-between w-full gap-1 bg-emerald-50 dark:bg-emerald-900/20 hover:bg-emerald-100 dark:hover:bg-emerald-900/30 px-2 py-1 rounded-md transition-colors text-xs">
+                                    <i data-lucide="upload" class="w-3 h-3"></i>
+                                    <span>Upload</span>
+                                </button>
+                                {% endif %}
                                 <button data-shop='{{ shop.model_dump() | tojson | safe }}' 
                                         onclick="editShop(this.dataset.shop)"
                                         class="text-indigo-600 dark:text-indigo-500 hover:text-indigo-900 dark:hover:text-indigo-400 inline-flex items-center justify-between w-full gap-1 bg-indigo-50 dark:bg-indigo-900/20 hover:bg-indigo-100 dark:hover:bg-indigo-900/30 px-2 py-1 rounded-md transition-colors text-xs">
@@ -196,9 +204,18 @@
         {% for shop in shops %}
         <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4 space-y-3">
             <div class="flex flex-col space-y-3">
+                {% if shop.img %}
                 <div class="w-full h-48 bg-gray-100 dark:bg-gray-700 rounded-lg overflow-hidden cursor-pointer" onclick="openShopImage('{{ shop.img }}')">
                     <img src="{{ shop.img }}" alt="{{ shop.name }}" class="w-full h-full object-cover hover:opacity-90 transition-opacity">
                 </div>
+                {% else %}
+                <div class="w-full h-48 bg-gray-100 dark:bg-gray-700 rounded-lg overflow-hidden cursor-pointer flex items-center justify-center" onclick="uploadShopImage('{{ shop.id }}')">
+                    <div class="text-center">
+                        <i data-lucide="upload" class="w-8 h-8 mx-auto mb-2 text-gray-400 dark:text-gray-500"></i>
+                        <p class="text-sm text-gray-500 dark:text-gray-400">Click to upload shop image</p>
+                    </div>
+                </div>
+                {% endif %}
                 <div>
                     <h3 class="text-lg font-medium text-gray-900 dark:text-white">{{ shop.name }}</h3>
                     <p class="text-sm text-gray-500 dark:text-gray-400">#{{ shop.id }}</p>
@@ -720,6 +737,50 @@
     </div>
 </div>
 
+<!-- Image Upload Modal -->
+<div id="imageUploadModal" class="hidden fixed inset-0 bg-gray-600 dark:bg-gray-900 bg-opacity-50 dark:bg-opacity-50 overflow-y-auto h-full w-full z-50">
+    <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white dark:bg-gray-800 dark:border-gray-700">
+        <div class="mt-3">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg font-medium text-gray-900 dark:text-white">Upload Shop Image</h3>
+                <button onclick="document.getElementById('imageUploadModal').classList.add('hidden')"
+                        class="text-gray-400 hover:text-gray-500 dark:hover:text-gray-300">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+            <form id="imageUploadForm" class="space-y-4">
+                <input type="hidden" id="uploadShopId" name="shop_id">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Select Image</label>
+                    <input type="file" accept="image/*" id="shopImageInput"
+                           class="block w-full text-sm text-gray-500 dark:text-gray-400
+                                  file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0
+                                  file:text-sm file:font-semibold file:bg-blue-50 dark:file:bg-blue-900/20
+                                  file:text-blue-700 dark:file:text-blue-400
+                                  hover:file:bg-blue-100 dark:hover:file:bg-blue-900/30">
+                </div>
+                <div class="w-full h-48 bg-gray-100 dark:bg-gray-700 rounded-lg overflow-hidden">
+                    <img id="imagePreview" src="" alt="" class="w-full h-full object-contain hidden">
+                    <div id="imagePlaceholder" class="w-full h-full flex items-center justify-center">
+                        <i data-lucide="image" class="w-8 h-8 text-gray-400 dark:text-gray-500"></i>
+                    </div>
+                </div>
+                <div class="flex justify-end gap-3">
+                    <button type="button"
+                            onclick="document.getElementById('imageUploadModal').classList.add('hidden')"
+                            class="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm transition-colors">
+                        Cancel
+                    </button>
+                    <button type="submit"
+                            class="px-4 py-2 text-sm font-medium text-white bg-blue-500 hover:bg-blue-600 border border-blue-600 dark:border-blue-500 rounded-md shadow-sm transition-colors">
+                        Upload
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <script>
     function handleShopSubmit(event) {
         if (event.detail.successful) {
@@ -1144,5 +1205,72 @@
             }
         }
     }
+
+    function uploadShopImage(shopId) {
+        document.getElementById('uploadShopId').value = shopId;
+        document.getElementById('shopImageInput').value = '';
+        document.getElementById('imagePreview').classList.add('hidden');
+        document.getElementById('imagePlaceholder').classList.remove('hidden');
+        document.getElementById('imageUploadModal').classList.remove('hidden');
+    }
+
+    document.getElementById('shopImageInput').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const preview = document.getElementById('imagePreview');
+                const placeholder = document.getElementById('imagePlaceholder');
+                preview.src = e.target.result;
+                preview.classList.remove('hidden');
+                placeholder.classList.add('hidden');
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
+    document.getElementById('imageUploadForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const shopId = document.getElementById('uploadShopId').value;
+        const file = document.getElementById('shopImageInput').files[0];
+        
+        if (!file) {
+            showError('Please select an image to upload');
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append('file', file);
+        
+        try {
+            const response = await fetch('/api/upload/shop-image', {
+                method: 'POST',
+                body: formData
+            });
+            
+            if (response.ok) {
+                const data = await response.json();
+                // Update the shop with the new image URL
+                await fetch(`/api/shops/${shopId}`, {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        img: data.url
+                    })
+                });
+                
+                // Close modal and reload page
+                document.getElementById('imageUploadModal').classList.add('hidden');
+                window.location.reload();
+            } else {
+                throw new Error('Failed to upload image');
+            }
+        } catch (error) {
+            console.error('Error uploading image:', error);
+            showError('Error uploading image. Please try again.');
+        }
+    });
 </script>
 {% endblock %}

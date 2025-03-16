@@ -307,6 +307,32 @@ async def update_shop(shop_id: int, updated_shop: Shop):
             return updated_shop
     raise HTTPException(status_code=404, detail="Shop not found")
 
+@app.patch("/api/shops/{shop_id}", response_model=Shop)
+async def patch_shop(shop_id: int, updated_fields: dict):
+    for i, shop in enumerate(data_structure.shops):
+        if shop.id == shop_id:
+            # Create a copy of the current shop data
+            shop_data = shop.model_dump()
+            
+            # Update only the provided fields
+            for field, value in updated_fields.items():
+                if field in shop_data:
+                    # If updating image, delete the old one
+                    if field == 'img' and shop.img and shop.img != value:
+                        try:
+                            await storage.delete_file(shop.img)
+                        except Exception as e:
+                            print(f"Error deleting old image: {e}")
+                    shop_data[field] = value
+            
+            # Create updated shop instance
+            updated_shop = Shop(**shop_data)
+            data_structure.shops[i] = updated_shop
+            save_data(data_structure)
+            return updated_shop
+            
+    raise HTTPException(status_code=404, detail="Shop not found")
+
 @app.delete("/api/shops/{shop_id}")
 async def delete_shop(shop_id: int):
     for i, shop in enumerate(data_structure.shops):
