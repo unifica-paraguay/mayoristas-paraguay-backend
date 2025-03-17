@@ -50,7 +50,8 @@
         "recommended",
         "see_all"
       ],
-      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/5fe0f8bf-70ba-4905-a17d-3f121f1768b0.jpg"
+      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/5fe0f8bf-70ba-4905-a17d-3f121f1768b0.jpg",
+      "description": null
     },
     {
       "id": 1,
@@ -102,7 +103,8 @@
         "recommended",
         "see_all"
       ],
-      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/71f4c52e-2427-4eba-8bba-095cfcfd665b.jpg"
+      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/71f4c52e-2427-4eba-8bba-095cfcfd665b.jpg",
+      "description": null
     },
     {
       "id": 2,
@@ -154,7 +156,8 @@
         "recommended",
         "see_all"
       ],
-      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/30e9ce89-fcf6-4657-afbf-6d9b9d98aede.jpg"
+      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/30e9ce89-fcf6-4657-afbf-6d9b9d98aede.jpg",
+      "description": null
     },
     {
       "id": 3,
@@ -203,7 +206,8 @@
         "recommended",
         "see_all"
       ],
-      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/d5b6d99d-b06b-4c1f-82ea-9603d56250a1.jpg"
+      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/d5b6d99d-b06b-4c1f-82ea-9603d56250a1.jpg",
+      "description": null
     },
     {
       "id": 4,
@@ -254,7 +258,8 @@
         "recommended",
         "see_all"
       ],
-      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/2436cc20-9b88-470f-8b82-b4e7bb3a6ed8.jpg"
+      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/2436cc20-9b88-470f-8b82-b4e7bb3a6ed8.jpg",
+      "description": null
     },
     {
       "id": 5,
@@ -301,7 +306,8 @@
         "recommended",
         "see_all"
       ],
-      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/a15bc7c5-e214-4589-8ec8-81017bbf23b7.jpg"
+      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/a15bc7c5-e214-4589-8ec8-81017bbf23b7.jpg",
+      "description": null
     },
     {
       "id": 6,
@@ -353,7 +359,8 @@
         "recommended",
         "see_all"
       ],
-      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/407feab6-209b-48c4-a177-bb1900010a73.jpg"
+      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/407feab6-209b-48c4-a177-bb1900010a73.jpg",
+      "description": null
     },
     {
       "id": 7,
@@ -400,7 +407,8 @@
         "recommended",
         "see_all"
       ],
-      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/ec460695-52ac-46ad-9ab0-7fc261f4be4b.jpg"
+      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/ec460695-52ac-46ad-9ab0-7fc261f4be4b.jpg",
+      "description": null
     },
     {
       "id": 8,
@@ -446,7 +454,8 @@
         "recommended",
         "see_all"
       ],
-      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/eda0b3bb-84dc-4ccf-8c1b-e78dd2b38e0c.jpg"
+      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/eda0b3bb-84dc-4ccf-8c1b-e78dd2b38e0c.jpg",
+      "description": null
     },
     {
       "id": 9,
@@ -503,7 +512,8 @@
         "recommended",
         "see_all"
       ],
-      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/5bb4024a-7cd6-4400-8eb8-81472fd39348.jpg"
+      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/5bb4024a-7cd6-4400-8eb8-81472fd39348.jpg",
+      "description": null
     },
     {
       "id": 10,
@@ -555,7 +565,8 @@
         "recommended",
         "see_all"
       ],
-      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/2f01c22a-6bc0-478f-8c46-0a16c16949b3.jpg"
+      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/2f01c22a-6bc0-478f-8c46-0a16c16949b3.jpg",
+      "description": null
     },
     {
       "id": 11,
@@ -608,7 +619,8 @@
         "recommended",
         "see_all"
       ],
-      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/8242890a-3b2d-4afb-b4f8-c87e2818c9ae.jpg"
+      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/8242890a-3b2d-4afb-b4f8-c87e2818c9ae.jpg",
+      "description": null
     },
     {
       "id": 12,
@@ -654,7 +666,8 @@
         "recommended",
         "see_all"
       ],
-      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/1422cac0-6ba7-4a3b-a420-7fe1374bf96e.jpg"
+      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/1422cac0-6ba7-4a3b-a420-7fe1374bf96e.jpg",
+      "description": null
     },
     {
       "id": 13,
@@ -701,7 +714,8 @@
         "recommended",
         "see_all"
       ],
-      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/e93a6575-81f6-4f9c-aa7b-29fae8c2473e.jpg"
+      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/e93a6575-81f6-4f9c-aa7b-29fae8c2473e.jpg",
+      "description": null
     },
     {
       "id": 14,
@@ -752,7 +766,8 @@
         "recommended",
         "see_all"
       ],
-      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/1c156068-3004-4cd3-aadf-b6a3a96d2ad0.jpg"
+      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/1c156068-3004-4cd3-aadf-b6a3a96d2ad0.jpg",
+      "description": null
     },
     {
       "id": 15,
@@ -806,7 +821,8 @@
         "recommended",
         "see_all"
       ],
-      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/4346047b-c419-4276-bbbe-e49ec9551e16.jpg"
+      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/4346047b-c419-4276-bbbe-e49ec9551e16.jpg",
+      "description": null
     },
     {
       "id": 16,
@@ -858,7 +874,8 @@
         "recommended",
         "see_all"
       ],
-      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/910aa0a6-fb8e-4ac3-8efe-fb350bf6a9a3.jpg"
+      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/910aa0a6-fb8e-4ac3-8efe-fb350bf6a9a3.jpg",
+      "description": null
     },
     {
       "id": 17,
@@ -910,7 +927,8 @@
         "recommended",
         "see_all"
       ],
-      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/4a2ca035-b7a8-452c-92eb-b330e8d16e70.jpg"
+      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/4a2ca035-b7a8-452c-92eb-b330e8d16e70.jpg",
+      "description": null
     },
     {
       "id": 18,
@@ -962,7 +980,8 @@
         "recommended",
         "see_all"
       ],
-      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/8c110f21-cc75-43c2-8bed-6795ec425f92.jpg"
+      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/8c110f21-cc75-43c2-8bed-6795ec425f92.jpg",
+      "description": null
     },
     {
       "id": 19,
@@ -1015,7 +1034,8 @@
         "recommended",
         "see_all"
       ],
-      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/b4b80424-7277-46e1-b100-4ec2191276f8.jpg"
+      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/b4b80424-7277-46e1-b100-4ec2191276f8.jpg",
+      "description": null
     },
     {
       "id": 20,
@@ -1066,7 +1086,8 @@
         "recommended",
         "see_all"
       ],
-      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/e8dc8625-11c6-42fb-b007-fbf6e5432d9a.jpg"
+      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/e8dc8625-11c6-42fb-b007-fbf6e5432d9a.jpg",
+      "description": null
     },
     {
       "id": 21,
@@ -1116,7 +1137,8 @@
         "recommended",
         "see_all"
       ],
-      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/bfb3de9b-1405-4519-b9e6-527ce35cf4d1.jpg"
+      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/bfb3de9b-1405-4519-b9e6-527ce35cf4d1.jpg",
+      "description": null
     },
     {
       "id": 22,
@@ -1165,7 +1187,8 @@
         "recommended",
         "see_all"
       ],
-      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/59375016-001a-424d-8c8a-6a58d36f8e2d.jpg"
+      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/59375016-001a-424d-8c8a-6a58d36f8e2d.jpg",
+      "description": null
     },
     {
       "id": 23,
@@ -1215,7 +1238,8 @@
         "recommended",
         "see_all"
       ],
-      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/280bfe6f-4b37-411a-82dc-76a2080be51a.jpg"
+      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/280bfe6f-4b37-411a-82dc-76a2080be51a.jpg",
+      "description": null
     },
     {
       "id": 24,
@@ -1269,7 +1293,8 @@
         "recommended",
         "see_all"
       ],
-      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/4b771bff-bf92-4a68-88ad-6e7ec7190e08.jpg"
+      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/4b771bff-bf92-4a68-88ad-6e7ec7190e08.jpg",
+      "description": null
     },
     {
       "id": 25,
@@ -1324,7 +1349,8 @@
         "recommended",
         "see_all"
       ],
-      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/2f5c74a1-ab0b-48c5-8a19-2abdb9a49f11.jpg"
+      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/2f5c74a1-ab0b-48c5-8a19-2abdb9a49f11.jpg",
+      "description": null
     },
     {
       "id": 26,
@@ -1370,7 +1396,8 @@
         "recommended",
         "see_all"
       ],
-      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/8869128e-e574-476f-8f6a-c99157d17c90.jpg"
+      "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/8869128e-e574-476f-8f6a-c99157d17c90.jpg",
+      "description": null
     },
     {
       "id": 27,
@@ -1421,7 +1448,8 @@
         "recommended",
         "see_all"
       ],
-      "img": ""
+      "img": "",
+      "description": null
     }
   ],
   "categories": [
@@ -1897,7 +1925,12 @@
   "recommended_image": "https://storage.googleapis.com/mayoristas-paraguay-backend/recommended/af9b2d53-71a4-4db0-b90a-c17d42c3f080.gif",
   "other_businesses": "https://storage.googleapis.com/mayoristas-paraguay-backend/other-business/78579912-e0da-4802-8555-b73beaae916e.gif",
   "branding": {
-    "logo": "https://unificadesign.com.py/img/unifica/footerIcon.png",
-    "copyright": "© 2024 Unifica Paraguay. Todos los derechos reservados."
+    "logo": "https://storage.googleapis.com/mayoristas-paraguay-backend/branding/bcbf01c8-b393-4696-9bba-2337b5086f27.gif",
+    "copyright": "© 2025 Sebastián Ucedo. Todos los derechos reservados.",
+    "client_logo": "https://storage.googleapis.com/mayoristas-paraguay-backend/branding/bcbf01c8-b393-4696-9bba-2337b5086f27.gif",
+    "client_name": "Sebastián Ucedo",
+    "subscription_end_date": "2026-03-31",
+    "active": true,
+    "client_copyright": "© 2025 Sebastián Ucedo. Todos los derechos reservados."
   }
 }
