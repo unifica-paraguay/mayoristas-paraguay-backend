@@ -45,9 +45,6 @@ app.add_middleware(
     secret_key=os.getenv("SECRET_KEY"),
     session_cookie="session",
     max_age=ACCESS_TOKEN_EXPIRE_MINUTES * 60,  # in seconds
-    secure=IS_PRODUCTION,  # Secure in production
-    httponly=True,
-    samesite="lax" if not IS_PRODUCTION else "strict"  # Stricter in production
 )
 
 # Mount static files
@@ -133,16 +130,25 @@ async def login(
         )
         # Create a simple redirect response
         response = RedirectResponse(url="/admin", status_code=302)
-        # Set the auth cookie with environment-aware settings
-        response.set_cookie(
-            key="Authorization",
-            value=f"Bearer {access_token}",
-            httponly=True,
-            secure=IS_PRODUCTION,  # Secure in production
-            samesite="lax" if not IS_PRODUCTION else "strict",  # Stricter in production
-            path="/",
-            max_age=ACCESS_TOKEN_EXPIRE_MINUTES * 60
-        )
+        
+        # Get the host from the request headers
+        host = request.headers.get("host", "")
+        is_https = request.url.scheme == "https" or IS_PRODUCTION
+        
+        # Set cookie settings based on environment and protocol
+        cookie_settings = {
+            "key": "Authorization",
+            "value": f"Bearer {access_token}",
+            "httponly": True,
+            "secure": is_https,
+            "samesite": "strict" if is_https else "lax",
+            "path": "/",
+            "max_age": ACCESS_TOKEN_EXPIRE_MINUTES * 60
+        }
+        
+        # Set the auth cookie with appropriate settings
+        response.set_cookie(**cookie_settings)
+        
         print("DEBUG: Setting cookie with token:", access_token[:20], "...")  # Debug print
         return response
     
@@ -155,12 +161,18 @@ async def login(
 @app.get("/logout")
 async def logout():
     response = RedirectResponse(url="/", status_code=303)
+    
+    # Get request from context
+    request = Request(scope={"type": "http"})  # Minimal request object
+    is_https = IS_PRODUCTION  # In production, always assume HTTPS
+    
+    # Delete cookie with matching settings
     response.delete_cookie(
         key="Authorization",
+        path="/",
         httponly=True,
-        secure=IS_PRODUCTION,  # Secure in production
-        samesite="lax" if not IS_PRODUCTION else "strict",  # Stricter in production
-        path="/"
+        secure=is_https,
+        samesite="strict" if is_https else "lax"
     )
     return response
 
