@@ -62,6 +62,15 @@ class Shop(BaseModel):
             data['working_hours'] = self.working_hours.model_dump()
         return data
 
+class ClientBranding(BaseModel):
+    logo: str
+    client_logo: Optional[str] = None
+    copyright: str
+    client_copyright: Optional[str] = None
+    active: bool = False
+    client_name: Optional[str] = None
+    subscription_end_date: Optional[str] = None
+
 class DataStructure(BaseModel):
     shops: List[Shop]
     categories: List[Category]
@@ -69,4 +78,5 @@ class DataStructure(BaseModel):
     primary_banner: List[str]
     secondary_banner: List[str]
     recommended_image: str
-    other_businesses: str 
+    other_businesses: str
+    branding: Optional[Dict] = None 

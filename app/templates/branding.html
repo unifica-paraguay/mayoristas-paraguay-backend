@@ -1,0 +1,218 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <div class="flex items-center justify-between mb-6">
+        <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Branding Management</h1>
+    </div>
+
+    <!-- Branding Status Card -->
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-8">
+        <div class="flex items-center justify-between">
+            <div>
+                <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">Branding Status</h2>
+                {% if branding.active %}
+                <p class="text-green-600 dark:text-green-400 flex items-center">
+                    <i data-lucide="check-circle" class="h-5 w-5 mr-2"></i> Client branding is active
+                </p>
+                {% if branding.subscription_end_date %}
+                <p class="text-sm text-gray-600 dark:text-gray-400 mt-2">
+                    Subscription ends: {{ branding.subscription_end_date }}
+                </p>
+                {% endif %}
+                {% else %}
+                <p class="text-gray-600 dark:text-gray-400 flex items-center">
+                    <i data-lucide="info" class="h-5 w-5 mr-2"></i> Using Unifica default branding
+                </p>
+                {% endif %}
+            </div>
+            <div>
+                {% if branding.active %}
+                <form id="disableBrandingForm" method="POST" action="/api/branding/disable">
+                    <button type="submit" class="px-4 py-2 bg-yellow-500 hover:bg-yellow-600 text-white rounded-md shadow-sm">
+                        Disable Client Branding
+                    </button>
+                </form>
+                {% else %}
+                <form id="enableBrandingForm" method="POST" action="/api/branding/enable">
+                    <button type="submit" class="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-md shadow-sm">
+                        Enable Client Branding
+                    </button>
+                </form>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- Default Branding -->
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+            <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Default Branding</h2>
+            
+            <div class="mb-6">
+                <p class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Logo</p>
+                <div class="border border-gray-300 dark:border-gray-600 rounded-md p-4 flex items-center justify-center bg-gray-50 dark:bg-gray-700">
+                    <img src="https://unificadesign.com.py/img/unifica/footerIcon.png" alt="Unifica Logo" class="max-h-28 object-contain">
+                </div>
+            </div>
+            
+            <div>
+                <p class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Copyright</p>
+                <div class="border border-gray-300 dark:border-gray-600 rounded-md p-4 bg-gray-50 dark:bg-gray-700">
+                    <p class="text-gray-900 dark:text-gray-100">© 2025 Unifica Paraguay. Todos los derechos reservados.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Client Branding Form -->
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+            <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Client Branding</h2>
+            
+            <form id="brandingForm" method="POST" action="/api/branding" enctype="multipart/form-data">
+                <div class="space-y-6">
+                    <!-- Client Name -->
+                    <div>
+                        <label for="client_name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Client Name</label>
+                        <input type="text" id="client_name" name="client_name" value="{{ branding.client_name or '' }}" 
+                            class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white">
+                    </div>
+                    
+                    <!-- Subscription End Date -->
+                    <div>
+                        <label for="subscription_end_date" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Subscription End Date</label>
+                        <input type="date" id="subscription_end_date" name="subscription_end_date" value="{{ branding.subscription_end_date or '' }}" 
+                            class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white">
+                    </div>
+                    
+                    <!-- Client Logo -->
+                    <div>
+                        <label for="logo" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Logo</label>
+                        <div class="space-y-3">
+                            {% if branding.client_logo %}
+                            <div class="border border-gray-300 dark:border-gray-600 rounded-md p-4 flex items-center justify-center bg-gray-50 dark:bg-gray-700 mb-2">
+                                <img src="{{ branding.client_logo }}" alt="Client Logo" class="max-h-28 object-contain" id="logoPreview">
+                            </div>
+                            {% else %}
+                            <div class="border border-gray-300 dark:border-gray-600 rounded-md p-4 flex items-center justify-center bg-gray-50 dark:bg-gray-700 mb-2 hidden" id="logoPreviewContainer">
+                                <img src="" alt="Client Logo" class="max-h-28 object-contain" id="logoPreview">
+                            </div>
+                            {% endif %}
+                            <div class="flex items-center space-x-2">
+                                <label for="logo_file" class="cursor-pointer px-4 py-2 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-md inline-flex items-center transition-colors">
+                                    <i data-lucide="upload" class="h-4 w-4 mr-2"></i>
+                                    <span>Choose Logo</span>
+                                    <input type="file" id="logo_file" name="logo_file" accept="image/*" class="hidden" onchange="handleLogoUpload(this)">
+                                </label>
+                                <input type="hidden" id="logo" name="logo" value="{{ branding.client_logo or '' }}">
+                                <button type="button" id="clearLogo" onclick="clearLogoField()" class="px-2 py-2 text-red-500 hover:text-red-700 rounded-md inline-flex items-center transition-colors" {{ 'hidden' if not branding.client_logo }}>
+                                    <i data-lucide="trash-2" class="h-4 w-4"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Copyright Text -->
+                    <div>
+                        <label for="copyright" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Copyright Text</label>
+                        <input type="text" id="copyright" name="copyright" value="{{ branding.copyright or '' }}" 
+                            class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm bg-gray-50 dark:bg-gray-600 dark:text-white"
+                            readonly>
+                        <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">Copyright is automatically generated based on client name</p>
+                        
+                        <!-- Hidden field for client_copyright -->
+                        <input type="hidden" id="client_copyright" name="client_copyright" value="{{ branding.client_copyright or '' }}">
+                    </div>
+                    
+                    <!-- Submit Button -->
+                    <div class="flex justify-end">
+                        <button type="submit" class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-md shadow-sm">
+                            Save Branding Settings
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Initialize Lucide icons
+    lucide.createIcons();
+    
+    // Update copyright when client name changes
+    document.getElementById('client_name').addEventListener('input', updateCopyright);
+    
+    function updateCopyright() {
+        const clientName = document.getElementById('client_name').value.trim();
+        const currentYear = new Date().getFullYear();
+        
+        let copyrightText;
+        if (clientName) {
+            copyrightText = `© ${currentYear} ${clientName}. Todos los derechos reservados.`;
+        } else {
+            copyrightText = `© ${currentYear} Unifica Paraguay. Todos los derechos reservados.`;
+        }
+        
+        // Update the copyright field for display (this is read-only)
+        document.getElementById('copyright').value = copyrightText;
+        
+        // Store the client copyright in a hidden field for submission
+        const clientCopyrightField = document.getElementById('client_copyright');
+        if (clientCopyrightField) {
+            clientCopyrightField.value = copyrightText;
+        }
+    }
+    
+    // Run on page load to initialize
+    updateCopyright();
+    
+    // Handle logo image upload preview and API call
+    async function handleLogoUpload(input) {
+        if (input.files && input.files[0]) {
+            const file = input.files[0];
+            const formData = new FormData();
+            formData.append('file', file);
+            
+            try {
+                // Show loading state
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('logoPreview').src = e.target.result;
+                    document.getElementById('logoPreviewContainer').classList.remove('hidden');
+                };
+                reader.readAsDataURL(file);
+                
+                // Upload to server
+                const response = await fetch('/api/upload/branding-logo', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Error uploading logo');
+                }
+                
+                const data = await response.json();
+                
+                // Update hidden input with URL
+                document.getElementById('logo').value = data.url;
+                document.getElementById('logoPreview').src = data.url;
+                document.getElementById('clearLogo').classList.remove('hidden');
+                
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Failed to upload logo. Please try again.');
+            }
+        }
+    }
+    
+    // Clear logo field
+    function clearLogoField() {
+        document.getElementById('logo').value = '';
+        document.getElementById('logoPreviewContainer').classList.add('hidden');
+        document.getElementById('logoPreview').src = '';
+        document.getElementById('logo_file').value = '';
+        document.getElementById('clearLogo').classList.add('hidden');
+    }
+</script>
+{% endblock %}

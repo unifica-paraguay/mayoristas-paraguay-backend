@@ -193,6 +193,9 @@ async def admin_dashboard(
         data_structure.recommended_image,
         data_structure.other_businesses
     ] if banner)
+    
+    # Get branding information
+    branding = await get_active_branding()
 
     return templates.TemplateResponse("admin_dashboard.html", {
         "request": request,
@@ -200,6 +203,7 @@ async def admin_dashboard(
         "total_categories": total_categories,
         "total_zones": total_zones,
         "total_banners": total_banners,
+        "branding": branding,
         "title": "Admin Dashboard"
     })
 
@@ -682,4 +686,298 @@ async def delete_storage_file(url: str):
 @app.get("/api/shops/open")
 async def get_open_shops():
     """Get all currently open shops"""
-    return [shop for shop in data_structure.shops if is_shop_open(shop)] 
+    return [shop for shop in data_structure.shops if is_shop_open(shop)]
+
+# Branding Management Helper
+async def get_active_branding():
+    """Helper function to get active branding configuration"""
+    data_structure = load_data()
+    
+    # Get default branding values from environment variables
+    default_logo = os.getenv("DEFAULT_BRANDING_LOGO")
+    default_copyright = os.getenv("DEFAULT_BRANDING_COPYRIGHT")
+    
+    # Use current year if default_copyright is not provided
+    if not default_copyright:
+        from datetime import datetime
+        current_year = datetime.now().year
+        default_copyright = f"© {current_year} Unifica Paraguay. Todos los derechos reservados."
+    
+    branding = data_structure.branding or {
+        "logo": default_logo,
+        "client_logo": "",  # Store client logo separately
+        "copyright": default_copyright,
+        "client_copyright": "",  # Store client copyright separately
+        "active": False,
+        "client_name": "",
+        "subscription_end_date": ""
+    }
+    
+    # Ensure client_logo field exists
+    if "client_logo" not in branding:
+        branding["client_logo"] = ""
+        
+    # Ensure client_copyright field exists
+    if "client_copyright" not in branding:
+        branding["client_copyright"] = ""
+    
+    # Always ensure the logo and copyright are correct based on active status
+    if not branding.get("active", False):
+        branding["logo"] = default_logo
+        branding["copyright"] = default_copyright
+    else:
+        # Use client_logo if it exists
+        if branding.get("client_logo"):
+            branding["logo"] = branding["client_logo"]
+        
+        # Use client_copyright if it exists
+        if branding.get("client_copyright"):
+            branding["copyright"] = branding["client_copyright"]
+        
+    return branding
+
+# Branding Management Page
+@app.get("/admin/branding", response_class=HTMLResponse)
+async def get_branding_page(
+    request: Request,
+    current_user: str = Depends(get_current_user)
+):
+    """Render the branding management page"""
+    branding = await get_active_branding()
+    
+    return templates.TemplateResponse(
+        "branding.html",
+        {
+            "request": request,
+            "branding": branding,
+            "active_page": "branding"
+        }
+    )
+
+# Branding API Endpoints
+@app.post("/api/branding")
+async def update_branding(
+    client_name: str = Form(None),
+    subscription_end_date: str = Form(None),
+    logo: str = Form(None),
+    copyright: str = Form(None),  # Ignored - for display only
+    client_copyright: str = Form(None),  # This is what we'll store and use
+    current_user: str = Depends(get_current_user)
+):
+    """Update branding information"""
+    data_structure = load_data()
+    
+    # Get default branding values
+    default_logo = os.getenv("DEFAULT_BRANDING_LOGO")
+    default_copyright = os.getenv("DEFAULT_BRANDING_COPYRIGHT")
+    
+    # Use current year if default_copyright is not provided
+    if not default_copyright:
+        from datetime import datetime
+        current_year = datetime.now().year
+        default_copyright = f"© {current_year} Unifica Paraguay. Todos los derechos reservados."
+    
+    # Get existing branding or create new
+    branding = data_structure.branding or {
+        "logo": default_logo,
+        "client_logo": "",
+        "copyright": default_copyright,
+        "client_copyright": "",
+        "active": False,
+        "client_name": "",
+        "subscription_end_date": ""
+    }
+    
+    # Ensure client_logo field exists
+    if "client_logo" not in branding:
+        branding["client_logo"] = ""
+    
+    # Ensure client_copyright field exists
+    if "client_copyright" not in branding:
+        branding["client_copyright"] = ""
+    
+    # Update fields
+    if client_name is not None:
+        branding["client_name"] = client_name
+    
+    if subscription_end_date is not None:
+        branding["subscription_end_date"] = subscription_end_date
+    
+    if logo is not None:
+        branding["client_logo"] = logo
+        # Update the active logo if client branding is active
+        if branding.get("active", False):
+            branding["logo"] = logo
+    
+    if client_copyright is not None:
+        # Store the client copyright
+        branding["client_copyright"] = client_copyright
+        
+        # Update active copyright if client branding is active
+        if branding.get("active", False):
+            branding["copyright"] = client_copyright
+        else:
+            branding["copyright"] = default_copyright
+    
+    # Save updated branding
+    data_structure.branding = branding
+    save_data(data_structure)
+    
+    return RedirectResponse(url="/admin/branding", status_code=303)
+
+@app.post("/api/branding/enable")
+async def enable_client_branding(
+    current_user: str = Depends(get_current_user)
+):
+    """Enable client branding"""
+    data_structure = load_data()
+    
+    if not data_structure.branding:
+        raise HTTPException(status_code=400, detail="Branding not configured")
+    
+    # Ensure client_logo field exists
+    if "client_logo" not in data_structure.branding:
+        data_structure.branding["client_logo"] = ""
+        
+    # Ensure client_copyright field exists
+    if "client_copyright" not in data_structure.branding:
+        # Generate a default client copyright if not set
+        from datetime import datetime
+        current_year = datetime.now().year
+        client_name = data_structure.branding.get("client_name", "").strip()
+        
+        if client_name:
+            data_structure.branding["client_copyright"] = f"© {current_year} {client_name}. Todos los derechos reservados."
+        else:
+            data_structure.branding["client_copyright"] = f"© {current_year} Unifica Paraguay. Todos los derechos reservados."
+    
+    data_structure.branding["active"] = True
+    
+    # Set the logo to client_logo if available
+    if data_structure.branding.get("client_logo"):
+        data_structure.branding["logo"] = data_structure.branding["client_logo"]
+    
+    # Set copyright to client_copyright
+    if data_structure.branding.get("client_copyright"):
+        data_structure.branding["copyright"] = data_structure.branding["client_copyright"]
+    
+    save_data(data_structure)
+    
+    return RedirectResponse(url="/admin/branding", status_code=303)
+
+@app.post("/api/branding/disable")
+async def disable_client_branding(
+    current_user: str = Depends(get_current_user)
+):
+    """Disable client branding and use default"""
+    data_structure = load_data()
+    
+    # Get default branding values from environment variables
+    default_logo = os.getenv("DEFAULT_BRANDING_LOGO")
+    default_copyright = os.getenv("DEFAULT_BRANDING_COPYRIGHT")
+    
+    # Use current year if default_copyright is not provided
+    if not default_copyright:
+        from datetime import datetime
+        current_year = datetime.now().year
+        default_copyright = f"© {current_year} Unifica Paraguay. Todos los derechos reservados."
+    
+    if not data_structure.branding:
+        data_structure.branding = {
+            "logo": default_logo,
+            "client_logo": "",
+            "copyright": default_copyright,
+            "client_copyright": "",
+            "active": False,
+            "client_name": "",
+            "subscription_end_date": ""
+        }
+    else:
+        # Ensure client_logo field exists
+        if "client_logo" not in data_structure.branding:
+            data_structure.branding["client_logo"] = ""
+            
+        # Ensure client_copyright field exists
+        if "client_copyright" not in data_structure.branding:
+            data_structure.branding["client_copyright"] = ""
+        
+        # Set active to false and switch to default logo and copyright
+        data_structure.branding["active"] = False
+        data_structure.branding["logo"] = default_logo
+        data_structure.branding["copyright"] = default_copyright
+        
+        # But keep the client_logo, client_name, and client_copyright for later use
+        # (don't modify client_logo, client_name, or client_copyright fields)
+    
+    save_data(data_structure)
+    
+    return RedirectResponse(url="/admin/branding", status_code=303)
+
+# Logo Upload Endpoint
+@app.post("/api/upload/branding-logo")
+async def upload_branding_logo(
+    file: UploadFile = File(...),
+    current_user: str = Depends(get_current_user)
+):
+    """Upload a branding logo image and return its URL"""
+    url = await storage.upload_file(file, folder="branding")
+    
+    # If there was a previous logo, delete it
+    data_structure = load_data()
+    
+    # Ensure branding object exists
+    if not data_structure.branding:
+        data_structure.branding = {}
+    
+    # Ensure client_logo field exists
+    if "client_logo" not in data_structure.branding:
+        data_structure.branding["client_logo"] = ""
+    
+    # Check for existing logo to delete
+    if data_structure.branding.get("client_logo"):
+        old_logo = data_structure.branding["client_logo"]
+        if old_logo and "storage.googleapis.com" in old_logo and "branding" in old_logo:
+            try:
+                await storage.delete_file(old_logo)
+            except Exception:
+                # Ignore errors when deleting old logo
+                pass
+    
+    # Store in client_logo
+    data_structure.branding["client_logo"] = url
+    
+    # Also set as active logo if client branding is active
+    if data_structure.branding.get("active", False):
+        data_structure.branding["logo"] = url
+    
+    # Update data structure
+    save_data(data_structure)
+    
+    return {"url": url}
+
+# Add this route to get branding info
+@app.get("/api/branding")
+async def get_branding_info():
+    """Get branding information for the site"""
+    branding = await get_active_branding()
+    
+    # The get_active_branding helper now ensures the logo is set correctly
+    # based on active status, so we just need to return it
+    return {
+        "logo": branding.get("logo", ""),
+        "copyright": branding.get("copyright", "")
+    }
+
+# Favicon endpoint that redirects to current branding logo
+@app.get("/favicon.ico")
+async def favicon():
+    """Redirect to the current branding logo for favicon"""
+    branding = await get_active_branding()
+    logo_url = branding.get("logo", "")
+    
+    if logo_url:
+        return RedirectResponse(url=logo_url)
+    else:
+        # Use default Unifica logo if no branding logo is set
+        default_logo = os.getenv("DEFAULT_BRANDING_LOGO", "https://unificadesign.com.py/img/unifica/footerIcon.png")
+        return RedirectResponse(url=default_logo) 
