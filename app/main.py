@@ -32,6 +32,10 @@ ALGORITHM = "HS256"
 SECRET_KEY = os.getenv("SECRET_KEY")
 ADMIN_USERNAME = os.getenv("ADMIN_USERNAME")
 
+# Get environment
+ENVIRONMENT = os.getenv("ENVIRONMENT", "development")
+IS_PRODUCTION = ENVIRONMENT == "production"
+
 app = FastAPI(title="Mayoristas Paraguay Backend")
 storage = CloudStorage()
 
@@ -41,6 +45,9 @@ app.add_middleware(
     secret_key=os.getenv("SECRET_KEY"),
     session_cookie="session",
     max_age=ACCESS_TOKEN_EXPIRE_MINUTES * 60,  # in seconds
+    secure=IS_PRODUCTION,  # Secure in production
+    httponly=True,
+    samesite="lax" if not IS_PRODUCTION else "strict"  # Stricter in production
 )
 
 # Mount static files
@@ -126,14 +133,14 @@ async def login(
         )
         # Create a simple redirect response
         response = RedirectResponse(url="/admin", status_code=302)
-        # Set the auth cookie with development-friendly settings
+        # Set the auth cookie with environment-aware settings
         response.set_cookie(
             key="Authorization",
             value=f"Bearer {access_token}",
             httponly=True,
-            secure=False,  # Allow HTTP for development
-            samesite="lax",
-            path="/",  # Ensure cookie is sent for all paths
+            secure=IS_PRODUCTION,  # Secure in production
+            samesite="lax" if not IS_PRODUCTION else "strict",  # Stricter in production
+            path="/",
             max_age=ACCESS_TOKEN_EXPIRE_MINUTES * 60
         )
         print("DEBUG: Setting cookie with token:", access_token[:20], "...")  # Debug print
@@ -151,9 +158,9 @@ async def logout():
     response.delete_cookie(
         key="Authorization",
         httponly=True,
-        secure=False,  # Allow HTTP for development
-        samesite="lax",
-        path="/"  # Match login cookie settings
+        secure=IS_PRODUCTION,  # Secure in production
+        samesite="lax" if not IS_PRODUCTION else "strict",  # Stricter in production
+        path="/"
     )
     return response
 
