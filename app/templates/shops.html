@@ -174,6 +174,14 @@
                                     <span>Upload</span>
                                 </button>
                                 {% endif %}
+                                <button data-shop-id="{{ shop.id }}" 
+                                        data-shop-name="{{ shop.name }}" 
+                                        data-shop-description="{{ shop.description|default('') }}"
+                                        onclick="viewShopDescription(this.dataset.shopId, this.dataset.shopName, this.dataset.shopDescription)"
+                                        class="text-blue-600 dark:text-blue-500 hover:text-blue-900 dark:hover:text-blue-400 inline-flex items-center justify-between w-full gap-1 bg-blue-50 dark:bg-blue-900/20 hover:bg-blue-100 dark:hover:bg-blue-900/30 px-2 py-1 rounded-md transition-colors text-xs">
+                                    <i data-lucide="file-text" class="w-3 h-3"></i>
+                                    <span>Description</span>
+                                </button>
                                 <button data-shop='{{ shop.model_dump() | tojson | safe }}' 
                                         onclick="editShop(this.dataset.shop)"
                                         class="text-indigo-600 dark:text-indigo-500 hover:text-indigo-900 dark:hover:text-indigo-400 inline-flex items-center justify-between w-full gap-1 bg-indigo-50 dark:bg-indigo-900/20 hover:bg-indigo-100 dark:hover:bg-indigo-900/30 px-2 py-1 rounded-md transition-colors text-xs">
@@ -284,6 +292,14 @@
             </div>
 
             <div class="flex items-center justify-end space-x-2 pt-2 border-t dark:border-gray-700">
+                <button data-shop-id="{{ shop.id }}" 
+                        data-shop-name="{{ shop.name }}" 
+                        data-shop-description="{{ shop.description|default('') }}"
+                        onclick="viewShopDescription(this.dataset.shopId, this.dataset.shopName, this.dataset.shopDescription)"
+                        class="text-blue-600 dark:text-blue-500 hover:text-blue-900 dark:hover:text-blue-400 inline-flex items-center justify-between w-full gap-1 bg-blue-50 dark:bg-blue-900/20 hover:bg-blue-100 dark:hover:bg-blue-900/30 px-2 py-1 rounded-md transition-colors text-xs">
+                    <i data-lucide="file-text" class="w-3 h-3"></i>
+                    <span>Description</span>
+                </button>
                 <button data-shop='{{ shop.model_dump() | tojson | safe }}' 
                         onclick="editShop(this.dataset.shop)"
                         class="text-indigo-600 dark:text-indigo-500 hover:text-indigo-900 dark:hover:text-indigo-400 inline-flex items-center justify-between w-full gap-1 bg-indigo-50 dark:bg-indigo-900/20 hover:bg-indigo-100 dark:hover:bg-indigo-900/30 px-2 py-1 rounded-md transition-colors text-xs">
@@ -307,7 +323,7 @@
         <div class="mt-3">
             <h3 class="text-lg font-medium leading-6 text-gray-900 dark:text-white mb-4">Create New Shop</h3>
             <form id="createShopForm" hx-post="/api/shops" hx-on::after-request="handleShopSubmit(event)">
-                <div class="grid grid-cols-2 gap-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div class="mb-4">
                         <label class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2" for="id">ID</label>
                         <input type="number" name="id" required
@@ -341,6 +357,11 @@
                             <option value="{{ zone.id }}">{{ zone.name }}</option>
                             {% endfor %}
                         </select>
+                    </div>
+                    <div class="mb-4 sm:col-span-2">
+                        <label class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2" for="description">Description</label>
+                        <textarea name="description" rows="3"
+                               class="shadow appearance-none border dark:border-gray-600 rounded w-full py-2 px-3 text-gray-700 dark:text-white dark:bg-gray-700 leading-tight focus:outline-none focus:shadow-outline"></textarea>
                     </div>
                 </div>
                 <div class="mb-4">
@@ -539,7 +560,7 @@
             <h3 class="text-lg font-medium leading-6 text-gray-900 dark:text-white mb-4">Edit Shop</h3>
             <form id="editShopForm">
                 <input type="hidden" name="id" id="edit_id">
-                <div class="grid grid-cols-2 gap-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div class="mb-4">
                         <label class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2" for="edit_name">Name</label>
                         <input type="text" name="name" id="edit_name" required
@@ -568,6 +589,11 @@
                             <option value="{{ zone.id }}">{{ zone.name }}</option>
                             {% endfor %}
                         </select>
+                    </div>
+                    <div class="mb-4 sm:col-span-2">
+                        <label class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2" for="edit_description">Description</label>
+                        <textarea name="description" id="edit_description" rows="3"
+                               class="shadow appearance-none border dark:border-gray-600 rounded w-full py-2 px-3 text-gray-700 dark:text-white dark:bg-gray-700 leading-tight focus:outline-none focus:shadow-outline"></textarea>
                     </div>
                 </div>
                 <div class="mb-4">
@@ -819,6 +845,28 @@
     </div>
 </div>
 
+<!-- Add Description Modal -->
+<div id="descriptionModal" class="hidden fixed inset-0 bg-gray-600 dark:bg-gray-900 bg-opacity-50 dark:bg-opacity-50 overflow-y-auto h-full w-full">
+    <div class="relative top-20 mx-auto p-4 sm:p-5 border w-full max-w-[600px] shadow-lg rounded-md bg-white dark:bg-gray-800 dark:border-gray-700 m-4">
+        <div class="flex justify-between items-center mb-4">
+            <h3 id="descriptionTitle" class="text-lg font-medium leading-6 text-gray-900 dark:text-white"></h3>
+            <button onclick="document.getElementById('descriptionModal').classList.add('hidden')" class="text-gray-400 hover:text-gray-500 dark:text-gray-500 dark:hover:text-gray-400">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+        </div>
+        <div class="mt-2">
+            <div id="descriptionContent" class="text-sm text-gray-700 dark:text-gray-300 whitespace-pre-wrap"></div>
+            <div id="noDescriptionMessage" class="hidden text-sm italic text-gray-500 dark:text-gray-400">No description available</div>
+        </div>
+        <div class="mt-4 flex justify-end">
+            <button onclick="document.getElementById('descriptionModal').classList.add('hidden')" 
+                    class="bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200 font-bold py-2 px-4 rounded">
+                Close
+            </button>
+        </div>
+    </div>
+</div>
+
 <script>
     function handleShopSubmit(event) {
         if (event.detail.successful) {
@@ -934,6 +982,7 @@
             contact_number: formData.get('contact_number'),
             city: formData.get('city'),
             zone_id: parseInt(formData.get('zone_id')),
+            description: formData.get('description'),
             categories: Array.from(this.querySelectorAll('input[name="categories"]:checked')).map(cb => parseInt(cb.value)),
             categorie_pages: Array.from(this.querySelectorAll('input[name="categorie_pages"]:checked')).map(cb => cb.value),
             img: formData.get('img'),
@@ -961,38 +1010,45 @@
     });
 
     function editShop(shopData) {
-        const shop = typeof shopData === 'string' ? JSON.parse(shopData) : shopData;
+        const shop = JSON.parse(shopData);
         
+        // Set form values
         document.getElementById('edit_id').value = shop.id;
         document.getElementById('edit_name').value = shop.name;
-        document.getElementById('edit_owner').value = shop.owner;
-        document.getElementById('edit_contact_number').value = shop.contact_number;
-        document.getElementById('edit_city').value = shop.city;
+        document.getElementById('edit_owner').value = shop.owner || '';
+        document.getElementById('edit_contact_number').value = shop.contact_number || '';
+        document.getElementById('edit_city').value = shop.city || '';
         document.getElementById('edit_zone_id').value = shop.zone_id;
-        document.getElementById('edit_shop_image_url').value = shop.img;
-
-        // Clear all checkboxes first
+        document.getElementById('edit_description').value = shop.description || '';
+        
+        // Clear all checkboxes
         document.querySelectorAll('#editShopForm input[name="categories"]').forEach(cb => cb.checked = false);
         document.querySelectorAll('#editShopForm input[name="categorie_pages"]').forEach(cb => cb.checked = false);
         
-        // Check the boxes for selected categories
-        shop.categories.forEach(catId => {
-            const checkbox = document.querySelector(`#editShopForm input[name="categories"][value="${catId}"]`);
-            if (checkbox) checkbox.checked = true;
-        });
-
-        // Check the boxes for selected category pages
-        shop.categorie_pages.forEach(page => {
-            const checkbox = document.querySelector(`#editShopForm input[name="categorie_pages"][value="${page}"]`);
-            if (checkbox) checkbox.checked = true;
-        });
+        // Set categories
+        if (shop.categories) {
+            shop.categories.forEach(catId => {
+                const checkbox = document.querySelector(`#editShopForm input[name="categories"][value="${catId}"]`);
+                if (checkbox) checkbox.checked = true;
+            });
+        }
         
-        // Update image preview
+        // Set category pages
+        if (shop.categorie_pages) {
+            shop.categorie_pages.forEach(page => {
+                const checkbox = document.querySelector(`#editShopForm input[name="categorie_pages"][value="${page}"]`);
+                if (checkbox) checkbox.checked = true;
+            });
+        }
+        
+        // Set image
+        const imageUrl = shop.img || '';
+        document.getElementById('edit_shop_image_url').value = imageUrl;
         const preview = document.getElementById('edit_shop_image_preview');
         const placeholder = document.getElementById('edit_shop_image_placeholder');
         
-        if (shop.img) {
-            preview.src = shop.img;
+        if (imageUrl) {
+            preview.src = imageUrl;
             preview.classList.remove('hidden');
             placeholder.classList.add('hidden');
         } else {
@@ -1027,6 +1083,7 @@
             contact_number: formData.get('contact_number'),
             city: formData.get('city'),
             zone_id: parseInt(formData.get('zone_id')),
+            description: formData.get('description'),
             categories: Array.from(this.querySelectorAll('input[name="categories"]:checked')).map(cb => parseInt(cb.value)),
             categorie_pages: Array.from(this.querySelectorAll('input[name="categorie_pages"]:checked')).map(cb => cb.value),
             img: formData.get('img'),
@@ -1365,5 +1422,22 @@
             showError('Error uploading image. Please try again.');
         }
     });
+
+    function viewShopDescription(id, name, description) {
+        document.getElementById('descriptionTitle').textContent = name;
+        const contentEl = document.getElementById('descriptionContent');
+        const noDescriptionEl = document.getElementById('noDescriptionMessage');
+        
+        if (description && description.trim() && description !== "None") {
+            contentEl.textContent = description;
+            contentEl.classList.remove('hidden');
+            noDescriptionEl.classList.add('hidden');
+        } else {
+            contentEl.classList.add('hidden');
+            noDescriptionEl.classList.remove('hidden');
+        }
+        
+        document.getElementById('descriptionModal').classList.remove('hidden');
+    }
 </script>
 {% endblock %}

@@ -54,6 +54,7 @@ class Shop(BaseModel):
     zone_id: int
     categorie_pages: List[str]
     img: str
+    description: Optional[str] = None
 
     def model_dump(self, **kwargs):
         data = super().model_dump(**kwargs)
