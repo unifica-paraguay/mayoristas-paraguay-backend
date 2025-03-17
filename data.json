@@ -1895,5 +1895,9 @@
     "https://storage.googleapis.com/mayoristas-paraguay-backend/secondary-banners/dd4efb9c-9560-48b7-a61e-1e08504f30a9.jpg"
   ],
   "recommended_image": "https://storage.googleapis.com/mayoristas-paraguay-backend/recommended/af9b2d53-71a4-4db0-b90a-c17d42c3f080.gif",
-  "other_businesses": "https://storage.googleapis.com/mayoristas-paraguay-backend/other-business/78579912-e0da-4802-8555-b73beaae916e.gif"
+  "other_businesses": "https://storage.googleapis.com/mayoristas-paraguay-backend/other-business/78579912-e0da-4802-8555-b73beaae916e.gif",
+  "branding": {
+    "logo": "https://unificadesign.com.py/img/unifica/footerIcon.png",
+    "copyright": "© 2024 Unifica Paraguay. Todos los derechos reservados."
+  }
 }
