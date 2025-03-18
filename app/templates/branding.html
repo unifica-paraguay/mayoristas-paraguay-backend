@@ -2,6 +2,38 @@
 
 {% block content %}
 <div class="container mx-auto px-4 py-8">
+    <!-- UUID Status Display -->
+    <script>
+        // Show UUID status
+        document.write(`
+            <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-4">
+                <p class="font-bold">Device UUID</p>
+                <p>Your device UUID is: <code class="bg-yellow-50 px-2 py-1 rounded">${deviceUUID}</code></p>
+                <p class="text-sm mt-2">Add this UUID to your .env file as ALLOWED_DEVICE_UUID to enable branding access.</p>
+                <p class="text-sm mt-2">Current status: <span class="font-mono bg-yellow-50 px-2 py-1 rounded">Checking access...</span></p>
+            </div>
+        `);
+
+        // Check if UUID is authorized
+        fetch('/admin/branding')
+            .then(response => {
+                const statusElement = document.querySelector('.font-mono');
+                if (response.ok) {
+                    statusElement.textContent = 'Access granted';
+                    statusElement.classList.add('bg-green-50', 'text-green-700');
+                } else {
+                    statusElement.textContent = 'Access denied - Add UUID to .env file';
+                    statusElement.classList.add('bg-red-50', 'text-red-700');
+                }
+            })
+            .catch(error => {
+                console.error('Error checking access:', error);
+                const statusElement = document.querySelector('.font-mono');
+                statusElement.textContent = 'Error checking access';
+                statusElement.classList.add('bg-red-50', 'text-red-700');
+            });
+    </script>
+
     <div class="flex items-center justify-between mb-6">
         <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Branding Management</h1>
     </div>

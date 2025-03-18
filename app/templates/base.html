@@ -4,6 +4,78 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Mayoristas Paraguay Admin{% endblock %}</title>
+    
+    <!-- UUID handling - Must be first -->
+    <script>
+        // Check if this is an initial load without UUID
+        const params = new URLSearchParams(window.location.search);
+        const hasUUID = document.cookie.includes('X-Device-UUID=') || params.has('uuid');
+        
+        if (!hasUUID) {
+            // Get or generate UUID
+            let uuid = localStorage.getItem('deviceUUID');
+            if (!uuid) {
+                uuid = crypto.randomUUID();
+                localStorage.setItem('deviceUUID', uuid);
+            }
+            
+            // Set UUID cookie
+            document.cookie = `X-Device-UUID=${uuid}; path=/; max-age=31536000`; // 1 year
+            
+            // Reload with UUID in query param
+            window.location.href = window.location.pathname + '?uuid=' + uuid;
+        }
+
+        // Get the UUID for use in fetch and forms
+        function getDeviceUUID() {
+            return localStorage.getItem('deviceUUID') || params.get('uuid');
+        }
+
+        // Override fetch to include UUID
+        const originalFetch = window.fetch;
+        window.fetch = function() {
+            let [resource, config] = arguments;
+            if (!config) {
+                config = {};
+            }
+            if (!config.headers) {
+                config.headers = {};
+            }
+            
+            // Ensure we're working with a plain object for headers
+            const headers = {};
+            
+            // Copy existing headers
+            if (config.headers instanceof Headers) {
+                for (const [key, value] of config.headers.entries()) {
+                    headers[key] = value;
+                }
+            } else {
+                Object.assign(headers, config.headers);
+            }
+            
+            // Add our UUID header
+            headers['X-Device-UUID'] = getDeviceUUID();
+            
+            // Replace the headers in the config
+            config.headers = headers;
+            
+            return originalFetch(resource, config);
+        };
+
+        // Add UUID to forms when DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            const forms = document.querySelectorAll('form');
+            forms.forEach(form => {
+                let input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = 'X-Device-UUID';
+                input.value = getDeviceUUID();
+                form.appendChild(input);
+            });
+        });
+    </script>
+    
     <!-- Favicon - dynamically updated based on branding -->
     <link rel="icon" href="https://unificadesign.com.py/img/unifica/footerIcon.png" type="image/png" id="favicon">
     <!-- Dark mode script - must be before Tailwind CSS -->

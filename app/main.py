@@ -16,7 +16,7 @@ from dotenv import load_dotenv
 from .utils.working_hours import parse_legacy_working_hours, is_shop_open, format_working_hours, parse_time
 from datetime import time
 import secrets
-from .utils.security import authenticate_user, create_access_token, get_current_user, ACCESS_TOKEN_EXPIRE_MINUTES
+from .utils.security import authenticate_user, create_access_token, get_current_user, ACCESS_TOKEN_EXPIRE_MINUTES, validate_device_uuid
 from datetime import timedelta
 import jwt
 from jose import JWTError
@@ -750,13 +750,28 @@ async def get_active_branding():
 
 # Branding Management Page
 @app.get("/admin/branding", response_class=HTMLResponse)
-async def get_branding_page(
+async def branding_page(
     request: Request,
     current_user: str = Depends(get_current_user)
 ):
-    """Render the branding management page"""
-    branding = await get_active_branding()
+    """Branding management page"""
+    print("DEBUG: Accessing branding page")
+    print(f"DEBUG: Headers: {dict(request.headers)}")
     
+    # Validate device UUID
+    if not await validate_device_uuid(request):
+        print("DEBUG: UUID validation failed")
+        return templates.TemplateResponse(
+            "unauthorized.html",
+            {
+                "request": request,
+                "title": "Unauthorized Access"
+            },
+            status_code=403
+        )
+    
+    print("DEBUG: UUID validation successful")
+    branding = await get_active_branding()
     return templates.TemplateResponse(
         "branding.html",
         {
@@ -769,15 +784,27 @@ async def get_branding_page(
 # Branding API Endpoints
 @app.post("/api/branding")
 async def update_branding(
+    request: Request,
     client_name: str = Form(None),
     subscription_end_date: str = Form(None),
     logo: str = Form(None),
-    copyright: str = Form(None),  # Ignored - for display only
-    client_copyright: str = Form(None),  # This is what we'll store and use
-    client_contact_number: str = Form(None),  # New field for client contact
+    copyright: str = Form(None),
+    client_copyright: str = Form(None),
+    client_contact_number: str = Form(None),
     current_user: str = Depends(get_current_user)
 ):
     """Update branding information"""
+    # Validate device UUID
+    if not await validate_device_uuid(request):
+        return JSONResponse(
+            status_code=403,
+            content={
+                "status": "error",
+                "message": "Unauthorized device. Please provide a valid device UUID.",
+                "code": "UNAUTHORIZED_DEVICE"
+            }
+        )
+    
     data_structure = load_data()
     
     # Get default branding values
@@ -857,9 +884,21 @@ async def update_branding(
 
 @app.post("/api/branding/enable")
 async def enable_client_branding(
+    request: Request,
     current_user: str = Depends(get_current_user)
 ):
     """Enable client branding"""
+    # Validate device UUID
+    if not await validate_device_uuid(request):
+        return JSONResponse(
+            status_code=403,
+            content={
+                "status": "error",
+                "message": "Unauthorized device. Please provide a valid device UUID.",
+                "code": "UNAUTHORIZED_DEVICE"
+            }
+        )
+    
     data_structure = load_data()
     
     if not data_structure.branding:
@@ -905,9 +944,17 @@ async def enable_client_branding(
 
 @app.post("/api/branding/disable")
 async def disable_client_branding(
+    request: Request,
     current_user: str = Depends(get_current_user)
 ):
     """Disable client branding and use default"""
+    # Validate device UUID
+    if not await validate_device_uuid(request):
+        raise HTTPException(
+            status_code=403,
+            detail="Unauthorized device. Please provide a valid device UUID."
+        )
+    
     data_structure = load_data()
     
     # Get default branding values from environment variables
@@ -962,10 +1009,22 @@ async def disable_client_branding(
 # Logo Upload Endpoint
 @app.post("/api/upload/branding-logo")
 async def upload_branding_logo(
+    request: Request,
     file: UploadFile = File(...),
     current_user: str = Depends(get_current_user)
 ):
     """Upload a branding logo image and return its URL"""
+    # Validate device UUID
+    if not await validate_device_uuid(request):
+        return JSONResponse(
+            status_code=403,
+            content={
+                "status": "error",
+                "message": "Unauthorized device. Please provide a valid device UUID.",
+                "code": "UNAUTHORIZED_DEVICE"
+            }
+        )
+    
     url = await storage.upload_file(file, folder="branding")
     
     # If there was a previous logo, delete it

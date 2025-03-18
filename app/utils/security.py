@@ -18,6 +18,7 @@ ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 12  # 12 hour
 ADMIN_USERNAME = os.getenv("ADMIN_USERNAME")
 ADMIN_PASSWORD = os.getenv("ADMIN_PASSWORD")
 SECRET_KEY = os.getenv("SECRET_KEY")
+ALLOWED_DEVICE_UUID = os.getenv("ALLOWED_DEVICE_UUID")
 
 # Debug print environment variables
 print("DEBUG Environment Variables:")
@@ -25,6 +26,8 @@ print(f"ADMIN_USERNAME set: {bool(ADMIN_USERNAME)}")
 print(f"ADMIN_PASSWORD set: {bool(ADMIN_PASSWORD)}")
 print(f"SECRET_KEY set: {bool(SECRET_KEY)}")
 print(f"SECRET_KEY length: {len(SECRET_KEY) if SECRET_KEY else 0}")
+print(f"ALLOWED_DEVICE_UUID set: {bool(ALLOWED_DEVICE_UUID)}")
+print(f"ALLOWED_DEVICE_UUID value: {ALLOWED_DEVICE_UUID}")
 
 # Security scheme
 bearer_scheme = HTTPBearer(auto_error=False)  # Don't auto-raise errors
@@ -101,5 +104,33 @@ def get_auth_dependency() -> Callable:
     """Returns the authentication dependency."""
     return Depends(get_current_user)
 
+async def validate_device_uuid(request: Request) -> bool:
+    """Validate the device UUID from the request headers, cookies, or query parameters against the allowed UUID."""
+    if not ALLOWED_DEVICE_UUID:
+        print("DEBUG: No ALLOWED_DEVICE_UUID set in environment")
+        return False
+    
+    # Check headers first
+    device_uuid = request.headers.get("X-Device-UUID")
+    
+    # If not in headers, check cookies
+    if not device_uuid:
+        device_uuid = request.cookies.get("X-Device-UUID")
+    
+    # If not in cookies, check query parameters
+    if not device_uuid:
+        device_uuid = request.query_params.get("uuid")
+    
+    print(f"DEBUG: Received device UUID: {device_uuid}")
+    print(f"DEBUG: Allowed device UUID: {ALLOWED_DEVICE_UUID}")
+    
+    if not device_uuid:
+        print("DEBUG: No device UUID found in headers, cookies, or query parameters")
+        return False
+    
+    is_valid = device_uuid == ALLOWED_DEVICE_UUID
+    print(f"DEBUG: UUID validation result: {is_valid}")
+    return is_valid
+
 # Dependency for protected routes
-require_auth = get_auth_dependency() 
+require_auth = get_auth_dependency()

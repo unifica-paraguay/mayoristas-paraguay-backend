@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block title %}Unauthorized Access - Mayoristas Paraguay Admin{% endblock %}
+
+{% block content %}
+<div class="min-h-[60vh] flex items-center justify-center px-4 sm:px-6 lg:px-8">
+    <div class="max-w-md w-full space-y-8 bg-white dark:bg-gray-800 p-8 rounded-lg shadow-lg">
+        <div>
+            <div class="flex justify-center">
+                <i data-lucide="shield-alert" class="h-16 w-16 text-red-500"></i>
+            </div>
+            <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900 dark:text-white">
+                Unauthorized Access
+            </h2>
+            <p class="mt-2 text-center text-sm text-gray-600 dark:text-gray-400">
+                This device is not authorized to access the branding management page.
+            </p>
+        </div>
+        <div class="mt-8 space-y-6">
+            <div class="rounded-md bg-yellow-50 dark:bg-yellow-900/50 p-4">
+                <div class="flex">
+                    <div class="flex-shrink-0">
+                        <i data-lucide="info" class="h-5 w-5 text-yellow-400"></i>
+                    </div>
+                    <div class="ml-3">
+                        <h3 class="text-sm font-medium text-yellow-800 dark:text-yellow-200">
+                            Device Information
+                        </h3>
+                        <div class="mt-2 text-sm text-yellow-700 dark:text-yellow-300">
+                            <p>Your Device UUID: <span id="currentUUID" class="font-mono">Loading...</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <p class="text-sm text-gray-500 dark:text-gray-400">
+                    Please contact your system administrator with your Device UUID to request access.
+                </p>
+                <button onclick="copyUUID()" class="mt-4 w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    <i data-lucide="copy" class="h-5 w-5 mr-2"></i>
+                    Copy Device UUID
+                </button>
+                <a href="/admin" class="mt-4 w-full flex justify-center py-2 px-4 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    <i data-lucide="arrow-left" class="h-5 w-5 mr-2"></i>
+                    Return to Dashboard
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Display the current UUID
+    document.getElementById('currentUUID').textContent = getDeviceUUID() || 'Not available';
+
+    // Function to copy UUID to clipboard
+    async function copyUUID() {
+        const uuid = getDeviceUUID();
+        if (uuid) {
+            try {
+                await navigator.clipboard.writeText(uuid);
+                showSuccess('Device UUID copied to clipboard!');
+            } catch (err) {
+                showError('Failed to copy UUID');
+            }
+        } else {
+            showError('No UUID available');
+        }
+    }
+</script>
+{% endblock %}
