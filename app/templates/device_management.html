@@ -1,72 +1,91 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container mx-auto px-4 py-8">
+<div class="bg-white dark:bg-gray-800 shadow rounded-lg p-6">
     <div class="flex justify-between items-center mb-6">
-        <h1 class="text-2xl font-bold text-gray-900">Device Management</h1>
-        <button onclick="showAddDeviceModal()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-            Add Device
+        <h2 class="text-2xl font-bold text-gray-800 dark:text-white">Device Management</h2>
+        <button onclick="showAddDeviceModal()" 
+                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded inline-flex items-center gap-2">
+            <i data-lucide="plus-circle" class="w-5 h-5"></i>
+            <span class="hidden md:inline">Add Device</span>
         </button>
     </div>
 
-    <!-- Device List -->
-    <div class="bg-white shadow-md rounded-lg overflow-hidden">
-        <table class="min-w-full divide-y divide-gray-200">
-            <thead class="bg-gray-50">
-                <tr>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Device Name</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">UUID</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Expires</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Last Used</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
-                </tr>
-            </thead>
-            <tbody class="bg-white divide-y divide-gray-200" id="deviceList">
-                <!-- Devices will be populated here -->
-            </tbody>
-        </table>
+    <!-- Desktop view (table) -->
+    <div class="hidden md:block">
+        <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                <thead class="bg-gray-50 dark:bg-gray-700">
+                    <tr>
+                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider w-[80px]">ID</th>
+                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Basic Info</th>
+                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider w-[100px]">Status</th>
+                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Expires</th>
+                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Last Used</th>
+                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider w-[120px]">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700" id="deviceList">
+                    <!-- Devices will be populated here -->
+                </tbody>
+            </table>
+        </div>
     </div>
 
-    <!-- Add Device Modal -->
-    <div id="addDeviceModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden overflow-y-auto h-full w-full">
-        <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
-            <div class="mt-3">
-                <h3 class="text-lg font-medium text-gray-900 mb-4">Add New Device</h3>
-                <form id="addDeviceForm" class="space-y-4">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">Device Name</label>
+    <!-- Mobile view (cards) -->
+    <div class="md:hidden space-y-4" id="deviceListMobile">
+        <!-- Devices will be populated here -->
+    </div>
+</div>
+
+<!-- Add Device Modal -->
+<div id="addDeviceModal" class="hidden fixed inset-0 bg-gray-600 dark:bg-gray-900 bg-opacity-50 dark:bg-opacity-50 overflow-y-auto h-full w-full">
+    <div class="relative top-20 mx-auto p-4 sm:p-5 border w-full max-w-[800px] shadow-lg rounded-md bg-white dark:bg-gray-800 dark:border-gray-700 m-4">
+        <div class="mt-3">
+            <h3 class="text-lg font-medium leading-6 text-gray-900 dark:text-white mb-4">Add New Device</h3>
+            <form id="addDeviceForm" class="space-y-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="mb-4">
+                        <label class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2" for="device_name">Device Name</label>
                         <input type="text" name="device_name" required
-                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                               class="shadow appearance-none border dark:border-gray-600 rounded w-full py-2 px-3 text-gray-700 dark:text-white dark:bg-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                     </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">UUID (optional)</label>
+                    <div class="mb-4">
+                        <label class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2" for="uuid">UUID (optional)</label>
                         <input type="text" name="uuid" placeholder="Leave empty to generate automatically"
-                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                               class="shadow appearance-none border dark:border-gray-600 rounded w-full py-2 px-3 text-gray-700 dark:text-white dark:bg-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                     </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">Expiration Date</label>
+                    <div class="mb-4">
+                        <label class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2" for="expires_at">Expiration Date</label>
                         <input type="datetime-local" name="expires_at"
-                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                               class="shadow appearance-none border dark:border-gray-600 rounded w-full py-2 px-3 text-gray-700 dark:text-white dark:bg-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                     </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">Notes</label>
-                        <textarea name="notes"
-                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"></textarea>
+                    <div class="mb-4 sm:col-span-2">
+                        <label class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2" for="notes">Notes</label>
+                        <textarea name="notes" rows="3"
+                               class="shadow appearance-none border dark:border-gray-600 rounded w-full py-2 px-3 text-gray-700 dark:text-white dark:bg-gray-700 leading-tight focus:outline-none focus:shadow-outline"></textarea>
                     </div>
-                    <div class="flex justify-end space-x-3">
-                        <button type="button" onclick="hideAddDeviceModal()"
-                            class="bg-gray-200 hover:bg-gray-300 px-4 py-2 rounded text-gray-800">Cancel</button>
-                        <button type="submit"
-                            class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">Add</button>
-                    </div>
-                </form>
-            </div>
+                </div>
+                <div class="flex items-center justify-end space-x-3 mt-6 pt-6 border-t dark:border-gray-700">
+                    <div class="flex-1"><!-- spacer --></div>
+                    <button type="button" onclick="hideAddDeviceModal()"
+                            class="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-offset-gray-800">
+                        Cancel
+                    </button>
+                    <button type="submit"
+                            class="px-4 py-2 text-sm font-medium text-white bg-blue-500 hover:bg-blue-600 border border-blue-600 dark:border-blue-500 rounded-md shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800">
+                        Add Device
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
 
 <script>
+    // Initialize Lucide icons
+    lucide.createIcons();
+
     // Utility function to format dates
     function formatDate(dateString) {
         if (!dateString) return 'N/A';
@@ -78,31 +97,116 @@
         try {
             const response = await fetch('/api/devices');
             const devices = await response.json();
+            
+            // Update desktop view
             const deviceList = document.getElementById('deviceList');
             deviceList.innerHTML = devices.map(device => `
                 <tr>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${device.device_name}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${device.uuid}</td>
-                    <td class="px-6 py-4 whitespace-nowrap">
-                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
-                            ${device.is_active ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">
-                            ${device.is_active ? 'Active' : 'Inactive'}
-                        </span>
+                    <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">${device.id || '-'}</td>
+                    <td class="px-4 py-4">
+                        <div class="space-y-1">
+                            <div class="text-sm font-medium text-gray-900 dark:text-white">${device.device_name}</div>
+                            <div class="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
+                                <i data-lucide="key" class="w-4 h-4"></i>
+                                <span class="font-mono">${device.uuid}</span>
+                            </div>
+                            ${device.notes ? `
+                            <div class="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
+                                <i data-lucide="file-text" class="w-4 h-4"></i>
+                                <span>${device.notes}</span>
+                            </div>
+                            ` : ''}
+                        </div>
                     </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${formatDate(device.expires_at)}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${formatDate(device.last_used)}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
-                        <button onclick="toggleDevice('${device.uuid}', ${!device.is_active})"
-                            class="text-blue-600 hover:text-blue-900">
-                            ${device.is_active ? 'Disable' : 'Enable'}
-                        </button>
-                        <button onclick="deleteDevice('${device.uuid}')"
-                            class="text-red-600 hover:text-red-900">Delete</button>
+                    <td class="px-4 py-4 whitespace-nowrap">
+                        <div class="w-[100px]">
+                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                                ${device.is_active ? 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400' : 'bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-400'}">
+                                ${device.is_active ? 'Active' : 'Inactive'}
+                            </span>
+                        </div>
+                    </td>
+                    <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">${formatDate(device.expires_at)}</td>
+                    <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">${formatDate(device.last_used)}</td>
+                    <td class="px-4 py-4">
+                        <div class="flex flex-col gap-2">
+                            <button onclick="toggleDevice('${device.uuid}', ${!device.is_active})"
+                                    class="${device.is_active ? 'text-orange-600 dark:text-orange-500 hover:text-orange-900 dark:hover:text-orange-400 bg-orange-50 dark:bg-orange-900/20 hover:bg-orange-100 dark:hover:bg-orange-900/30' : 'text-green-600 dark:text-green-500 hover:text-green-900 dark:hover:text-green-400 bg-green-50 dark:bg-green-900/20 hover:bg-green-100 dark:hover:bg-green-900/30'} inline-flex items-center justify-between w-full gap-1 px-2 py-1 rounded-md transition-colors text-xs">
+                                <i data-lucide="${device.is_active ? 'power-off' : 'power'}" class="w-3 h-3"></i>
+                                <span>${device.is_active ? 'Disable' : 'Enable'}</span>
+                            </button>
+                            <button onclick="deleteDevice('${device.uuid}')"
+                                    class="text-red-600 dark:text-red-500 hover:text-red-900 dark:hover:text-red-400 inline-flex items-center justify-between w-full gap-1 bg-red-50 dark:bg-red-900/20 hover:bg-red-100 dark:hover:bg-red-900/30 px-2 py-1 rounded-md transition-colors text-xs">
+                                <i data-lucide="trash-2" class="w-3 h-3"></i>
+                                <span>Delete</span>
+                            </button>
+                        </div>
                     </td>
                 </tr>
             `).join('');
+
+            // Update mobile view
+            const deviceListMobile = document.getElementById('deviceListMobile');
+            deviceListMobile.innerHTML = devices.map(device => `
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4 space-y-3">
+                    <div class="flex flex-col space-y-3">
+                        <div>
+                            <h3 class="text-lg font-medium text-gray-900 dark:text-white">${device.device_name}</h3>
+                            <p class="text-sm font-mono text-gray-500 dark:text-gray-400">${device.uuid}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-2 text-sm">
+                        <div class="w-[100px]">
+                            <p class="text-gray-500 dark:text-gray-400">Status</p>
+                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                                ${device.is_active ? 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400' : 'bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-400'}">
+                                ${device.is_active ? 'Active' : 'Inactive'}
+                            </span>
+                        </div>
+                        <div>
+                            <p class="text-gray-500 dark:text-gray-400">Expires</p>
+                            <p class="font-medium text-gray-900 dark:text-white">${formatDate(device.expires_at)}</p>
+                        </div>
+                        <div>
+                            <p class="text-gray-500 dark:text-gray-400">Last Used</p>
+                            <p class="font-medium text-gray-900 dark:text-white">${formatDate(device.last_used)}</p>
+                        </div>
+                        ${device.notes ? `
+                        <div class="col-span-2">
+                            <p class="text-gray-500 dark:text-gray-400">Notes</p>
+                            <p class="font-medium text-gray-900 dark:text-white">${device.notes}</p>
+                        </div>
+                        ` : ''}
+                    </div>
+
+                    <div class="flex items-center justify-end space-x-2 pt-2 border-t dark:border-gray-700">
+                        <button onclick="toggleDevice('${device.uuid}', ${!device.is_active})"
+                                class="${device.is_active ? 'text-orange-600 dark:text-orange-500 hover:text-orange-900 dark:hover:text-orange-400 bg-orange-50 dark:bg-orange-900/20 hover:bg-orange-100 dark:hover:bg-orange-900/30' : 'text-green-600 dark:text-green-500 hover:text-green-900 dark:hover:text-green-400 bg-green-50 dark:bg-green-900/20 hover:bg-green-100 dark:hover:bg-green-900/30'} inline-flex items-center justify-between w-full gap-1 px-2 py-1 rounded-md transition-colors text-xs">
+                            <i data-lucide="${device.is_active ? 'power-off' : 'power'}" class="w-3 h-3"></i>
+                            <span>${device.is_active ? 'Disable' : 'Enable'}</span>
+                        </button>
+                        <button onclick="deleteDevice('${device.uuid}')"
+                                class="text-red-600 dark:text-red-500 hover:text-red-900 dark:hover:text-red-400 inline-flex items-center justify-between w-full gap-1 bg-red-50 dark:bg-red-900/20 hover:bg-red-100 dark:hover:bg-red-900/30 px-2 py-1 rounded-md transition-colors text-xs">
+                            <i data-lucide="trash-2" class="w-3 h-3"></i>
+                            <span>Delete</span>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+
+            // Reinitialize Lucide icons for dynamically added content
+            lucide.createIcons();
         } catch (error) {
             console.error('Error fetching devices:', error);
+            Swal.fire({
+                title: 'Error',
+                text: 'Failed to load devices',
+                icon: 'error',
+                confirmButtonText: 'OK',
+                background: '#1f2937',
+                color: '#fff'
+            });
         }
     }
 
@@ -139,13 +243,34 @@
             if (response.ok) {
                 hideAddDeviceModal();
                 refreshDeviceList();
+                Swal.fire({
+                    title: 'Success',
+                    text: 'Device added successfully',
+                    icon: 'success',
+                    timer: 700,
+                    showConfirmButton: false
+                });
             } else {
                 const error = await response.json();
-                alert(error.detail || 'Error adding device');
+                Swal.fire({
+                    title: 'Error',
+                    text: error.detail || 'Error adding device',
+                    icon: 'error',
+                    confirmButtonText: 'OK',
+                    background: '#1f2937',
+                    color: '#fff'
+                });
             }
         } catch (error) {
             console.error('Error adding device:', error);
-            alert('Error adding device');
+            Swal.fire({
+                title: 'Error',
+                text: 'Failed to add device',
+                icon: 'error',
+                confirmButtonText: 'OK',
+                background: '#1f2937',
+                color: '#fff'
+            });
         }
     });
 
@@ -162,34 +287,102 @@
 
             if (response.ok) {
                 refreshDeviceList();
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 1500,
+                    background: '#1f2937',
+                    color: '#fff',
+                    html: true
+                });
+                Toast.fire({
+                    icon: 'success',
+                    html: `Device <span class="${enable ? 'text-green-400' : 'text-orange-400'}">${enable ? 'enabled' : 'disabled'}</span>`
+                });
             } else {
                 const error = await response.json();
-                alert(error.detail || 'Error toggling device status');
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    background: '#1f2937',
+                    color: '#fff'
+                });
+                Toast.fire({
+                    icon: 'error',
+                    title: error.detail || 'Error toggling device status'
+                });
             }
         } catch (error) {
             console.error('Error toggling device:', error);
-            alert('Error toggling device status');
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                background: '#1f2937',
+                color: '#fff'
+            });
+            Toast.fire({
+                icon: 'error',
+                title: 'Failed to toggle device status'
+            });
         }
     }
 
     // Delete device
     async function deleteDevice(uuid) {
-        if (!confirm('Are you sure you want to delete this device?')) return;
+        const result = await Swal.fire({
+            title: 'Are you sure?',
+            text: 'This device will be permanently deleted',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Delete',
+            cancelButtonText: 'Cancel',
+            confirmButtonColor: '#dc2626',
+            background: '#1f2937',
+            color: '#fff'
+        });
 
-        try {
-            const response = await fetch(`/api/devices/${uuid}`, {
-                method: 'DELETE'
-            });
+        if (result.isConfirmed) {
+            try {
+                const response = await fetch(`/api/devices/${uuid}`, {
+                    method: 'DELETE'
+                });
 
-            if (response.ok) {
-                refreshDeviceList();
-            } else {
-                const error = await response.json();
-                alert(error.detail || 'Error deleting device');
+                if (response.ok) {
+                    refreshDeviceList();
+                    Swal.fire({
+                        title: 'Success',
+                        text: 'Device deleted successfully',
+                        icon: 'success',
+                        timer: 700,
+                        showConfirmButton: false
+                    });
+                } else {
+                    const error = await response.json();
+                    Swal.fire({
+                        title: 'Error',
+                        text: error.detail || 'Error deleting device',
+                        icon: 'error',
+                        confirmButtonText: 'OK',
+                        background: '#1f2937',
+                        color: '#fff'
+                    });
+                }
+            } catch (error) {
+                console.error('Error deleting device:', error);
+                Swal.fire({
+                    title: 'Error',
+                    text: 'Failed to delete device',
+                    icon: 'error',
+                    confirmButtonText: 'OK',
+                    background: '#1f2937',
+                    color: '#fff'
+                });
             }
-        } catch (error) {
-            console.error('Error deleting device:', error);
-            alert('Error deleting device');
         }
     }
 
