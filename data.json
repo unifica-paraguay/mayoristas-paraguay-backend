@@ -51,7 +51,7 @@
         "see_all"
       ],
       "img": "https://storage.googleapis.com/mayoristas-paraguay-backend/shops/5fe0f8bf-70ba-4905-a17d-3f121f1768b0.jpg",
-      "description": null
+      "description": "Tienda de ropa"
     },
     {
       "id": 1,
@@ -1925,14 +1925,14 @@
   "recommended_image": "https://storage.googleapis.com/mayoristas-paraguay-backend/recommended/af9b2d53-71a4-4db0-b90a-c17d42c3f080.gif",
   "other_businesses": "https://storage.googleapis.com/mayoristas-paraguay-backend/other-business/78579912-e0da-4802-8555-b73beaae916e.gif",
   "branding": {
-    "logo": "https://storage.googleapis.com/mayoristas-paraguay-backend/branding/bcbf01c8-b393-4696-9bba-2337b5086f27.gif",
-    "copyright": "© 2025 Sebastián Ucedo. Todos los derechos reservados.",
+    "logo": "https://unificadesign.com.py/img/unifica/footerIcon.png",
+    "copyright": "© 2025 Unifica Paraguay. Todos los derechos reservados.",
     "client_logo": "https://storage.googleapis.com/mayoristas-paraguay-backend/branding/bcbf01c8-b393-4696-9bba-2337b5086f27.gif",
     "client_name": "Sebastián Ucedo",
     "subscription_end_date": "2026-03-31",
-    "active": true,
+    "active": false,
     "client_copyright": "© 2025 Sebastián Ucedo. Todos los derechos reservados.",
     "client_contact_number": "595981123456",
-    "contact_number": "595981123456"
+    "contact_number": "595984637337"
   }
 }
