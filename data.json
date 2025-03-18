@@ -1931,6 +1931,8 @@
     "client_name": "Sebastián Ucedo",
     "subscription_end_date": "2026-03-31",
     "active": true,
-    "client_copyright": "© 2025 Sebastián Ucedo. Todos los derechos reservados."
+    "client_copyright": "© 2025 Sebastián Ucedo. Todos los derechos reservados.",
+    "client_contact_number": "595981123456",
+    "contact_number": "595981123456"
   }
 }

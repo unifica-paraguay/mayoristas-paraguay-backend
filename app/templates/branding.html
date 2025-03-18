@@ -77,6 +77,14 @@
                             class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white">
                     </div>
                     
+                    <!-- Contact Number -->
+                    <div>
+                        <label for="client_contact_number" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Contact Number</label>
+                        <input type="text" id="client_contact_number" name="client_contact_number" value="{{ branding.client_contact_number or '' }}" 
+                            class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
+                            placeholder="e.g. +595 21 123 456">
+                    </div>
+                    
                     <!-- Subscription End Date -->
                     <div>
                         <label for="subscription_end_date" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Subscription End Date</label>

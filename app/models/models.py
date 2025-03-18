@@ -70,6 +70,8 @@ class ClientBranding(BaseModel):
     active: bool = False
     client_name: Optional[str] = None
     subscription_end_date: Optional[str] = None
+    contact_number: Optional[str] = None
+    client_contact_number: Optional[str] = None
 
 class DataStructure(BaseModel):
     shops: List[Shop]

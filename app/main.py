@@ -696,6 +696,7 @@ async def get_active_branding():
     # Get default branding values from environment variables
     default_logo = os.getenv("DEFAULT_BRANDING_LOGO")
     default_copyright = os.getenv("DEFAULT_BRANDING_COPYRIGHT")
+    default_contact = os.getenv("DEFAULT_BRANDING_CONTACT")
     
     # Use current year if default_copyright is not provided
     if not default_copyright:
@@ -708,6 +709,8 @@ async def get_active_branding():
         "client_logo": "",  # Store client logo separately
         "copyright": default_copyright,
         "client_copyright": "",  # Store client copyright separately
+        "contact_number": default_contact,
+        "client_contact_number": "",  # Store client contact separately
         "active": False,
         "client_name": "",
         "subscription_end_date": ""
@@ -720,11 +723,16 @@ async def get_active_branding():
     # Ensure client_copyright field exists
     if "client_copyright" not in branding:
         branding["client_copyright"] = ""
+        
+    # Ensure client_contact_number field exists
+    if "client_contact_number" not in branding:
+        branding["client_contact_number"] = ""
     
-    # Always ensure the logo and copyright are correct based on active status
+    # Always ensure the logo, copyright and contact are correct based on active status
     if not branding.get("active", False):
         branding["logo"] = default_logo
         branding["copyright"] = default_copyright
+        branding["contact_number"] = default_contact
     else:
         # Use client_logo if it exists
         if branding.get("client_logo"):
@@ -733,6 +741,10 @@ async def get_active_branding():
         # Use client_copyright if it exists
         if branding.get("client_copyright"):
             branding["copyright"] = branding["client_copyright"]
+            
+        # Use client_contact_number if it exists
+        if branding.get("client_contact_number"):
+            branding["contact_number"] = branding["client_contact_number"]
         
     return branding
 
@@ -762,6 +774,7 @@ async def update_branding(
     logo: str = Form(None),
     copyright: str = Form(None),  # Ignored - for display only
     client_copyright: str = Form(None),  # This is what we'll store and use
+    client_contact_number: str = Form(None),  # New field for client contact
     current_user: str = Depends(get_current_user)
 ):
     """Update branding information"""
@@ -770,6 +783,7 @@ async def update_branding(
     # Get default branding values
     default_logo = os.getenv("DEFAULT_BRANDING_LOGO")
     default_copyright = os.getenv("DEFAULT_BRANDING_COPYRIGHT")
+    default_contact = os.getenv("DEFAULT_BRANDING_CONTACT")
     
     # Use current year if default_copyright is not provided
     if not default_copyright:
@@ -783,6 +797,8 @@ async def update_branding(
         "client_logo": "",
         "copyright": default_copyright,
         "client_copyright": "",
+        "contact_number": default_contact,
+        "client_contact_number": "",
         "active": False,
         "client_name": "",
         "subscription_end_date": ""
@@ -795,6 +811,10 @@ async def update_branding(
     # Ensure client_copyright field exists
     if "client_copyright" not in branding:
         branding["client_copyright"] = ""
+        
+    # Ensure client_contact_number field exists
+    if "client_contact_number" not in branding:
+        branding["client_contact_number"] = ""
     
     # Update fields
     if client_name is not None:
@@ -818,6 +838,16 @@ async def update_branding(
             branding["copyright"] = client_copyright
         else:
             branding["copyright"] = default_copyright
+            
+    if client_contact_number is not None:
+        # Store the client contact number
+        branding["client_contact_number"] = client_contact_number
+        
+        # Update active contact if client branding is active
+        if branding.get("active", False):
+            branding["contact_number"] = client_contact_number
+        else:
+            branding["contact_number"] = default_contact
     
     # Save updated branding
     data_structure.branding = branding
@@ -850,6 +880,10 @@ async def enable_client_branding(
             data_structure.branding["client_copyright"] = f"© {current_year} {client_name}. Todos los derechos reservados."
         else:
             data_structure.branding["client_copyright"] = f"© {current_year} Unifica Paraguay. Todos los derechos reservados."
+            
+    # Ensure client_contact_number field exists
+    if "client_contact_number" not in data_structure.branding:
+        data_structure.branding["client_contact_number"] = ""
     
     data_structure.branding["active"] = True
     
@@ -860,6 +894,10 @@ async def enable_client_branding(
     # Set copyright to client_copyright
     if data_structure.branding.get("client_copyright"):
         data_structure.branding["copyright"] = data_structure.branding["client_copyright"]
+        
+    # Set contact to client_contact_number
+    if data_structure.branding.get("client_contact_number"):
+        data_structure.branding["contact_number"] = data_structure.branding["client_contact_number"]
     
     save_data(data_structure)
     
@@ -875,6 +913,7 @@ async def disable_client_branding(
     # Get default branding values from environment variables
     default_logo = os.getenv("DEFAULT_BRANDING_LOGO")
     default_copyright = os.getenv("DEFAULT_BRANDING_COPYRIGHT")
+    default_contact = os.getenv("DEFAULT_BRANDING_CONTACT")
     
     # Use current year if default_copyright is not provided
     if not default_copyright:
@@ -888,6 +927,8 @@ async def disable_client_branding(
             "client_logo": "",
             "copyright": default_copyright,
             "client_copyright": "",
+            "contact_number": default_contact,
+            "client_contact_number": "",
             "active": False,
             "client_name": "",
             "subscription_end_date": ""
@@ -900,14 +941,19 @@ async def disable_client_branding(
         # Ensure client_copyright field exists
         if "client_copyright" not in data_structure.branding:
             data_structure.branding["client_copyright"] = ""
+            
+        # Ensure client_contact_number field exists
+        if "client_contact_number" not in data_structure.branding:
+            data_structure.branding["client_contact_number"] = ""
         
-        # Set active to false and switch to default logo and copyright
+        # Set active to false and switch to default logo, copyright and contact
         data_structure.branding["active"] = False
         data_structure.branding["logo"] = default_logo
         data_structure.branding["copyright"] = default_copyright
+        data_structure.branding["contact_number"] = default_contact
         
-        # But keep the client_logo, client_name, and client_copyright for later use
-        # (don't modify client_logo, client_name, or client_copyright fields)
+        # But keep the client_logo, client_name, client_copyright and client_contact_number for later use
+        # (don't modify client_logo, client_name, client_copyright or client_contact_number fields)
     
     save_data(data_structure)
     
@@ -965,7 +1011,8 @@ async def get_branding_info():
     # based on active status, so we just need to return it
     return {
         "logo": branding.get("logo", ""),
-        "copyright": branding.get("copyright", "")
+        "copyright": branding.get("copyright", ""),
+        "contact_number": branding.get("contact_number", "")
     }
 
 # Favicon endpoint that redirects to current branding logo
