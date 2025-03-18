@@ -1,6 +1,6 @@
-from typing import Dict, List, Optional
-from pydantic import BaseModel
-from datetime import time
+from typing import Dict, List, Optional, Any
+from pydantic import BaseModel, Field
+from datetime import time, datetime
 
 class WorkingDay(BaseModel):
     open_time: time
@@ -73,6 +73,17 @@ class ClientBranding(BaseModel):
     contact_number: Optional[str] = None
     client_contact_number: Optional[str] = None
 
+class DeviceRegistration(BaseModel):
+    uuid: str
+    device_name: str
+    expires_at: Optional[datetime] = None
+    created_at: datetime = Field(default_factory=datetime.now)
+    last_used: Optional[datetime] = None
+    is_active: bool = True
+    created_by: str
+    notes: Optional[str] = None
+    ip_address: Optional[str] = None
+
 class DataStructure(BaseModel):
     shops: List[Shop]
     categories: List[Category]
@@ -81,4 +92,5 @@ class DataStructure(BaseModel):
     secondary_banner: List[str]
     recommended_image: str
     other_businesses: str
-    branding: Optional[Dict] = None 
+    branding: Optional[Dict] = None
+    device_registrations: List[DeviceRegistration] = Field(default_factory=list) 

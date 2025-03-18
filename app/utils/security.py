@@ -106,32 +106,48 @@ def get_auth_dependency() -> Callable:
     return Depends(get_current_user)
 
 async def validate_device_uuid(request: Request) -> bool:
-    """Validate the device UUID from the request headers, cookies, or query parameters against the allowed UUIDs."""
-    if not ALLOWED_DEVICE_UUIDS:
-        print("DEBUG: No ALLOWED_DEVICE_UUIDS set in environment")
-        return False
+    """Validate the device UUID from the request headers, cookies, or query parameters against registered devices."""
+    from ..main import load_data
     
-    # Check headers first
+    # Get device UUID from request
     device_uuid = request.headers.get("X-Device-UUID")
-    
-    # If not in headers, check cookies
     if not device_uuid:
         device_uuid = request.cookies.get("X-Device-UUID")
-    
-    # If not in cookies, check query parameters
     if not device_uuid:
         device_uuid = request.query_params.get("uuid")
     
     print(f"DEBUG: Received device UUID: {device_uuid}")
-    print(f"DEBUG: Allowed device UUIDs: {ALLOWED_DEVICE_UUIDS}")
     
     if not device_uuid:
         print("DEBUG: No device UUID found in headers, cookies, or query parameters")
         return False
     
-    is_valid = device_uuid in ALLOWED_DEVICE_UUIDS
-    print(f"DEBUG: UUID validation result: {is_valid}")
-    return is_valid
+    # Load registered devices
+    data_structure = load_data()
+    
+    # Find matching device registration
+    device = next((d for d in data_structure.device_registrations if d.uuid == device_uuid), None)
+    
+    if not device:
+        print(f"DEBUG: Device UUID {device_uuid} not found in registrations")
+        return False
+    
+    if not device.is_active:
+        print(f"DEBUG: Device UUID {device_uuid} is inactive")
+        return False
+    
+    # Check expiration
+    if device.expires_at and device.expires_at < datetime.now():
+        print(f"DEBUG: Device UUID {device_uuid} has expired")
+        return False
+    
+    # Update last used timestamp
+    device.last_used = datetime.now()
+    from ..main import save_data
+    save_data(data_structure)
+    
+    print(f"DEBUG: Device UUID {device_uuid} validated successfully")
+    return True
 
 # Dependency for protected routes
 require_auth = get_auth_dependency()

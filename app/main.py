@@ -7,7 +7,7 @@ from starlette.middleware.sessions import SessionMiddleware
 import plotly.express as px
 import plotly.graph_objects as go
 import pandas as pd
-from .models.models import DataStructure, Shop, Category, Zone
+from .models.models import DataStructure, Shop, Category, Zone, DeviceRegistration
 from pydantic import BaseModel
 import json
 from typing import List, Optional
@@ -20,6 +20,8 @@ from .utils.security import authenticate_user, create_access_token, get_current_
 from datetime import timedelta
 import jwt
 from jose import JWTError
+from uuid import uuid4
+from datetime import datetime
 
 # Load environment variables from .env file
 load_dotenv()
@@ -59,6 +61,19 @@ DATA_FILE = "data.json"
 class ImageUrl(BaseModel):
     url: str = ""
 
+# Device Management Models
+class DeviceCreate(BaseModel):
+    device_name: str
+    uuid: Optional[str] = None  # Make UUID optional in creation
+    expires_at: Optional[str] = None
+    notes: Optional[str] = None
+
+class DeviceUpdate(DeviceCreate):
+    uuid: str
+
+class DeviceToggle(BaseModel):
+    enable: bool
+
 def load_data() -> DataStructure:
     with open(DATA_FILE, "r", encoding="utf-8") as f:
         data = json.load(f)
@@ -68,8 +83,8 @@ def save_data(data: DataStructure):
     def time_handler(obj):
         if hasattr(obj, 'model_dump'):
             return obj.model_dump()
-        if isinstance(obj, time):
-            return obj.strftime("%H:%M")
+        if isinstance(obj, (datetime, time)):
+            return obj.isoformat()
         raise TypeError(f'Object of type {type(obj).__name__} is not JSON serializable')
 
     with open(DATA_FILE, "w", encoding="utf-8") as f:
@@ -1086,4 +1101,147 @@ async def favicon():
     else:
         # Use default Unifica logo if no branding logo is set
         default_logo = os.getenv("DEFAULT_BRANDING_LOGO", "https://unificadesign.com.py/img/unifica/footerIcon.png")
-        return RedirectResponse(url=default_logo) 
+        return RedirectResponse(url=default_logo)
+
+# Device Management Routes
+@app.get("/admin/devices", response_class=HTMLResponse)
+async def device_management(
+    request: Request,
+    current_user: str = Depends(get_current_user)
+):
+    """Device management page"""
+    data_structure = load_data()
+    return templates.TemplateResponse(
+        "device_management.html",
+        {
+            "request": request,
+            "devices": data_structure.device_registrations,
+            "active_page": "devices"
+        }
+    )
+
+@app.get("/api/devices/{uuid}")
+async def get_device(
+    uuid: str,
+    current_user: str = Depends(get_current_user)
+):
+    """Get device details"""
+    data_structure = load_data()
+    device = next((d for d in data_structure.device_registrations if d.uuid == uuid), None)
+    if not device:
+        raise HTTPException(status_code=404, detail="Device not found")
+    return device
+
+@app.post("/api/devices")
+async def create_device(
+    device: DeviceCreate,
+    request: Request,
+    current_user: str = Depends(get_current_user)
+):
+    """Create a new device registration"""
+    data_structure = load_data()
+    
+    # Use provided UUID or generate new one
+    device_uuid = device.uuid if device.uuid else str(uuid4())
+    
+    # Check if UUID already exists
+    if any(d.uuid == device_uuid for d in data_structure.device_registrations):
+        raise HTTPException(status_code=400, detail="Device UUID already exists")
+    
+    # Parse expiration date if provided
+    expires_at = None
+    if device.expires_at:
+        try:
+            expires_at = datetime.fromisoformat(device.expires_at)
+        except ValueError:
+            raise HTTPException(status_code=400, detail="Invalid expiration date format")
+    
+    # Create new device registration
+    new_device = DeviceRegistration(
+        uuid=device_uuid,
+        device_name=device.device_name,
+        expires_at=expires_at,
+        created_by=current_user,
+        notes=device.notes,
+        ip_address=request.client.host
+    )
+    
+    data_structure.device_registrations.append(new_device)
+    save_data(data_structure)
+    
+    return new_device
+
+@app.put("/api/devices")
+async def update_device(
+    device: DeviceUpdate,
+    current_user: str = Depends(get_current_user)
+):
+    """Update device registration"""
+    data_structure = load_data()
+    
+    # Find existing device
+    existing_device = next((d for d in data_structure.device_registrations if d.uuid == device.uuid), None)
+    if not existing_device:
+        raise HTTPException(status_code=404, detail="Device not found")
+    
+    # Parse expiration date if provided
+    expires_at = None
+    if device.expires_at:
+        try:
+            expires_at = datetime.fromisoformat(device.expires_at)
+        except ValueError:
+            raise HTTPException(status_code=400, detail="Invalid expiration date format")
+    
+    # Update device fields
+    existing_device.device_name = device.device_name
+    existing_device.expires_at = expires_at
+    existing_device.notes = device.notes
+    
+    save_data(data_structure)
+    return existing_device
+
+@app.post("/api/devices/{uuid}/toggle")
+async def toggle_device(
+    uuid: str,
+    toggle: DeviceToggle,
+    current_user: str = Depends(get_current_user)
+):
+    """Toggle device active status"""
+    data_structure = load_data()
+    
+    # Find existing device
+    device = next((d for d in data_structure.device_registrations if d.uuid == uuid), None)
+    if not device:
+        raise HTTPException(status_code=404, detail="Device not found")
+    
+    # Update active status
+    device.is_active = toggle.enable
+    
+    save_data(data_structure)
+    return device
+
+@app.delete("/api/devices/{uuid}")
+async def delete_device(
+    uuid: str,
+    current_user: str = Depends(get_current_user)
+):
+    """Delete device registration"""
+    data_structure = load_data()
+    
+    # Find and remove device
+    device = next((d for d in data_structure.device_registrations if d.uuid == uuid), None)
+    if not device:
+        raise HTTPException(status_code=404, detail="Device not found")
+    
+    data_structure.device_registrations = [d for d in data_structure.device_registrations if d.uuid != uuid]
+    save_data(data_structure)
+    
+    return {"status": "success"}
+
+@app.get("/api/devices")
+async def get_devices(
+    current_user: str = Depends(get_current_user)
+):
+    """Get all device registrations"""
+    data_structure = load_data()
+    return data_structure.device_registrations 
