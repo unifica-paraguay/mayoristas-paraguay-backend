@@ -7,96 +7,93 @@
     
     <!-- UUID handling - Must be first -->
     <script>
-        // Get or generate UUID from localStorage
-        let deviceUUID = localStorage.getItem('deviceUUID');
-        if (!deviceUUID) {
-            deviceUUID = crypto.randomUUID();
-            localStorage.setItem('deviceUUID', deviceUUID);
-        }
-        
-        // Set UUID cookie if not present
-        if (!document.cookie.includes('X-Device-UUID=')) {
-            document.cookie = `X-Device-UUID=${deviceUUID}; path=/; max-age=31536000`; // 1 year
+        // Get or generate UUID immediately and make it globally available
+        window.deviceUUID = localStorage.getItem('deviceUUID');
+        if (!window.deviceUUID) {
+            window.deviceUUID = crypto.randomUUID();
+            localStorage.setItem('deviceUUID', window.deviceUUID);
+            // Reload page with UUID in headers
+            window.location.reload();
         }
 
-        // Get the UUID for use in fetch and forms
-        function getDeviceUUID() {
-            return localStorage.getItem('deviceUUID');
-        }
-
-        // Check if device is authorized for a specific feature
-        async function checkFeatureAuthorization(featureId) {
-            try {
-                const response = await fetch(`/api/features/${featureId}/check`, {
-                    headers: {
-                        'X-Device-UUID': getDeviceUUID()
-                    }
-                });
-                return response.ok;
-            } catch (error) {
-                console.error('Error checking feature authorization:', error);
-                return false;
-            }
-        }
-
-        // Update menu visibility based on feature authorization
-        async function updateMenuVisibility() {
-            const menuItems = document.querySelectorAll('[data-feature-id]');
-            for (const item of menuItems) {
-                const featureId = item.getAttribute('data-feature-id');
-                const isAuthorized = await checkFeatureAuthorization(featureId);
-                if (!isAuthorized) {
-                    item.remove();
+        // Add UUID to all requests
+        (() => {
+            // Override fetch
+            const originalFetch = window.fetch;
+            window.fetch = function() {
+                let [resource, config] = arguments;
+                config = config || {};
+                config.headers = config.headers || {};
+                
+                // Always add UUID to headers
+                if (config.headers instanceof Headers) {
+                    config.headers.set('X-Device-UUID', window.deviceUUID);
+                } else {
+                    config.headers['X-Device-UUID'] = window.deviceUUID;
                 }
-            }
-        }
+                
+                return originalFetch(resource, config);
+            };
 
-        // Override fetch to include UUID
-        const originalFetch = window.fetch;
-        window.fetch = function() {
-            let [resource, config] = arguments;
-            if (!config) {
-                config = {};
-            }
-            if (!config.headers) {
-                config.headers = {};
-            }
-            
-            // Ensure we're working with a plain object for headers
-            const headers = {};
-            
-            // Copy existing headers
-            if (config.headers instanceof Headers) {
-                for (const [key, value] of config.headers.entries()) {
-                    headers[key] = value;
-                }
-            } else {
-                Object.assign(headers, config.headers);
-            }
-            
-            // Add our UUID header
-            headers['X-Device-UUID'] = getDeviceUUID();
-            
-            // Replace the headers in the config
-            config.headers = headers;
-            
-            return originalFetch(resource, config);
-        };
+            // Override XHR
+            const originalXHROpen = XMLHttpRequest.prototype.open;
+            XMLHttpRequest.prototype.open = function() {
+                const xhrInstance = this;
+                originalXHROpen.apply(xhrInstance, arguments);
+                xhrInstance.setRequestHeader('X-Device-UUID', window.deviceUUID);
+            };
 
-        // Add UUID to forms and check authorization when DOM is ready
+            // Add UUID to current page request
+            const meta = document.createElement('meta');
+            meta.httpEquiv = 'X-Device-UUID';
+            meta.content = window.deviceUUID;
+            document.head.appendChild(meta);
+        })();
+
+        // Add UUID to forms when DOM is ready
         document.addEventListener('DOMContentLoaded', function() {
+            // Add UUID to all forms
             const forms = document.querySelectorAll('form');
             forms.forEach(form => {
                 let input = document.createElement('input');
                 input.type = 'hidden';
                 input.name = 'X-Device-UUID';
-                input.value = getDeviceUUID();
+                input.value = window.deviceUUID;
                 form.appendChild(input);
             });
 
-            // Update menu visibility
-            updateMenuVisibility();
+            // Add UUID to any dynamically added forms
+            const observer = new MutationObserver(function(mutations) {
+                mutations.forEach(function(mutation) {
+                    mutation.addedNodes.forEach(function(node) {
+                        if (node.nodeName === 'FORM') {
+                            let input = document.createElement('input');
+                            input.type = 'hidden';
+                            input.name = 'X-Device-UUID';
+                            input.value = window.deviceUUID;
+                            node.appendChild(input);
+                        }
+                    });
+                });
+            });
+
+            observer.observe(document.body, { childList: true, subtree: true });
+
+            // Check if device is authorized
+            fetch('/api/features')
+                .then(response => {
+                    if (!response.ok) {
+                        window.location.href = '/unauthorized';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error checking authorization:', error);
+                    window.location.href = '/unauthorized';
+                });
         });
+
+        // Debug log to confirm UUID is set
+        console.log('Device UUID:', window.deviceUUID);
     </script>
     
     <!-- Favicon - dynamically updated based on branding -->
@@ -133,22 +130,122 @@
                         <a href="/admin" class="text-xl font-bold text-gray-800 dark:text-white">Mayoristas Paraguay</a>
                     </div>
                     <!-- Desktop Menu -->
-                    <div class="hidden md:ml-6 md:flex md:space-x-8" id="desktop-menu">
-                        <!-- Menu items will be loaded dynamically -->
+                    <div class="hidden md:ml-6 md:flex md:space-x-8">
+                        {% if "dashboard" in authorized_features %}
+                        <a href="/admin" class="inline-flex items-center px-1 pt-1 border-b-2 {% if request.url.path == '/admin' %}text-pink-500 border-pink-500{% else %}text-gray-500 dark:text-gray-400 border-transparent hover:text-pink-500 hover:border-pink-500 dark:hover:text-pink-400{% endif %} transition-colors">
+                            <i data-lucide="layout-dashboard" class="w-5 h-5 mr-1"></i>
+                            Dashboard
+                        </a>
+                        {% endif %}
+                        {% if "shop_management" in authorized_features %}
+                        <a href="/admin/shops" class="inline-flex items-center px-1 pt-1 border-b-2 {% if request.url.path == '/admin/shops' %}text-blue-500 border-blue-500{% else %}text-gray-500 dark:text-gray-400 border-transparent hover:text-blue-500 hover:border-blue-500 dark:hover:text-blue-400{% endif %} transition-colors">
+                            <i data-lucide="shopping-cart" class="w-5 h-5 mr-1"></i>
+                            Shops
+                        </a>
+                        {% endif %}
+                        {% if "category_management" in authorized_features %}
+                        <a href="/admin/categories" class="inline-flex items-center px-1 pt-1 border-b-2 {% if request.url.path == '/admin/categories' %}text-green-500 border-green-500{% else %}text-gray-500 dark:text-gray-400 border-transparent hover:text-green-500 hover:border-green-500 dark:hover:text-green-400{% endif %} transition-colors">
+                            <i data-lucide="tag" class="w-5 h-5 mr-1"></i>
+                            Categories
+                        </a>
+                        {% endif %}
+                        {% if "zone_management" in authorized_features %}
+                        <a href="/admin/zones" class="inline-flex items-center px-1 pt-1 border-b-2 {% if request.url.path == '/admin/zones' %}text-yellow-500 border-yellow-500{% else %}text-gray-500 dark:text-gray-400 border-transparent hover:text-yellow-500 hover:border-yellow-500 dark:hover:text-yellow-400{% endif %} transition-colors">
+                            <i data-lucide="map-pin" class="w-5 h-5 mr-1"></i>
+                            Zones
+                        </a>
+                        {% endif %}
+                        {% if "banner_management" in authorized_features %}
+                        <a href="/admin/banners" class="inline-flex items-center px-1 pt-1 border-b-2 {% if request.url.path == '/admin/banners' %}text-purple-500 border-purple-500{% else %}text-gray-500 dark:text-gray-400 border-transparent hover:text-purple-500 hover:border-purple-500 dark:hover:text-purple-400{% endif %} transition-colors">
+                            <i data-lucide="image" class="w-5 h-5 mr-1"></i>
+                            Banners
+                        </a>
+                        {% endif %}
+                        {% if "branding_management" in authorized_features %}
+                        <a href="/admin/branding" class="inline-flex items-center px-1 pt-1 border-b-2 {% if request.url.path == '/admin/branding' %}text-indigo-500 border-indigo-500{% else %}text-gray-500 dark:text-gray-400 border-transparent hover:text-indigo-500 hover:border-indigo-500 dark:hover:text-indigo-400{% endif %} transition-colors">
+                            <i data-lucide="palette" class="w-5 h-5 mr-1"></i>
+                            Branding
+                        </a>
+                        {% endif %}
+                        {% if "device_management" in authorized_features %}
+                        <a href="/admin/devices" class="inline-flex items-center px-1 pt-1 border-b-2 {% if request.url.path == '/admin/devices' %}text-teal-500 border-teal-500{% else %}text-gray-500 dark:text-gray-400 border-transparent hover:text-teal-500 hover:border-teal-500 dark:hover:text-teal-400{% endif %} transition-colors">
+                            <i data-lucide="smartphone" class="w-5 h-5 mr-1"></i>
+                            Devices
+                        </a>
+                        {% endif %}
+                        <button id="theme-toggle" type="button" class="inline-flex items-center px-1 pt-1 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-colors">
+                            <i data-lucide="sun" class="w-5 h-5 hidden dark:block"></i>
+                            <i data-lucide="moon" class="w-5 h-5 block dark:hidden"></i>
+                        </button>
+                        <a href="/logout" class="inline-flex items-center px-1 pt-1 text-red-500 hover:text-red-700 dark:hover:text-red-400 transition-colors">
+                            <i data-lucide="log-out" class="w-5 h-5 mr-1"></i>
+                            Logout
+                        </a>
                     </div>
                     <!-- Mobile menu button -->
-                    <div class="-mr-2 flex items-center md:hidden">
-                        <button id="mobile-menu-button" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-pink-500 dark:hover:bg-gray-700" aria-controls="mobile-menu" aria-expanded="false">
-                            <span class="sr-only">Open main menu</span>
-                            <i data-lucide="menu" class="block h-6 w-6"></i>
+                    <div class="flex items-center space-x-2 md:hidden">
+                        <button id="theme-toggle-mobile" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 dark:hover:text-gray-300">
+                            <i data-lucide="sun" class="w-6 h-6 hidden dark:block"></i>
+                            <i data-lucide="moon" class="w-6 h-6 block dark:hidden"></i>
+                        </button>
+                        <button type="button" 
+                                class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500"
+                                onclick="toggleMobileMenu()">
+                            <i data-lucide="menu" class="block h-6 w-6" id="menu-icon"></i>
+                            <i data-lucide="x" class="hidden h-6 w-6" id="close-icon"></i>
                         </button>
                     </div>
                 </div>
             </div>
             <!-- Mobile menu -->
             <div class="hidden md:hidden" id="mobile-menu">
-                <div class="pt-2 pb-3 space-y-1" id="mobile-menu-items">
-                    <!-- Mobile menu items will be loaded dynamically -->
+                <div class="pt-2 pb-3 space-y-1">
+                    {% if "dashboard" in authorized_features %}
+                    <a href="/admin" class="block pl-3 pr-4 py-2 text-base font-medium rounded-md flex items-center {% if request.url.path == '/admin' %}text-pink-500 bg-pink-50 dark:bg-pink-900/50{% else %}text-gray-500 dark:text-gray-400 hover:text-pink-500 hover:bg-gray-50 dark:hover:bg-gray-700{% endif %}">
+                        <i data-lucide="layout-dashboard" class="w-5 h-5 mr-2"></i>
+                        Dashboard
+                    </a>
+                    {% endif %}
+                    {% if "shop_management" in authorized_features %}
+                    <a href="/admin/shops" class="block pl-3 pr-4 py-2 text-base font-medium rounded-md flex items-center {% if request.url.path == '/admin/shops' %}text-blue-500 bg-blue-50 dark:bg-blue-900/50{% else %}text-gray-500 dark:text-gray-400 hover:text-blue-500 hover:bg-gray-50 dark:hover:bg-gray-700{% endif %}">
+                        <i data-lucide="shopping-cart" class="w-5 h-5 mr-2"></i>
+                        Shops
+                    </a>
+                    {% endif %}
+                    {% if "category_management" in authorized_features %}
+                    <a href="/admin/categories" class="block pl-3 pr-4 py-2 text-base font-medium rounded-md flex items-center {% if request.url.path == '/admin/categories' %}text-green-500 bg-green-50 dark:bg-green-900/50{% else %}text-gray-500 dark:text-gray-400 hover:text-green-500 hover:bg-gray-50 dark:hover:bg-gray-700{% endif %}">
+                        <i data-lucide="tag" class="w-5 h-5 mr-2"></i>
+                        Categories
+                    </a>
+                    {% endif %}
+                    {% if "zone_management" in authorized_features %}
+                    <a href="/admin/zones" class="block pl-3 pr-4 py-2 text-base font-medium rounded-md flex items-center {% if request.url.path == '/admin/zones' %}text-yellow-500 bg-yellow-50 dark:bg-yellow-900/50{% else %}text-gray-500 dark:text-gray-400 hover:text-yellow-500 hover:bg-gray-50 dark:hover:bg-gray-700{% endif %}">
+                        <i data-lucide="map-pin" class="w-5 h-5 mr-2"></i>
+                        Zones
+                    </a>
+                    {% endif %}
+                    {% if "banner_management" in authorized_features %}
+                    <a href="/admin/banners" class="block pl-3 pr-4 py-2 text-base font-medium rounded-md flex items-center {% if request.url.path == '/admin/banners' %}text-purple-500 bg-purple-50 dark:bg-purple-900/50{% else %}text-gray-500 dark:text-gray-400 hover:text-purple-500 hover:bg-gray-50 dark:hover:bg-gray-700{% endif %}">
+                        <i data-lucide="image" class="w-5 h-5 mr-2"></i>
+                        Banners
+                    </a>
+                    {% endif %}
+                    {% if "branding_management" in authorized_features %}
+                    <a href="/admin/branding" class="block pl-3 pr-4 py-2 text-base font-medium rounded-md flex items-center {% if request.url.path == '/admin/branding' %}text-indigo-500 bg-indigo-50 dark:bg-indigo-900/50{% else %}text-gray-500 dark:text-gray-400 hover:text-indigo-500 hover:bg-gray-50 dark:hover:bg-gray-700{% endif %}">
+                        <i data-lucide="palette" class="w-5 h-5 mr-2"></i>
+                        Branding
+                    </a>
+                    {% endif %}
+                    {% if "device_management" in authorized_features %}
+                    <a href="/admin/devices" class="block pl-3 pr-4 py-2 text-base font-medium rounded-md flex items-center {% if request.url.path == '/admin/devices' %}text-teal-500 bg-teal-50 dark:bg-teal-900/50{% else %}text-gray-500 dark:text-gray-400 hover:text-teal-500 hover:bg-gray-50 dark:hover:bg-gray-700{% endif %}">
+                        <i data-lucide="smartphone" class="w-5 h-5 mr-2"></i>
+                        Devices
+                    </a>
+                    {% endif %}
+                    <a href="/logout" class="block pl-3 pr-4 py-2 text-base font-medium text-red-500 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-900/50 rounded-md flex items-center">
+                        <i data-lucide="log-out" class="w-5 h-5 mr-2"></i>
+                        Logout
+                    </a>
                 </div>
             </div>
         </div>
@@ -162,30 +259,51 @@
         // Initialize Lucide icons
         lucide.createIcons();
 
-        // Mobile menu toggle
-        const mobileMenuButton = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
-
-        mobileMenuButton.addEventListener('click', () => {
-            const expanded = mobileMenuButton.getAttribute('aria-expanded') === 'true';
-            mobileMenuButton.setAttribute('aria-expanded', !expanded);
-            mobileMenu.classList.toggle('hidden');
-        });
-
-        // Theme toggle
-        const themeToggleBtn = document.getElementById('theme-toggle');
-        const htmlElement = document.documentElement;
-
-        // Check for saved theme preference, otherwise use system preference
-        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            htmlElement.classList.add('dark');
-        } else {
-            htmlElement.classList.remove('dark');
+        // Theme toggle functionality
+        function toggleTheme() {
+            // Toggle dark class on documentElement
+            document.documentElement.classList.toggle('dark');
+            
+            // Update localStorage
+            if (document.documentElement.classList.contains('dark')) {
+                localStorage.theme = 'dark';
+            } else {
+                localStorage.theme = 'light';
+            }
         }
 
-        themeToggleBtn.addEventListener('click', () => {
-            htmlElement.classList.toggle('dark');
-            localStorage.theme = htmlElement.classList.contains('dark') ? 'dark' : 'light';
+        // Add click handlers for theme toggle buttons
+        document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
+        document.getElementById('theme-toggle-mobile').addEventListener('click', toggleTheme);
+
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            const menuIcon = document.getElementById('menu-icon');
+            const closeIcon = document.getElementById('close-icon');
+            
+            mobileMenu.classList.toggle('hidden');
+            menuIcon.classList.toggle('hidden');
+            closeIcon.classList.toggle('hidden');
+        }
+
+        document.body.addEventListener('htmx:configRequest', (event) => {
+            event.detail.headers['Content-Type'] = 'application/json';
+        });
+
+        document.body.addEventListener('htmx:afterRequest', (event) => {
+            if (event.detail.successful && event.detail.pathInfo.requestPath.includes('delete')) {
+                const row = event.detail.elt.closest('tr');
+                if (row) {
+                    row.remove();
+                }
+                Swal.fire({
+                    title: 'Success!',
+                    text: 'Item deleted successfully',
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                });
+            }
         });
 
         function showError(message) {
@@ -202,7 +320,8 @@
                 title: 'Success!',
                 text: message,
                 icon: 'success',
-                confirmButtonText: 'OK'
+                timer: 1500,
+                showConfirmButton: false
             });
         }
     </script>
@@ -266,144 +385,6 @@
 
         // Call on page load
         fetchBranding();
-    </script>
-
-    <script>
-        // Menu configuration
-        const menuItems = [
-            {
-                id: 'dashboard',
-                name: 'Dashboard',
-                icon: 'layout-dashboard',
-                href: '/admin'
-            },
-            {
-                id: 'shop_management',
-                name: 'Shops',
-                icon: 'shopping-cart',
-                href: '/admin/shops'
-            },
-            {
-                id: 'category_management',
-                name: 'Categories',
-                icon: 'tag',
-                href: '/admin/categories'
-            },
-            {
-                id: 'zone_management',
-                name: 'Zones',
-                icon: 'map-pin',
-                href: '/admin/zones'
-            },
-            {
-                id: 'banner_management',
-                name: 'Banners',
-                icon: 'image',
-                href: '/admin/banners'
-            },
-            {
-                id: 'branding_management',
-                name: 'Branding',
-                icon: 'palette',
-                href: '/admin/branding'
-            },
-            {
-                id: 'device_management',
-                name: 'Devices',
-                icon: 'smartphone',
-                href: '/admin/devices'
-            }
-        ];
-
-        // Create menu item HTML
-        function createDesktopMenuItem(item, isActive) {
-            return `
-                <a href="${item.href}" 
-                   data-feature-id="${item.id}" 
-                   class="inline-flex items-center px-1 pt-1 border-b-2 ${
-                       isActive 
-                       ? 'text-indigo-500 border-indigo-500' 
-                       : 'text-gray-500 dark:text-gray-400 border-transparent hover:text-indigo-500 hover:border-indigo-500 dark:hover:text-indigo-400'
-                   } transition-colors">
-                    <i data-lucide="${item.icon}" class="w-5 h-5 mr-1"></i>
-                    ${item.name}
-                </a>
-            `;
-        }
-
-        function createMobileMenuItem(item, isActive) {
-            return `
-                <a href="${item.href}" 
-                   data-feature-id="${item.id}" 
-                   class="block pl-3 pr-4 py-2 text-base font-medium rounded-md flex items-center ${
-                       isActive 
-                       ? 'text-indigo-500 bg-indigo-50 dark:bg-indigo-900/50' 
-                       : 'text-gray-500 dark:text-gray-400 hover:text-indigo-500 hover:bg-gray-50 dark:hover:bg-gray-700'
-                   }">
-                    <i data-lucide="${item.icon}" class="w-5 h-5 mr-2"></i>
-                    ${item.name}
-                </a>
-            `;
-        }
-
-        // Load menu items
-        async function loadMenuItems() {
-            const desktopMenu = document.getElementById('desktop-menu');
-            const mobileMenuItems = document.getElementById('mobile-menu-items');
-            const currentPath = window.location.pathname;
-            
-            let desktopHtml = '';
-            let mobileHtml = '';
-
-            // Check authorization for each menu item
-            for (const item of menuItems) {
-                const isAuthorized = await checkFeatureAuthorization(item.id);
-                if (isAuthorized) {
-                    const isActive = currentPath === item.href;
-                    desktopHtml += createDesktopMenuItem(item, isActive);
-                    mobileHtml += createMobileMenuItem(item, isActive);
-                }
-            }
-
-            // Add theme toggle and logout buttons to desktop menu
-            desktopHtml += `
-                <button id="theme-toggle" type="button" class="inline-flex items-center px-1 pt-1 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-colors">
-                    <i data-lucide="sun" class="w-5 h-5 hidden dark:block"></i>
-                    <i data-lucide="moon" class="w-5 h-5 block dark:hidden"></i>
-                </button>
-                <a href="/logout" class="inline-flex items-center px-1 pt-1 text-red-500 hover:text-red-700 dark:hover:text-red-400 transition-colors">
-                    <i data-lucide="log-out" class="w-5 h-5 mr-1"></i>
-                    Logout
-                </a>
-            `;
-
-            // Add logout button to mobile menu
-            mobileHtml += `
-                <a href="/logout" class="block pl-3 pr-4 py-2 text-base font-medium text-red-500 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-900/50 rounded-md flex items-center">
-                    <i data-lucide="log-out" class="w-5 h-5 mr-2"></i>
-                    Logout
-                </a>
-            `;
-
-            // Update the menus
-            desktopMenu.innerHTML = desktopHtml;
-            mobileMenuItems.innerHTML = mobileHtml;
-
-            // Reinitialize Lucide icons for the new menu items
-            lucide.createIcons();
-
-            // Reattach theme toggle event listener
-            const themeToggleBtn = document.getElementById('theme-toggle');
-            if (themeToggleBtn) {
-                themeToggleBtn.addEventListener('click', () => {
-                    htmlElement.classList.toggle('dark');
-                    localStorage.theme = htmlElement.classList.contains('dark') ? 'dark' : 'light';
-                });
-            }
-        }
-
-        // Load menu items when DOM is ready
-        document.addEventListener('DOMContentLoaded', loadMenuItems);
     </script>
 
     {% block scripts %}{% endblock %}

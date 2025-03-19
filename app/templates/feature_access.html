@@ -1,0 +1,231 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="bg-white dark:bg-gray-800 shadow rounded-lg p-6">
+    <div class="flex justify-between items-center mb-6">
+        <h2 class="text-2xl font-bold text-gray-800 dark:text-white">Feature Access Control</h2>
+    </div>
+
+    <!-- Features List -->
+    <div class="space-y-6">
+        <div id="featuresList">
+            <!-- Features will be populated here -->
+        </div>
+    </div>
+</div>
+
+<script>
+    // Initialize Lucide icons
+    lucide.createIcons();
+
+    // Fetch and display features
+    async function refreshFeaturesList() {
+        try {
+            const [featuresResponse, devicesResponse] = await Promise.all([
+                fetch('/api/features'),
+                fetch('/api/devices')
+            ]);
+            
+            const features = await featuresResponse.json();
+            const devices = await devicesResponse.json();
+            
+            const featuresList = document.getElementById('featuresList');
+            featuresList.innerHTML = features.map(feature => `
+                <div class="bg-gray-50 dark:bg-gray-700/50 rounded-lg p-4 space-y-4">
+                    <div class="flex items-start justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="p-2 bg-blue-500/10 dark:bg-blue-500/20 rounded-lg">
+                                <i data-lucide="${feature.icon}" class="w-6 h-6 text-blue-500"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-medium text-gray-900 dark:text-white">${feature.feature_name}</h3>
+                                <p class="text-sm text-gray-500 dark:text-gray-400">${feature.description}</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" class="sr-only peer" 
+                                       ${feature.is_enabled ? 'checked' : ''}
+                                       onchange="toggleFeature('${feature.feature_id}', this.checked)">
+                                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                                <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Enabled</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="border-t dark:border-gray-600 pt-4">
+                        <div class="flex items-center justify-between mb-4">
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" class="sr-only peer" 
+                                       ${feature.requires_device_auth ? 'checked' : ''}
+                                       onchange="toggleDeviceAuth('${feature.feature_id}', this.checked)">
+                                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                                <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Require Device Authorization</span>
+                            </label>
+                        </div>
+
+                        <div id="deviceList_${feature.feature_id}" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 mt-4 ${feature.requires_device_auth ? '' : 'hidden'}">
+                            ${devices.map(device => `
+                                <label class="relative flex items-start">
+                                    <div class="flex items-center h-5">
+                                        <input type="checkbox" 
+                                               class="device-checkbox h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600"
+                                               ${feature.authorized_devices.includes(device.uuid) ? 'checked' : ''}
+                                               onchange="toggleDeviceAccess('${feature.feature_id}', '${device.uuid}', this.checked)">
+                                    </div>
+                                    <div class="ml-3 text-sm">
+                                        <span class="font-medium text-gray-900 dark:text-white">${device.device_name}</span>
+                                        <p class="text-gray-500 dark:text-gray-400 text-xs">${device.uuid}</p>
+                                    </div>
+                                </label>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+            
+            // Reinitialize Lucide icons
+            lucide.createIcons();
+            
+        } catch (error) {
+            console.error('Error fetching data:', error);
+            Swal.fire({
+                title: 'Error',
+                text: 'Failed to load features',
+                icon: 'error',
+                confirmButtonText: 'OK',
+                background: '#1f2937',
+                color: '#fff'
+            });
+        }
+    }
+
+    // Toggle feature enabled/disabled
+    async function toggleFeature(featureId, enabled) {
+        try {
+            const response = await fetch(`/api/features/${featureId}/toggle`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ enabled })
+            });
+
+            if (response.ok) {
+                refreshFeaturesList();
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 1500,
+                    background: '#1f2937',
+                    color: '#fff'
+                });
+                Toast.fire({
+                    icon: 'success',
+                    title: `Feature ${enabled ? 'enabled' : 'disabled'}`
+                });
+            } else {
+                throw new Error('Failed to toggle feature');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            Swal.fire({
+                title: 'Error',
+                text: 'Failed to toggle feature',
+                icon: 'error',
+                confirmButtonText: 'OK',
+                background: '#1f2937',
+                color: '#fff'
+            });
+        }
+    }
+
+    // Toggle device authorization requirement
+    async function toggleDeviceAuth(featureId, required) {
+        try {
+            const response = await fetch(`/api/features/${featureId}/auth`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    requires_device_auth: required
+                })
+            });
+
+            if (response.ok) {
+                refreshFeaturesList(); // Refresh to show updated state
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 1500,
+                    background: '#1f2937',
+                    color: '#fff'
+                });
+                Toast.fire({
+                    icon: 'success',
+                    title: `Device authorization ${required ? 'enabled' : 'disabled'}`
+                });
+            } else {
+                throw new Error('Failed to update authorization requirement');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            Swal.fire({
+                title: 'Error',
+                text: 'Failed to update authorization requirement',
+                icon: 'error',
+                confirmButtonText: 'OK',
+                background: '#1f2937',
+                color: '#fff'
+            });
+        }
+    }
+
+    // Toggle device access for a feature
+    async function toggleDeviceAccess(featureId, deviceId, granted) {
+        try {
+            const response = await fetch(`/api/features/${featureId}/devices/${deviceId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ granted })
+            });
+
+            if (response.ok) {
+                refreshFeaturesList(); // Add refresh to update the UI
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 1500,
+                    background: '#1f2937',
+                    color: '#fff'
+                });
+                Toast.fire({
+                    icon: 'success',
+                    title: `Device access ${granted ? 'granted' : 'revoked'}`
+                });
+            } else {
+                throw new Error('Failed to update device access');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            Swal.fire({
+                title: 'Error',
+                text: 'Failed to update device access',
+                icon: 'error',
+                confirmButtonText: 'OK',
+                background: '#1f2937',
+                color: '#fff'
+            });
+        }
+    }
+
+    // Initial load
+    refreshFeaturesList();
+</script>
+{% endblock %} 

@@ -84,6 +84,26 @@ class DeviceRegistration(BaseModel):
     notes: Optional[str] = None
     ip_address: Optional[str] = None
 
+class FeatureAccess(BaseModel):
+    """Model for managing feature-specific device access control."""
+    feature_id: str
+    feature_name: str
+    requires_device_auth: bool = False
+    authorized_devices: List[str] = []  # List of UUIDs
+    description: str = ""
+    icon: str = "settings"  # Lucide icon name
+    is_enabled: bool = True
+
+class FeatureAccessUpdate(BaseModel):
+    """Model for updating feature access settings."""
+    requires_device_auth: bool
+    authorized_devices: Optional[List[str]] = None
+    is_enabled: Optional[bool] = None
+
+class FeatureAccessResponse(FeatureAccess):
+    """Response model for feature access that includes device details."""
+    authorized_device_details: Optional[List[Dict]] = None
+
 class DataStructure(BaseModel):
     shops: List[Shop]
     categories: List[Category]
@@ -93,4 +113,19 @@ class DataStructure(BaseModel):
     recommended_image: str
     other_businesses: str
     branding: Optional[Dict] = None
-    device_registrations: List[DeviceRegistration] = Field(default_factory=list) 
+    device_registrations: List[DeviceRegistration] = Field(default_factory=list)
+    feature_access: List[FeatureAccess] = Field(default_factory=list)
+
+class User(BaseModel):
+    """Model for user data."""
+    username: str
+
+class UserCreate(BaseModel):
+    """Model for creating a new user."""
+    username: str
+    password: str
+
+class UserUpdate(BaseModel):
+    """Model for updating user data."""
+    username: str
+    password: Optional[str] = None 

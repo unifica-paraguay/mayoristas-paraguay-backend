@@ -13,7 +13,7 @@
                 Unauthorized Access
             </h2>
             <p class="mt-2 text-center text-sm text-gray-600 dark:text-gray-400">
-                This device is not authorized to access the branding management page.
+                This device is not authorized to access {{ feature_name }}.
             </p>
         </div>
         <div class="mt-8 space-y-6">
@@ -27,7 +27,7 @@
                             Device Information
                         </h3>
                         <div class="mt-2 text-sm text-yellow-700 dark:text-yellow-300">
-                            <p>Your Device UUID: <span id="currentUUID" class="font-mono">Loading...</span></p>
+                            <p>Your Device UUID: <span id="currentUUID" class="font-mono"></span></p>
                         </div>
                     </div>
                 </div>
@@ -52,12 +52,12 @@
 
 {% block scripts %}
 <script>
-    // Display the current UUID
-    document.getElementById('currentUUID').textContent = getDeviceUUID() || 'Not available';
+    // Display the current UUID immediately
+    document.getElementById('currentUUID').textContent = window.deviceUUID;
 
     // Function to copy UUID to clipboard
     async function copyUUID() {
-        const uuid = getDeviceUUID();
+        const uuid = window.deviceUUID;
         if (uuid) {
             try {
                 await navigator.clipboard.writeText(uuid);

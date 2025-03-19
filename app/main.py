@@ -7,21 +7,23 @@ from starlette.middleware.sessions import SessionMiddleware
 import plotly.express as px
 import plotly.graph_objects as go
 import pandas as pd
-from .models.models import DataStructure, Shop, Category, Zone, DeviceRegistration
+from .models.models import DataStructure, Shop, Category, Zone, DeviceRegistration, User, UserCreate, UserUpdate, FeatureAccess, FeatureAccessUpdate, FeatureAccessResponse
 from pydantic import BaseModel
 import json
-from typing import List, Optional
+from typing import List, Optional, Callable
 import os
 from dotenv import load_dotenv
 from .utils.working_hours import parse_legacy_working_hours, is_shop_open, format_working_hours, parse_time
 from datetime import time
 import secrets
-from .utils.security import authenticate_user, create_access_token, get_current_user, ACCESS_TOKEN_EXPIRE_MINUTES, validate_device_uuid
+from .utils.security import authenticate_user, create_access_token, get_current_user, ACCESS_TOKEN_EXPIRE_MINUTES, validate_device_uuid, validate_feature_access
 from datetime import timedelta
 import jwt
 from jose import JWTError
 from uuid import uuid4
 from datetime import datetime
+from functools import wraps
+from .utils.data_handler import DataHandler
 
 # Load environment variables from .env file
 load_dotenv()
@@ -40,6 +42,113 @@ IS_PRODUCTION = ENVIRONMENT == "production"
 
 app = FastAPI(title="Mayoristas Paraguay Backend")
 storage = CloudStorage()
+
+def get_authorized_features(request: Request, data_handler: DataHandler) -> List[str]:
+    """Get a list of feature IDs that the current device is authorized to access."""
+    print("\n=== get_authorized_features START ===")
+    authorized_features = []
+    
+    # Get device UUID from request
+    device_uuid = None
+    if "X-Device-UUID" in request.headers:
+        device_uuid = request.headers["X-Device-UUID"]
+    elif "device_uuid" in request.cookies:
+        device_uuid = request.cookies["device_uuid"]
+    
+    print(f"Device UUID from request: {device_uuid}")
+    
+    # If no device UUID is present, return empty list
+    if not device_uuid:
+        print("No device UUID found, returning empty list")
+        print("=== get_authorized_features END ===\n")
+        return authorized_features
+    
+    # First check if the device exists and is active
+    device = next((d for d in data_handler.data.device_registrations if d.uuid == device_uuid), None)
+    print(f"Found device in registrations: {device}")
+    
+    if not device or not device.is_active:
+        print(f"Device not found or not active, returning empty list")
+        print("=== get_authorized_features END ===\n")
+        return authorized_features
+    
+    # Get all features that are enabled and don't require device auth
+    for feature in data_handler.data.feature_access:
+        print(f"\nChecking feature: {feature.feature_id}")
+        print(f"Feature settings: {feature}")
+        
+        if not feature.is_enabled:
+            print(f"Feature {feature.feature_id} is not enabled, skipping")
+            continue
+            
+        if not feature.requires_device_auth:
+            print(f"Feature {feature.feature_id} doesn't require device auth, adding to authorized features")
+            authorized_features.append(feature.feature_id)
+            continue
+            
+        # For features that require device auth, check if device is authorized
+        if device_uuid in feature.authorized_devices:
+            print(f"Device {device_uuid} is authorized for feature {feature.feature_id}, adding to authorized features")
+            authorized_features.append(feature.feature_id)
+        else:
+            print(f"Device {device_uuid} is not authorized for feature {feature.feature_id}, skipping")
+    
+    print(f"\nFinal authorized features for device {device_uuid}: {authorized_features}")
+    print("=== get_authorized_features END ===\n")
+    return authorized_features
+
+# Update the protected route decorator to check feature-specific access
+def feature_protected(feature_id: str):
+    def decorator(func: Callable):
+        @wraps(func)
+        async def wrapper(*args, request: Request, **kwargs):
+            print(f"\n=== feature_protected START ===")
+            print(f"Checking access for feature: {feature_id}")
+            
+            data_handler = get_data_handler()
+            
+            # Special case: device_management should always be accessible if user is authenticated
+            if feature_id == "device_management":
+                print("Special case - device_management feature is always accessible")
+                print("=== feature_protected END ===\n")
+                return await func(*args, request=request, **kwargs)
+            
+            # Check if the feature is enabled and if the device is authorized
+            if not validate_feature_access(request, data_handler, feature_id):
+                print(f"Access denied - {feature_id} not authorized")
+                
+                # Get the feature name for the unauthorized template
+                feature_name = next(
+                    (f.feature_name for f in data_handler.data.feature_access if f.feature_id == feature_id),
+                    "this feature"
+                )
+                
+                # Get device UUID for the message
+                device_uuid = None
+                if "X-Device-UUID" in request.headers:
+                    device_uuid = request.headers["X-Device-UUID"]
+                elif "device_uuid" in request.cookies:
+                    device_uuid = request.cookies["device_uuid"]
+                
+                print(f"Rendering unauthorized template for device: {device_uuid}")
+                print("=== feature_protected END ===\n")
+                return templates.TemplateResponse(
+                    "unauthorized.html",
+                    {
+                        "request": request,
+                        "title": "Unauthorized Access",
+                        "feature_id": feature_id,
+                        "feature_name": feature_name,
+                        "device_uuid": device_uuid or "No device UUID found"
+                    },
+                    status_code=403
+                )
+            
+            print(f"Access granted for feature: {feature_id}")
+            print("=== feature_protected END ===\n")
+            return await func(*args, request=request, **kwargs)
+        return wrapper
+    return decorator
 
 # Add session middleware for CSRF protection
 app.add_middleware(
@@ -74,6 +183,12 @@ class DeviceUpdate(DeviceCreate):
 class DeviceToggle(BaseModel):
     enable: bool
 
+class FeatureToggle(BaseModel):
+    enabled: bool
+
+class DeviceAccessToggle(BaseModel):
+    granted: bool
+
 def load_data() -> DataStructure:
     with open(DATA_FILE, "r", encoding="utf-8") as f:
         data = json.load(f)
@@ -92,6 +207,13 @@ def save_data(data: DataStructure):
 
 # Load initial data
 data_structure = load_data()
+
+# Initialize data handler
+data_handler = DataHandler(DATA_FILE)
+
+def get_data_handler() -> DataHandler:
+    """Dependency to get the data handler instance."""
+    return data_handler
 
 # Authentication routes
 @app.get("/", response_class=HTMLResponse)
@@ -143,17 +265,15 @@ async def login(
             data={"sub": username},
             expires_delta=timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
         )
-        # Create a simple redirect response
+        
+        # Create a redirect response
         response = RedirectResponse(url="/admin", status_code=302)
         
         # Get the host from the request headers
-        host = request.headers.get("host", "")
         is_https = request.url.scheme == "https" or IS_PRODUCTION
         
         # Set cookie settings based on environment and protocol
         cookie_settings = {
-            "key": "Authorization",
-            "value": f"Bearer {access_token}",
             "httponly": True,
             "secure": is_https,
             "samesite": "strict" if is_https else "lax",
@@ -161,10 +281,45 @@ async def login(
             "max_age": ACCESS_TOKEN_EXPIRE_MINUTES * 60
         }
         
-        # Set the auth cookie with appropriate settings
-        response.set_cookie(**cookie_settings)
+        # Set the auth cookie
+        response.set_cookie(
+            key="Authorization",
+            value=f"Bearer {access_token}",
+            **cookie_settings
+        )
         
-        print("DEBUG: Setting cookie with token:", access_token[:20], "...")  # Debug print
+        # Check if device UUID exists in cookies
+        device_uuid = request.cookies.get("device_uuid")
+        
+        # If no device UUID exists, create a new one
+        if not device_uuid:
+            device_uuid = str(uuid4())
+            print(f"DEBUG: Generated new device UUID: {device_uuid}")  # Debug print
+            
+            # Create a new device registration
+            data_handler = get_data_handler()
+            new_device = DeviceRegistration(
+                uuid=device_uuid,
+                device_name=f"Browser Login - {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}",
+                created_by=username,
+                ip_address=request.client.host,
+                is_active=True  # Set to active by default
+            )
+            
+            # Add the device to registrations
+            data_handler.data.device_registrations.append(new_device)
+            data_handler.save_data()
+            
+            print("DEBUG: Created new device registration")  # Debug print
+        
+        # Set the device UUID cookie
+        response.set_cookie(
+            key="device_uuid",
+            value=device_uuid,
+            **cookie_settings
+        )
+        
+        print(f"DEBUG: Setting cookies - Auth token: {access_token[:20]}..., Device UUID: {device_uuid}")  # Debug print
         return response
     
     return templates.TemplateResponse("login.html", {
@@ -192,12 +347,34 @@ async def logout():
     return response
 
 # Admin interface routes - now protected
+from app.utils.security import get_authorized_features
+
+
 @app.get("/admin", response_class=HTMLResponse)
+@feature_protected("dashboard")
 async def admin_dashboard(
     request: Request,
-    current_user: str = Depends(get_current_user)
+    data_handler: DataHandler = Depends(get_data_handler)
 ):
-    print("DEBUG: Reached admin_dashboard with user:", current_user)  # Debug print
+    """Admin dashboard page."""
+    # Get authorized features for the current device
+    authorized_features = get_authorized_features(request, data_handler)
+    print(f"DEBUG: Authorized features for dashboard: {authorized_features}")
+    
+    # Get all features for the template
+    features = data_handler.data.feature_access
+    
+    # Get device info if available
+    device_uuid = None
+    if "X-Device-UUID" in request.headers:
+        device_uuid = request.headers["X-Device-UUID"]
+    elif "device_uuid" in request.cookies:
+        device_uuid = request.cookies["device_uuid"]
+    
+    device = None
+    if device_uuid:
+        device = next((d for d in data_handler.data.device_registrations if d.uuid == device_uuid), None)
+    
     # Calculate statistics
     total_shops = len(data_structure.shops)
     total_categories = len(data_structure.categories)
@@ -212,75 +389,109 @@ async def admin_dashboard(
     # Get branding information
     branding = await get_active_branding()
 
-    return templates.TemplateResponse("admin_dashboard.html", {
-        "request": request,
-        "total_shops": total_shops,
-        "total_categories": total_categories,
-        "total_zones": total_zones,
-        "total_banners": total_banners,
-        "branding": branding,
-        "title": "Admin Dashboard"
-    })
+    return templates.TemplateResponse(
+        "admin_dashboard.html",
+        {
+            "request": request,
+            "title": "Admin Dashboard",
+            "total_shops": total_shops,
+            "total_categories": total_categories,
+            "total_zones": total_zones,
+            "total_banners": total_banners,
+            "features": features,
+            "authorized_features": authorized_features,
+            "device": device,
+            "active_page": "dashboard",
+            "branding": branding
+        }
+    )
 
 @app.get("/admin/shops", response_class=HTMLResponse)
+@feature_protected("shop_management")
 async def admin_shops(
     request: Request,
     current_user: str = Depends(get_current_user)
 ):
+    data_handler = get_data_handler()
+    authorized_features = get_authorized_features(request, data_handler)
+    
     return templates.TemplateResponse("shops.html", {
         "request": request,
         "shops": data_structure.shops,
         "categories": data_structure.categories,
-        "zones": data_structure.zones
+        "zones": data_structure.zones,
+        "authorized_features": authorized_features,
+        "active_page": "shops"
     })
 
 @app.get("/admin/categories", response_class=HTMLResponse)
+@feature_protected("category_management")
 async def admin_categories(
     request: Request,
     current_user: str = Depends(get_current_user)
 ):
+    data_handler = get_data_handler()
+    authorized_features = get_authorized_features(request, data_handler)
+    
     return templates.TemplateResponse("categories.html", {
         "request": request,
-        "categories": data_structure.categories
+        "categories": data_structure.categories,
+        "authorized_features": authorized_features,
+        "active_page": "categories"
     })
 
 @app.get("/admin/zones", response_class=HTMLResponse)
+@feature_protected("zone_management")
 async def admin_zones(
     request: Request,
     current_user: str = Depends(get_current_user)
 ):
+    data_handler = get_data_handler()
+    authorized_features = get_authorized_features(request, data_handler)
+    
     return templates.TemplateResponse("zones.html", {
         "request": request,
-        "zones": data_structure.zones
+        "zones": data_structure.zones,
+        "authorized_features": authorized_features,
+        "active_page": "zones"
     })
 
 @app.get("/admin/banners", response_class=HTMLResponse)
+@feature_protected("banner_management")
 async def admin_banners(
     request: Request,
     current_user: str = Depends(get_current_user)
 ):
+    data_handler = get_data_handler()
+    authorized_features = get_authorized_features(request, data_handler)
+    
     return templates.TemplateResponse("banners.html", {
         "request": request,
         "primary_banner": data_structure.primary_banner,
         "secondary_banner": data_structure.secondary_banner,
         "recommended_image": data_structure.recommended_image,
-        "other_businesses": data_structure.other_businesses
+        "other_businesses": data_structure.other_businesses,
+        "authorized_features": authorized_features,
+        "active_page": "banners"
     })
 
 # CRUD Operations for Shops
 @app.get("/api/shops", response_model=List[Shop])
-async def get_shops(current_user: str = Depends(get_current_user)):
+@feature_protected("shop_management")
+async def get_shops(request: Request, current_user: str = Depends(get_current_user)):
     return data_structure.shops
 
 @app.get("/api/shops/{shop_id}", response_model=Shop)
-async def get_shop(shop_id: int, current_user: str = Depends(get_current_user)):
+@feature_protected("shop_management")
+async def get_shop(request: Request, shop_id: int, current_user: str = Depends(get_current_user)):
     for shop in data_structure.shops:
         if shop.id == shop_id:
             return shop
     raise HTTPException(status_code=404, detail="Shop not found")
 
 @app.post("/api/shops", response_model=Shop)
-async def create_shop(shop: Shop, current_user: str = Depends(get_current_user)):
+@feature_protected("shop_management")
+async def create_shop(request: Request, shop: Shop, current_user: str = Depends(get_current_user)):
     # Check if ID already exists
     if any(s.id == shop.id for s in data_structure.shops):
         raise HTTPException(status_code=400, detail="Shop ID already exists")
@@ -310,7 +521,8 @@ async def create_shop(shop: Shop, current_user: str = Depends(get_current_user))
     return shop
 
 @app.put("/api/shops/{shop_id}", response_model=Shop)
-async def update_shop(shop_id: int, updated_shop: Shop):
+@feature_protected("shop_management")
+async def update_shop(request: Request, shop_id: int, updated_shop: Shop):
     for i, shop in enumerate(data_structure.shops):
         if shop.id == shop_id:
             # Validate categories exist
@@ -346,7 +558,8 @@ async def update_shop(shop_id: int, updated_shop: Shop):
     raise HTTPException(status_code=404, detail="Shop not found")
 
 @app.patch("/api/shops/{shop_id}", response_model=Shop)
-async def patch_shop(shop_id: int, updated_fields: dict):
+@feature_protected("shop_management")
+async def patch_shop(request: Request, shop_id: int, updated_fields: dict):
     for i, shop in enumerate(data_structure.shops):
         if shop.id == shop_id:
             # Create a copy of the current shop data
@@ -372,7 +585,8 @@ async def patch_shop(shop_id: int, updated_fields: dict):
     raise HTTPException(status_code=404, detail="Shop not found")
 
 @app.delete("/api/shops/{shop_id}")
-async def delete_shop(shop_id: int):
+@feature_protected("shop_management")
+async def delete_shop(request: Request, shop_id: int):
     for i, shop in enumerate(data_structure.shops):
         if shop.id == shop_id:
             data_structure.shops.pop(i)
@@ -382,18 +596,21 @@ async def delete_shop(shop_id: int):
 
 # CRUD Operations for Categories
 @app.get("/api/categories", response_model=List[Category])
-async def get_categories(current_user: str = Depends(get_current_user)):
+@feature_protected("category_management")
+async def get_categories(request: Request, current_user: str = Depends(get_current_user)):
     return data_structure.categories
 
 @app.get("/api/categories/{category_id}", response_model=Category)
-async def get_category(category_id: int, current_user: str = Depends(get_current_user)):
+@feature_protected("category_management")
+async def get_category(request: Request, category_id: int, current_user: str = Depends(get_current_user)):
     for category in data_structure.categories:
         if category.id == category_id:
             return category
     raise HTTPException(status_code=404, detail="Category not found")
 
 @app.post("/api/categories", response_model=Category)
-async def create_category(category: Category, current_user: str = Depends(get_current_user)):
+@feature_protected("category_management")
+async def create_category(request: Request, category: Category, current_user: str = Depends(get_current_user)):
     if any(c.id == category.id for c in data_structure.categories):
         raise HTTPException(status_code=400, detail="Category ID already exists")
     data_structure.categories.append(category)
@@ -401,7 +618,8 @@ async def create_category(category: Category, current_user: str = Depends(get_cu
     return category
 
 @app.put("/api/categories/{category_id}", response_model=Category)
-async def update_category(category_id: int, updated_category: Category):
+@feature_protected("category_management")
+async def update_category(request: Request, category_id: int, updated_category: Category):
     for i, category in enumerate(data_structure.categories):
         if category.id == category_id:
             data_structure.categories[i] = updated_category
@@ -410,7 +628,8 @@ async def update_category(category_id: int, updated_category: Category):
     raise HTTPException(status_code=404, detail="Category not found")
 
 @app.delete("/api/categories/{category_id}")
-async def delete_category(category_id: int):
+@feature_protected("category_management")
+async def delete_category(request: Request, category_id: int):
     # Check if category is being used by any shop
     for shop in data_structure.shops:
         if category_id in shop.categories:
@@ -428,18 +647,21 @@ async def delete_category(category_id: int):
 
 # CRUD Operations for Zones
 @app.get("/api/zones", response_model=List[Zone])
-async def get_zones(current_user: str = Depends(get_current_user)):
+@feature_protected("zone_management")
+async def get_zones(request: Request, current_user: str = Depends(get_current_user)):
     return data_structure.zones
 
 @app.get("/api/zones/{zone_id}", response_model=Zone)
-async def get_zone(zone_id: int, current_user: str = Depends(get_current_user)):
+@feature_protected("zone_management")
+async def get_zone(request: Request, zone_id: int, current_user: str = Depends(get_current_user)):
     for zone in data_structure.zones:
         if zone.id == zone_id:
             return zone
     raise HTTPException(status_code=404, detail="Zone not found")
 
 @app.post("/api/zones", response_model=Zone)
-async def create_zone(zone: Zone, current_user: str = Depends(get_current_user)):
+@feature_protected("zone_management")
+async def create_zone(request: Request, zone: Zone, current_user: str = Depends(get_current_user)):
     if any(z.id == zone.id for z in data_structure.zones):
         raise HTTPException(status_code=400, detail="Zone ID already exists")
     data_structure.zones.append(zone)
@@ -447,7 +669,8 @@ async def create_zone(zone: Zone, current_user: str = Depends(get_current_user))
     return zone
 
 @app.put("/api/zones/{zone_id}", response_model=Zone)
-async def update_zone(zone_id: int, updated_zone: Zone):
+@feature_protected("zone_management")
+async def update_zone(request: Request, zone_id: int, updated_zone: Zone):
     for i, zone in enumerate(data_structure.zones):
         if zone.id == zone_id:
             data_structure.zones[i] = updated_zone
@@ -456,7 +679,8 @@ async def update_zone(zone_id: int, updated_zone: Zone):
     raise HTTPException(status_code=404, detail="Zone not found")
 
 @app.delete("/api/zones/{zone_id}")
-async def delete_zone(zone_id: int):
+@feature_protected("zone_management")
+async def delete_zone(request: Request, zone_id: int):
     # Check if zone is being used by any shop
     for shop in data_structure.shops:
         if shop.zone_id == zone_id:
@@ -474,21 +698,24 @@ async def delete_zone(zone_id: int):
 
 # Banner Management
 @app.put("/api/banners/primary")
-async def update_primary_banner(urls: List[str]):
+@feature_protected("banner_management")
+async def update_primary_banner(request: Request, urls: List[str]):
     # Replace existing URLs with new ones
     data_structure.primary_banner = urls
     save_data(data_structure)
     return {"message": "Primary banner updated successfully"}
 
 @app.put("/api/banners/secondary")
-async def update_secondary_banner(urls: List[str]):
+@feature_protected("banner_management")
+async def update_secondary_banner(request: Request, urls: List[str]):
     # Replace existing URLs with new ones
     data_structure.secondary_banner = urls
     save_data(data_structure)
     return {"message": "Secondary banner updated successfully"}
 
 @app.put("/api/images/recommended")
-async def update_recommended_image(image: ImageUrl):
+@feature_protected("banner_management")
+async def update_recommended_image(request: Request, image: ImageUrl):
     """Update the recommended image URL"""
     print("Datos recibidos:", image)
     print("URL recibida:", image.url)
@@ -498,13 +725,15 @@ async def update_recommended_image(image: ImageUrl):
     return {"message": "Recommended image updated successfully"}
 
 @app.put("/api/images/other-businesses")
-async def update_other_businesses_image(image: ImageUrl):
+@feature_protected("banner_management")
+async def update_other_businesses_image(request: Request, image: ImageUrl):
     # Store the new URL
     data_structure.other_businesses = image.url
     save_data(data_structure)
     return {"message": "Other businesses image updated successfully"}
 
 @app.get("/analytics", response_class=HTMLResponse)
+@feature_protected("dashboard")
 async def analytics_dashboard(request: Request, current_user: str = Depends(get_current_user)):
     """Analytics dashboard moved to /analytics and protected with authentication"""
     return """
@@ -528,6 +757,7 @@ async def analytics_dashboard(request: Request, current_user: str = Depends(get_
     """
 
 @app.get("/shops-by-zone")
+# @feature_protected("shop_management")
 async def get_shops_by_zone(request: Request):
     # Count shops per zone
     zone_counts = {}
@@ -561,6 +791,7 @@ async def get_shops_by_zone(request: Request):
     return HTMLResponse(fig.to_html(full_html=False, include_plotlyjs=True))
 
 @app.get("/categories-distribution")
+# @feature_protected("category_management")
 async def get_categories_distribution(request: Request):
     # Count category occurrences
     category_counts = {}
@@ -593,6 +824,7 @@ async def get_categories_distribution(request: Request):
     return HTMLResponse(fig.to_html(full_html=False, include_plotlyjs=True))
 
 @app.get("/shops-by-category")
+# @feature_protected("shop_management")
 async def get_shops_by_category(request: Request):
     # Count shops per category
     category_shop_counts = {}
@@ -630,6 +862,7 @@ async def get_shops_by_category(request: Request):
     return HTMLResponse(fig.to_html(full_html=False, include_plotlyjs=True))
 
 @app.get("/working-hours-distribution")
+# @feature_protected("shop_management")
 async def get_working_hours_distribution(request: Request):
     # Count shops with and without working hours
     with_hours = len([shop for shop in data_structure.shops if shop.working_hours])
@@ -653,43 +886,50 @@ async def get_working_hours_distribution(request: Request):
     return HTMLResponse(fig.to_html(full_html=False, include_plotlyjs=True))
 
 @app.get("/api/data")
-async def get_data_json():
+@feature_protected("dashboard")
+async def get_data_json(request: Request):
     return FileResponse(DATA_FILE, media_type="application/json")
 
 # Image Upload Endpoints
 @app.post("/api/upload/shop-image")
-async def upload_shop_image(file: UploadFile = File(...)):
+@feature_protected("shop_management")
+async def upload_shop_image(request: Request, file: UploadFile = File(...)):
     """Upload a shop image and return its URL"""
     url = await storage.upload_file(file, folder="shops")
     return {"url": url}
 
 @app.post("/api/upload/primary-banner")
-async def upload_primary_banner(file: UploadFile = File(...)):
+@feature_protected("banner_management")
+async def upload_primary_banner(request: Request, file: UploadFile = File(...)):
     """Upload a primary banner image and return its URL"""
     url = await storage.upload_file(file, folder="primary-banners")
     return {"url": url}
 
 @app.post("/api/upload/secondary-banner")
-async def upload_secondary_banner(file: UploadFile = File(...)):
+@feature_protected("banner_management")
+async def upload_secondary_banner(request: Request, file: UploadFile = File(...)):
     """Upload a secondary banner image and return its URL"""
     url = await storage.upload_file(file, folder="secondary-banners")
     return {"url": url}
 
 @app.post("/api/upload/recommended")
-async def upload_recommended_image(file: UploadFile = File(...)):
+@feature_protected("banner_management")
+async def upload_recommended_image(request: Request, file: UploadFile = File(...)):
     """Upload a recommended image and return its URL"""
     url = await storage.upload_file(file, folder="recommended")
     return {"url": url}
 
 @app.post("/api/upload/other-business")
-async def upload_other_business_image(file: UploadFile = File(...)):
+@feature_protected("banner_management")
+async def upload_other_business_image(request: Request, file: UploadFile = File(...)):
     """Upload an other business image and return its URL"""
     url = await storage.upload_file(file, folder="other-business")
     return {"url": url}
 
 # Storage Management
 @app.delete("/api/storage/delete")
-async def delete_storage_file(url: str):
+@feature_protected("banner_management")
+async def delete_storage_file(request: Request, url: str):
     """Delete a file from storage"""
     try:
         await storage.delete_file(url)
@@ -699,7 +939,8 @@ async def delete_storage_file(url: str):
 
 # Add new endpoint for getting open shops
 @app.get("/api/shops/open")
-async def get_open_shops():
+@feature_protected("shop_management")
+async def get_open_shops(request: Request):
     """Get all currently open shops"""
     return [shop for shop in data_structure.shops if is_shop_open(shop)]
 
@@ -765,39 +1006,25 @@ async def get_active_branding():
 
 # Branding Management Page
 @app.get("/admin/branding", response_class=HTMLResponse)
+@feature_protected("branding_management")
 async def branding_page(
     request: Request,
     current_user: str = Depends(get_current_user)
 ):
-    """Branding management page"""
-    print("DEBUG: Accessing branding page")
-    print(f"DEBUG: Headers: {dict(request.headers)}")
+    data_handler = get_data_handler()
+    authorized_features = get_authorized_features(request, data_handler)
     
-    # Validate device UUID
-    if not await validate_device_uuid(request):
-        print("DEBUG: UUID validation failed")
-        return templates.TemplateResponse(
-            "unauthorized.html",
-            {
-                "request": request,
-                "title": "Unauthorized Access"
-            },
-            status_code=403
-        )
-    
-    print("DEBUG: UUID validation successful")
     branding = await get_active_branding()
-    return templates.TemplateResponse(
-        "branding.html",
-        {
-            "request": request,
-            "branding": branding,
-            "active_page": "branding"
-        }
-    )
+    return templates.TemplateResponse("branding.html", {
+        "request": request,
+        "branding": branding,
+        "authorized_features": authorized_features,
+        "active_page": "branding"
+    })
 
 # Branding API Endpoints
 @app.post("/api/branding")
+@feature_protected("branding_management")
 async def update_branding(
     request: Request,
     client_name: str = Form(None),
@@ -809,17 +1036,6 @@ async def update_branding(
     current_user: str = Depends(get_current_user)
 ):
     """Update branding information"""
-    # Validate device UUID
-    if not await validate_device_uuid(request):
-        return JSONResponse(
-            status_code=403,
-            content={
-                "status": "error",
-                "message": "Unauthorized device. Please provide a valid device UUID.",
-                "code": "UNAUTHORIZED_DEVICE"
-            }
-        )
-    
     data_structure = load_data()
     
     # Get default branding values
@@ -898,6 +1114,7 @@ async def update_branding(
     return RedirectResponse(url="/admin/branding", status_code=303)
 
 @app.post("/api/branding/enable")
+@feature_protected("branding_management")
 async def enable_client_branding(
     request: Request,
     current_user: str = Depends(get_current_user)
@@ -958,6 +1175,7 @@ async def enable_client_branding(
     return RedirectResponse(url="/admin/branding", status_code=303)
 
 @app.post("/api/branding/disable")
+@feature_protected("branding_management")
 async def disable_client_branding(
     request: Request,
     current_user: str = Depends(get_current_user)
@@ -1023,6 +1241,7 @@ async def disable_client_branding(
 
 # Logo Upload Endpoint
 @app.post("/api/upload/branding-logo")
+@feature_protected("branding_management")
 async def upload_branding_logo(
     request: Request,
     file: UploadFile = File(...),
@@ -1077,7 +1296,8 @@ async def upload_branding_logo(
 
 # Add this route to get branding info
 @app.get("/api/branding")
-async def get_branding_info():
+@feature_protected("branding_management")
+async def get_branding_info(request: Request):
     """Get branding information for the site"""
     branding = await get_active_branding()
     
@@ -1093,35 +1313,37 @@ async def get_branding_info():
 @app.get("/favicon.ico")
 async def favicon():
     """Redirect to the current branding logo for favicon"""
+    # This endpoint should remain public as it's used by browsers
     branding = await get_active_branding()
     logo_url = branding.get("logo", "")
     
     if logo_url:
         return RedirectResponse(url=logo_url)
     else:
-        # Use default Unifica logo if no branding logo is set
         default_logo = os.getenv("DEFAULT_BRANDING_LOGO", "https://unificadesign.com.py/img/unifica/footerIcon.png")
         return RedirectResponse(url=default_logo)
 
 # Device Management Routes
 @app.get("/admin/devices", response_class=HTMLResponse)
+@feature_protected("device_management")
 async def device_management(
     request: Request,
     current_user: str = Depends(get_current_user)
 ):
-    """Device management page"""
-    data_structure = load_data()
-    return templates.TemplateResponse(
-        "device_management.html",
-        {
-            "request": request,
-            "devices": data_structure.device_registrations,
-            "active_page": "devices"
-        }
-    )
+    data_handler = get_data_handler()
+    authorized_features = get_authorized_features(request, data_handler)
+    
+    return templates.TemplateResponse("device_management.html", {
+        "request": request,
+        "devices": data_structure.device_registrations,
+        "authorized_features": authorized_features,
+        "active_page": "devices"
+    })
 
 @app.get("/api/devices/{uuid}")
+@feature_protected("device_management")
 async def get_device(
+    request: Request,
     uuid: str,
     current_user: str = Depends(get_current_user)
 ):
@@ -1239,9 +1461,214 @@ async def delete_device(
     return {"status": "success"}
 
 @app.get("/api/devices")
+@feature_protected("device_management")
 async def get_devices(
+    request: Request,
     current_user: str = Depends(get_current_user)
 ):
     """Get all device registrations"""
     data_structure = load_data()
-    return data_structure.device_registrations 
+    return data_structure.device_registrations
+
+# Initialize default features if they don't exist
+def init_features(data_handler: DataHandler):
+    if not hasattr(data_handler.data, 'feature_access'):
+        data_handler.data.feature_access = []
+    
+    default_features = [
+        {
+            "feature_id": "dashboard",
+            "feature_name": "Dashboard",
+            "description": "Access to main dashboard and analytics",
+            "icon": "layout-dashboard",
+            "requires_device_auth": False,
+            "is_enabled": True,
+            "authorized_devices": []
+        },
+        {
+            "feature_id": "shop_management",
+            "feature_name": "Shop Management",
+            "description": "Manage shops and their details",
+            "icon": "shopping-cart",
+            "requires_device_auth": False,
+            "is_enabled": True,
+            "authorized_devices": []
+        },
+        {
+            "feature_id": "category_management",
+            "feature_name": "Category Management",
+            "description": "Manage product categories",
+            "icon": "tag",
+            "requires_device_auth": False,
+            "is_enabled": True,
+            "authorized_devices": []
+        },
+        {
+            "feature_id": "zone_management",
+            "feature_name": "Zone Management",
+            "description": "Manage geographical zones",
+            "icon": "map-pin",
+            "requires_device_auth": False,
+            "is_enabled": True,
+            "authorized_devices": []
+        },
+        {
+            "feature_id": "banner_management",
+            "feature_name": "Banner Management",
+            "description": "Manage promotional banners and images",
+            "icon": "image",
+            "requires_device_auth": False,
+            "is_enabled": True,
+            "authorized_devices": []
+        },
+        {
+            "feature_id": "branding_management",
+            "feature_name": "Branding Management",
+            "description": "Manage branding settings and assets",
+            "icon": "palette",
+            "requires_device_auth": False,
+            "is_enabled": True,
+            "authorized_devices": []
+        },
+        {
+            "feature_id": "device_management",
+            "feature_name": "Device Management",
+            "description": "Manage device access and permissions",
+            "icon": "smartphone",
+            "requires_device_auth": False,
+            "is_enabled": True,
+            "authorized_devices": []
+        }
+    ]
+    
+    # Add any missing default features
+    existing_feature_ids = {f.feature_id for f in data_handler.data.feature_access}
+    for feature in default_features:
+        if feature["feature_id"] not in existing_feature_ids:
+            data_handler.data.feature_access.append(FeatureAccess(**feature))
+    
+    # Reset all features to not require device auth by default
+    # for feature in data_handler.data.feature_access:
+    #     feature.requires_device_auth = False
+    #     feature.authorized_devices = []
+    
+    data_handler.save_data()
+
+@app.on_event("startup")
+async def startup_event():
+    # Initialize data handler
+    data_handler = get_data_handler()
+    
+    # Initialize default features
+    init_features(data_handler)
+
+# Feature Access Management Routes
+@app.get("/admin/features", response_class=HTMLResponse)
+@feature_protected("device_management")
+async def feature_access_page(
+    request: Request,
+    current_user: str = Depends(get_current_user)
+):
+    data_handler = get_data_handler()
+    authorized_features = get_authorized_features(request, data_handler)
+    
+    return templates.TemplateResponse("feature_access.html", {
+        "request": request,
+        "authorized_features": authorized_features
+    })
+
+@app.get("/api/features", response_model=List[FeatureAccessResponse])
+@feature_protected("device_management")
+async def get_features(
+    request: Request,
+    user: User = Depends(get_current_user),
+    data_handler: DataHandler = Depends(get_data_handler)
+):
+    features = data_handler.data.feature_access
+    response_features = []
+    
+    for feature in features:
+        feature_dict = feature.dict()
+        if feature.requires_device_auth and feature.authorized_devices:
+            # Add device details for authorized devices
+            device_details = []
+            for device_uuid in feature.authorized_devices:
+                device = next((d for d in data_handler.data.device_registrations if d.uuid == device_uuid), None)
+                if device:
+                    device_details.append({
+                        "uuid": device.uuid,
+                        "device_name": device.device_name,
+                        "is_active": device.is_active
+                    })
+            feature_dict["authorized_device_details"] = device_details
+        response_features.append(FeatureAccessResponse(**feature_dict))
+    
+    return response_features
+
+@app.post("/api/features/{feature_id}/toggle")
+@feature_protected("device_management")
+async def toggle_feature(
+    request: Request,
+    feature_id: str,
+    toggle: FeatureToggle,
+    user: User = Depends(get_current_user),
+    data_handler: DataHandler = Depends(get_data_handler)
+):
+    feature = next((f for f in data_handler.data.feature_access if f.feature_id == feature_id), None)
+    if not feature:
+        raise HTTPException(status_code=404, detail="Feature not found")
+    
+    feature.is_enabled = toggle.enabled
+    data_handler.save_data()
+    return {"status": "success"}
+
+@app.post("/api/features/{feature_id}/auth")
+@feature_protected("device_management")
+async def update_feature_auth(
+    request: Request,
+    feature_id: str,
+    update: FeatureAccessUpdate,
+    user: User = Depends(get_current_user),
+    data_handler: DataHandler = Depends(get_data_handler)
+):
+    feature = next((f for f in data_handler.data.feature_access if f.feature_id == feature_id), None)
+    if not feature:
+        raise HTTPException(status_code=404, detail="Feature not found")
+    
+    feature.requires_device_auth = update.requires_device_auth
+    if update.authorized_devices is not None:
+        feature.authorized_devices = update.authorized_devices
+    elif not update.requires_device_auth:
+        feature.authorized_devices = []  # Clear devices if auth is disabled
+        
+    if update.is_enabled is not None:
+        feature.is_enabled = update.is_enabled
+    
+    data_handler.save_data()
+    return {"status": "success"}
+
+@app.post("/api/features/{feature_id}/devices/{device_id}")
+@feature_protected("device_management")
+async def toggle_device_access(
+    request: Request,
+    feature_id: str,
+    device_id: str,
+    toggle: DeviceAccessToggle,
+    user: User = Depends(get_current_user),
+    data_handler: DataHandler = Depends(get_data_handler)
+):
+    feature = next((f for f in data_handler.data.feature_access if f.feature_id == feature_id), None)
+    if not feature:
+        raise HTTPException(status_code=404, detail="Feature not found")
+    
+    device = next((d for d in data_handler.data.device_registrations if d.uuid == device_id), None)
+    if not device:
+        raise HTTPException(status_code=404, detail="Device not found")
+    
+    if toggle.granted and device_id not in feature.authorized_devices:
+        feature.authorized_devices.append(device_id)
+    elif not toggle.granted and device_id in feature.authorized_devices:
+        feature.authorized_devices.remove(device_id)
+    
+    data_handler.save_data()
+    return {"status": "success"} 

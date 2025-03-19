@@ -1942,10 +1942,98 @@
       "expires_at": null,
       "created_at": "2025-03-18T11:59:57.050300",
       "last_used": "2025-03-18T13:07:17.503479",
-      "is_active": false,
+      "is_active": true,
       "created_by": "admin",
       "notes": "This is the device for the super admin to manage the devices and the users of the app",
       "ip_address": "127.0.0.1"
+    },
+    {
+      "uuid": "fe53743c-06f3-4e88-9714-84208858d656",
+      "device_name": "Browser Login - 2025-03-19 14:35:43",
+      "expires_at": null,
+      "created_at": "2025-03-19T14:35:43.609918",
+      "last_used": null,
+      "is_active": true,
+      "created_by": "admin",
+      "notes": null,
+      "ip_address": "127.0.0.1"
+    }
+  ],
+  "feature_access": [
+    {
+      "feature_id": "dashboard",
+      "feature_name": "Dashboard",
+      "requires_device_auth": false,
+      "authorized_devices": [],
+      "description": "Access to main dashboard and analytics",
+      "icon": "layout-dashboard",
+      "is_enabled": true
+    },
+    {
+      "feature_id": "shop_management",
+      "feature_name": "Shop Management",
+      "requires_device_auth": true,
+      "authorized_devices": [
+        "f0852832-def6-4072-8914-3f87ce060343"
+      ],
+      "description": "Manage shops and their details",
+      "icon": "shopping-cart",
+      "is_enabled": true
+    },
+    {
+      "feature_id": "category_management",
+      "feature_name": "Category Management",
+      "requires_device_auth": true,
+      "authorized_devices": [
+        "f0852832-def6-4072-8914-3f87ce060343"
+      ],
+      "description": "Manage product categories",
+      "icon": "tag",
+      "is_enabled": true
+    },
+    {
+      "feature_id": "zone_management",
+      "feature_name": "Zone Management",
+      "requires_device_auth": true,
+      "authorized_devices": [
+        "f0852832-def6-4072-8914-3f87ce060343"
+      ],
+      "description": "Manage geographical zones",
+      "icon": "map-pin",
+      "is_enabled": true
+    },
+    {
+      "feature_id": "banner_management",
+      "feature_name": "Banner Management",
+      "requires_device_auth": true,
+      "authorized_devices": [
+        "f0852832-def6-4072-8914-3f87ce060343"
+      ],
+      "description": "Manage promotional banners and images",
+      "icon": "image",
+      "is_enabled": true
+    },
+    {
+      "feature_id": "branding_management",
+      "feature_name": "Branding Management",
+      "requires_device_auth": true,
+      "authorized_devices": [
+        "f0852832-def6-4072-8914-3f87ce060343"
+      ],
+      "description": "Manage branding settings and assets",
+      "icon": "palette",
+      "is_enabled": true
+    },
+    {
+      "feature_id": "device_management",
+      "feature_name": "Device Management",
+      "requires_device_auth": true,
+      "authorized_devices": [
+        "f0852832-def6-4072-8914-3f87ce060343"
+      ],
+      "description": "Manage device access and permissions",
+      "icon": "smartphone",
+      "is_enabled": true
     }
   ]
 }

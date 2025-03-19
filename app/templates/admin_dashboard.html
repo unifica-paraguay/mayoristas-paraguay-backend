@@ -70,7 +70,7 @@
     </div>
 
     <!-- Quick Access Cards -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mb-6">
         <a href="/admin/shops" class="bg-white dark:bg-gray-800 overflow-hidden shadow rounded-lg hover:shadow-md transition-shadow duration-200">
             <div class="p-5">
                 <div class="flex items-center">
@@ -144,6 +144,32 @@
                     <div class="ml-4">
                         <h3 class="text-lg font-medium text-gray-900 dark:text-white">Device Management</h3>
                         <p class="text-sm text-gray-500 dark:text-gray-400">Manage authorized devices and UUIDs</p>
+                    </div>
+                </div>
+            </div>
+        </a>
+
+        <!-- Feature Access Control Card -->
+        <a href="/admin/features" class="bg-white dark:bg-gray-800 overflow-hidden shadow rounded-lg relative group hover:shadow-md transition-shadow">
+            <div class="p-5">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 bg-blue-500/10 dark:bg-blue-500/20 rounded-lg p-3">
+                        <i data-lucide="shield" class="h-6 w-6 text-blue-500"></i>
+                    </div>
+                    <div class="ml-5 w-0 flex-1">
+                        <dl>
+                            <dt class="text-sm font-medium text-gray-500 dark:text-gray-400 truncate">Feature Access</dt>
+                            <dd class="flex items-baseline">
+                                <div class="text-lg font-semibold text-gray-900 dark:text-white">Control</div>
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-gray-50 dark:bg-gray-700/50 px-5 py-3">
+                <div class="text-sm">
+                    <div class="font-medium text-blue-700 dark:text-blue-400 group-hover:text-blue-900 dark:group-hover:text-blue-300">
+                        Manage feature access →
                     </div>
                 </div>
             </div>
