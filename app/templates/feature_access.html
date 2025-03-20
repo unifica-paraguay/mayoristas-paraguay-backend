@@ -22,8 +22,16 @@
     async function refreshFeaturesList() {
         try {
             const [featuresResponse, devicesResponse] = await Promise.all([
-                fetch('/api/features'),
-                fetch('/api/devices')
+                fetch('/api/features', {
+                    headers: {
+                        'X-Device-UUID': localStorage.getItem('device_uuid') || ''
+                    }
+                }),
+                fetch('/api/devices', {
+                    headers: {
+                        'X-Device-UUID': localStorage.getItem('device_uuid') || ''
+                    }
+                })
             ]);
             
             const features = await featuresResponse.json();
@@ -106,7 +114,8 @@
             const response = await fetch(`/api/features/${featureId}/toggle`, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'X-Device-UUID': localStorage.getItem('device_uuid') || ''
                 },
                 body: JSON.stringify({ enabled })
             });
@@ -147,7 +156,8 @@
             const response = await fetch(`/api/features/${featureId}/auth`, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'X-Device-UUID': localStorage.getItem('device_uuid') || ''
                 },
                 body: JSON.stringify({
                     requires_device_auth: required
@@ -190,7 +200,8 @@
             const response = await fetch(`/api/features/${featureId}/devices/${deviceId}`, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'X-Device-UUID': localStorage.getItem('device_uuid') || ''
                 },
                 body: JSON.stringify({ granted })
             });

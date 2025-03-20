@@ -1957,6 +1957,28 @@
       "created_by": "admin",
       "notes": null,
       "ip_address": "127.0.0.1"
+    },
+    {
+      "uuid": "fb62be2a-c0a1-4906-a6b9-31f896a969fa",
+      "device_name": "Browser Login - 2025-03-20 09:20:12",
+      "expires_at": null,
+      "created_at": "2025-03-20T09:20:12.642899",
+      "last_used": null,
+      "is_active": true,
+      "created_by": "admin",
+      "notes": null,
+      "ip_address": "127.0.0.1"
+    },
+    {
+      "uuid": "8556a956-a4e8-4b50-a900-cbe029dfb92d",
+      "device_name": "Test",
+      "expires_at": null,
+      "created_at": "2025-03-20T09:21:42.742943",
+      "last_used": null,
+      "is_active": true,
+      "created_by": "admin",
+      "notes": "",
+      "ip_address": "127.0.0.1"
     }
   ],
   "feature_access": [

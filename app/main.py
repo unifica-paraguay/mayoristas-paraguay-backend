@@ -107,12 +107,6 @@ def feature_protected(feature_id: str):
             
             data_handler = get_data_handler()
             
-            # Special case: device_management should always be accessible if user is authenticated
-            if feature_id == "device_management":
-                print("Special case - device_management feature is always accessible")
-                print("=== feature_protected END ===\n")
-                return await func(*args, request=request, **kwargs)
-            
             # Check if the feature is enabled and if the device is authorized
             if not validate_feature_access(request, data_handler, feature_id):
                 print(f"Access denied - {feature_id} not authorized")
@@ -1657,18 +1651,43 @@ async def toggle_device_access(
     user: User = Depends(get_current_user),
     data_handler: DataHandler = Depends(get_data_handler)
 ):
+    print("\n=== toggle_device_access START ===")
+    print(f"Feature ID: {feature_id}")
+    print(f"Device ID: {device_id}")
+    print(f"Toggle granted: {toggle.granted}")
+    
+    # Debug: Print all features
+    print("\nAvailable features:")
+    for f in data_handler.data.feature_access:
+        print(f"- {f.feature_id}")
+    
     feature = next((f for f in data_handler.data.feature_access if f.feature_id == feature_id), None)
+    print(f"\nFound feature: {feature}")
     if not feature:
+        print("Feature not found!")
+        print("=== toggle_device_access END ===\n")
         raise HTTPException(status_code=404, detail="Feature not found")
     
+    # Debug: Print all devices
+    print("\nRegistered devices:")
+    for d in data_handler.data.device_registrations:
+        print(f"- {d.uuid}: {d.device_name}")
+    
     device = next((d for d in data_handler.data.device_registrations if d.uuid == device_id), None)
+    print(f"\nFound device: {device}")
     if not device:
+        print("Device not found!")
+        print("=== toggle_device_access END ===\n")
         raise HTTPException(status_code=404, detail="Device not found")
     
     if toggle.granted and device_id not in feature.authorized_devices:
+        print(f"\nGranting access: Adding device {device_id} to feature {feature_id}")
         feature.authorized_devices.append(device_id)
     elif not toggle.granted and device_id in feature.authorized_devices:
+        print(f"\nRevoking access: Removing device {device_id} from feature {feature_id}")
         feature.authorized_devices.remove(device_id)
     
     data_handler.save_data()
+    print("\nAccess updated successfully")
+    print("=== toggle_device_access END ===\n")
     return {"status": "success"} 

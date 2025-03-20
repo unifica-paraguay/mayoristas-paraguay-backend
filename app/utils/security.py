@@ -20,7 +20,7 @@ ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 12  # 12 hour
 ADMIN_USERNAME = os.getenv("ADMIN_USERNAME")
 ADMIN_PASSWORD = os.getenv("ADMIN_PASSWORD")
 SECRET_KEY = os.getenv("SECRET_KEY")
-ALLOWED_DEVICE_UUIDS = [uuid.strip() for uuid in os.getenv("ALLOWED_DEVICE_UUID", "").split(",") if uuid.strip()]
+ADMIN_DEVICE_UUIDS = [uuid.strip() for uuid in os.getenv("ADMIN_DEVICE_UUID", "").split(",") if uuid.strip()]
 
 # Debug print environment variables
 print("DEBUG Environment Variables:")
@@ -28,8 +28,8 @@ print(f"ADMIN_USERNAME set: {bool(ADMIN_USERNAME)}")
 print(f"ADMIN_PASSWORD set: {bool(ADMIN_PASSWORD)}")
 print(f"SECRET_KEY set: {bool(SECRET_KEY)}")
 print(f"SECRET_KEY length: {len(SECRET_KEY) if SECRET_KEY else 0}")
-print(f"ALLOWED_DEVICE_UUIDS count: {len(ALLOWED_DEVICE_UUIDS)}")
-print(f"ALLOWED_DEVICE_UUIDS: {ALLOWED_DEVICE_UUIDS}")
+print(f"ADMIN_DEVICE_UUIDS count: {len(ADMIN_DEVICE_UUIDS)}")
+print(f"ADMIN_DEVICE_UUIDS: {ADMIN_DEVICE_UUIDS}")
 
 # Security scheme
 bearer_scheme = HTTPBearer(auto_error=False)  # Don't auto-raise errors
@@ -125,6 +125,10 @@ def validate_device_uuid(request: Request, data_handler: DataHandler) -> bool:
     
     if not device_uuid:
         return False
+        
+    # Always allow admin device UUIDs
+    if device_uuid in ADMIN_DEVICE_UUIDS:
+        return True
     
     # Check if device exists and is active
     for device in data_handler.data.device_registrations:
@@ -146,60 +150,55 @@ def validate_feature_access(request: Request, data_handler: DataHandler, feature
     print("\n=== validate_feature_access START ===")
     print(f"Checking access for feature: {feature_id}")
     
+    # Always grant access for admin device UUIDs
+    device_uuid = get_device_uuid(request)
+    if device_uuid in ADMIN_DEVICE_UUIDS:
+        print("Admin device UUID detected - granting access")
+        print("=== validate_feature_access END ===\n")
+        return True
+    
     # Get feature access settings
     feature_access = next(
         (f for f in data_handler.data.feature_access if f.feature_id == feature_id),
         None
     )
     
-    print(f"Feature access settings: {feature_access}")
-    
-    # If feature not found or disabled, deny access
-    if not feature_access or not feature_access.is_enabled:
-        print(f"Access denied: Feature not found or disabled")
+    if not feature_access:
+        print(f"Feature {feature_id} not found")
         print("=== validate_feature_access END ===\n")
         return False
     
-    # Get device UUID from request headers
-    device_uuid = get_device_uuid(request)
-    print(f"Device UUID from request: {device_uuid}")
-    print(f"Authorized devices for feature: {feature_access.authorized_devices}")
+    print(f"Feature settings: {feature_access}")
     
+    # If feature is not enabled, deny access
+    if not feature_access.is_enabled:
+        print(f"Feature {feature_id} is not enabled")
+        print("=== validate_feature_access END ===\n")
+        return False
+    
+    # If feature doesn't require device auth, grant access
+    if not feature_access.requires_device_auth:
+        print(f"Feature {feature_id} doesn't require device auth")
+        print("=== validate_feature_access END ===\n")
+        return True
+    
+    # If feature requires device auth, check device authorization
     if not device_uuid:
-        print(f"Access denied: No device UUID found")
+        print("No device UUID found")
         print("=== validate_feature_access END ===\n")
         return False
     
-    # First check if the device exists and is active
-    device = next((d for d in data_handler.data.device_registrations if d.uuid == device_uuid), None)
-    print(f"Found device in registrations: {device}")
-    
-    if not device or not device.is_active:
-        print(f"Access denied: Device not found or not active")
-        print("=== validate_feature_access END ===\n")
-        return False
-    
-    # If feature requires device auth, check if device is authorized
-    if feature_access.requires_device_auth:
-        if device_uuid not in feature_access.authorized_devices:
-            print(f"Access denied: Device {device_uuid} not in authorized devices list")
-            print("=== validate_feature_access END ===\n")
-            return False
-        print(f"Access granted: Device {device_uuid} is authorized for feature {feature_id}")
-    else:
-        print(f"Access granted: Feature doesn't require device auth")
-    
+    # Check if device is authorized for this feature
+    is_authorized = device_uuid in feature_access.authorized_devices
+    print(f"Device {device_uuid} authorization for feature {feature_id}: {is_authorized}")
     print("=== validate_feature_access END ===\n")
-    return True
+    return is_authorized
 
 def get_authorized_features(request: Request, data_handler: DataHandler) -> List[str]:
-    """
-    Get a list of feature IDs that the current device has access to.
-    """
+    """Get a list of feature IDs that the current device is authorized to access."""
     print("\n=== get_authorized_features START ===")
-    authorized_features = []
     
-    # Get device UUID from request headers
+    # Get device UUID from request
     device_uuid = get_device_uuid(request)
     print(f"Device UUID from request: {device_uuid}")
     
@@ -207,7 +206,18 @@ def get_authorized_features(request: Request, data_handler: DataHandler) -> List
     if not device_uuid:
         print("No device UUID found, returning empty list")
         print("=== get_authorized_features END ===\n")
-        return authorized_features
+        return []
+        
+    # Always grant all features for admin device UUIDs
+    if device_uuid in ADMIN_DEVICE_UUIDS:
+        print("Admin device UUID detected - granting all features")
+        all_features = [f.feature_id for f in data_handler.data.feature_access if f.is_enabled]
+        print(f"All enabled features: {all_features}")
+        print("=== get_authorized_features END ===\n")
+        return all_features
+    
+    # For other devices, check authorization normally
+    authorized_features = []
     
     # First check if the device exists and is active
     device = next((d for d in data_handler.data.device_registrations if d.uuid == device_uuid), None)
@@ -218,7 +228,7 @@ def get_authorized_features(request: Request, data_handler: DataHandler) -> List
         print("=== get_authorized_features END ===\n")
         return authorized_features
     
-    # Get all features
+    # Get all features that are enabled and don't require device auth
     for feature in data_handler.data.feature_access:
         print(f"\nChecking feature: {feature.feature_id}")
         print(f"Feature settings: {feature}")
@@ -227,24 +237,17 @@ def get_authorized_features(request: Request, data_handler: DataHandler) -> List
             print(f"Feature {feature.feature_id} is not enabled, skipping")
             continue
             
-        # Special case for device_management - always accessible if user is authenticated
-        # if feature.feature_id == "device_management":
-        #     print(f"Feature device_management is always accessible if authenticated")
-        #     authorized_features.append(feature.feature_id)
-        #     continue
-            
-        # For features that require device auth, check if device is authorized
-        if feature.requires_device_auth:
-            if device_uuid in feature.authorized_devices:
-                print(f"Device {device_uuid} is authorized for feature {feature.feature_id}, adding to authorized features")
-                authorized_features.append(feature.feature_id)
-            else:
-                print(f"Device {device_uuid} is not authorized for feature {feature.feature_id}, skipping")
+        if not feature.requires_device_auth:
+            print(f"Feature {feature.feature_id} doesn't require device auth, adding to authorized features")
+            authorized_features.append(feature.feature_id)
             continue
             
-        # For features that don't require device auth, device still needs to be registered and active
-        print(f"Feature {feature.feature_id} doesn't require device auth, adding to authorized features")
-        authorized_features.append(feature.feature_id)
+        # For features that require device auth, check if device is authorized
+        if device_uuid in feature.authorized_devices:
+            print(f"Device {device_uuid} is authorized for feature {feature.feature_id}, adding to authorized features")
+            authorized_features.append(feature.feature_id)
+        else:
+            print(f"Device {device_uuid} is not authorized for feature {feature.feature_id}, skipping")
     
     print(f"\nFinal authorized features for device {device_uuid}: {authorized_features}")
     print("=== get_authorized_features END ===\n")
