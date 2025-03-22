@@ -14,12 +14,14 @@ from typing import List, Optional, Dict
 import os
 from dotenv import load_dotenv
 from .utils.working_hours import parse_legacy_working_hours, is_shop_open, format_working_hours, parse_time
-from datetime import time
 import secrets
 from .utils.security import authenticate_user, create_access_token, get_current_user, ACCESS_TOKEN_EXPIRE_MINUTES
-from datetime import timedelta
+from datetime import time, timedelta, datetime
 import jwt
 from jose import JWTError
+import time
+import psutil
+import platform
 
 # Load environment variables from .env file
 load_dotenv()
@@ -63,7 +65,11 @@ class ImageUrl(BaseModel):
 class HealthCheck(BaseModel):
     status: str
     version: str
+    timestamp: str
+    uptime: float
     data_file_accessible: bool
+    storage_accessible: bool
+    memory_usage: Dict[str, float]
     details: Dict[str, str]
 
 def load_data() -> DataStructure:
@@ -1039,32 +1045,66 @@ async def favicon():
 @app.get("/health", response_model=HealthCheck)
 async def health_check():
     """
-    Health check endpoint that verifies:
-    1. The application is running
+    Enhanced health check endpoint that verifies:
+    1. The application is running and its uptime
     2. The data file is accessible
-    3. Returns the application version and environment
+    3. Cloud storage is accessible
+    4. Basic system metrics
+    5. Returns the application version and environment
     """
+    start_time = time.time()
+    
     try:
+        # Get system metrics
+        process = psutil.Process()
+        memory_info = process.memory_info()
+        memory_usage = {
+            "rss_mb": memory_info.rss / (1024 * 1024),  # RSS in MB
+            "vms_mb": memory_info.vms / (1024 * 1024),  # VMS in MB
+            "memory_percent": process.memory_percent()
+        }
+
         # Check if data file is accessible
         data_file_exists = os.path.exists(DATA_FILE)
         if data_file_exists:
             with open(DATA_FILE, "r", encoding="utf-8") as f:
                 json.load(f)
+
+        # Check storage connectivity
+        storage_accessible = False
+        try:
+            # Simple check if storage client is initialized
+            storage_accessible = storage is not None and hasattr(storage, 'bucket_name')
+        except Exception as e:
+            storage_accessible = False
+        
+        response_time = time.time() - start_time
         
         return HealthCheck(
             status="healthy",
-            version="1.0.0",  # You can update this based on your versioning
+            version="1.0.0",
+            timestamp=datetime.utcnow().isoformat(),
+            uptime=time.time() - process.create_time(),
             data_file_accessible=data_file_exists,
+            storage_accessible=storage_accessible,
+            memory_usage=memory_usage,
             details={
                 "environment": ENVIRONMENT,
-                "data_file": "accessible" if data_file_exists else "not found"
+                "data_file": "accessible" if data_file_exists else "not found",
+                "response_time_ms": f"{response_time * 1000:.2f}",
+                "python_version": platform.python_version(),
+                "host_os": platform.system()
             }
         )
     except Exception as e:
         return HealthCheck(
             status="unhealthy",
             version="1.0.0",
+            timestamp=datetime.utcnow().isoformat(),
+            uptime=0.0,
             data_file_accessible=False,
+            storage_accessible=False,
+            memory_usage={"rss_mb": 0, "vms_mb": 0, "memory_percent": 0},
             details={
                 "environment": ENVIRONMENT,
                 "error": str(e)
