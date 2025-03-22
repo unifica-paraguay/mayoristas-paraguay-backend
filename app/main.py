@@ -10,7 +10,7 @@ import pandas as pd
 from .models.models import DataStructure, Shop, Category, Zone
 from pydantic import BaseModel
 import json
-from typing import List, Optional
+from typing import List, Optional, Dict
 import os
 from dotenv import load_dotenv
 from .utils.working_hours import parse_legacy_working_hours, is_shop_open, format_working_hours, parse_time
@@ -58,6 +58,13 @@ DATA_FILE = "data.json"
 # Modelos para las solicitudes
 class ImageUrl(BaseModel):
     url: str = ""
+
+# Health check model
+class HealthCheck(BaseModel):
+    status: str
+    version: str
+    data_file_accessible: bool
+    details: Dict[str, str]
 
 def load_data() -> DataStructure:
     with open(DATA_FILE, "r", encoding="utf-8") as f:
@@ -1027,4 +1034,39 @@ async def favicon():
     else:
         # Use default Unifica logo if no branding logo is set
         default_logo = os.getenv("DEFAULT_BRANDING_LOGO", "https://unificadesign.com.py/img/unifica/footerIcon.png")
-        return RedirectResponse(url=default_logo) 
+        return RedirectResponse(url=default_logo)
+
+@app.get("/health", response_model=HealthCheck)
+async def health_check():
+    """
+    Health check endpoint that verifies:
+    1. The application is running
+    2. The data file is accessible
+    3. Returns the application version and environment
+    """
+    try:
+        # Check if data file is accessible
+        data_file_exists = os.path.exists(DATA_FILE)
+        if data_file_exists:
+            with open(DATA_FILE, "r", encoding="utf-8") as f:
+                json.load(f)
+        
+        return HealthCheck(
+            status="healthy",
+            version="1.0.0",  # You can update this based on your versioning
+            data_file_accessible=data_file_exists,
+            details={
+                "environment": ENVIRONMENT,
+                "data_file": "accessible" if data_file_exists else "not found"
+            }
+        )
+    except Exception as e:
+        return HealthCheck(
+            status="unhealthy",
+            version="1.0.0",
+            data_file_accessible=False,
+            details={
+                "environment": ENVIRONMENT,
+                "error": str(e)
+            }
+        ) 
